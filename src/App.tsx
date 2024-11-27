@@ -1,13 +1,12 @@
-import { useState } from 'react'
 import './App.css'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes/router.tsx'
 
 function App() {
 
   return (
     <>
-      <div className='text-[40px] font-semibold'>
-        Hello World!
-      </div>
+      <RouterProvider router={router} />
     </>
   )
 }
