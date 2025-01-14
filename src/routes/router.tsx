@@ -5,6 +5,8 @@ import MyPage from '../pages/MyPage';
 import Bookie from '../pages/Bookie';
 import BookSnap from '../pages/BookSnap';
 import Layout from '../components/Layout';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 
 export const router = createBrowserRouter([
 	{
@@ -18,4 +20,6 @@ export const router = createBrowserRouter([
 			{ path: '/mypage', element: <MyPage /> },
 		],
 	},
+	{ path: '/login', element: <Login /> },
+	{ path: '/signup', element: <Signup /> },
 ]);

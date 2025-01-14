@@ -9,6 +9,8 @@ export default {
 			colors: {
 				main_1: '#6589DE',
 				main_2: '#DBE5FF',
+				main_3: '#4869C3',
+				main_4: '#E1ECF6',
 			},
 		},
 	},
