@@ -56,19 +56,30 @@ export const ChatProvider = ({ children }: ChatProviderProps): JSX.Element => {
 	// 메시지 전송 함수
 	const chat = async (message: string): Promise<void> => {
 		try {
+			if (!message) {
+				console.error('messageObject is undefined or missing text:', message);
+				return; // 오류 발생 방지
+			}
+
 			setLoading(true);
+
 			const response = await instance.post(`${backendUrl}/chat`, { message });
 
 			if (response.status === 200) {
-				console.log('메시지 전송 성공:', response.data.messages[0].text);
+				console.log('Response Data:', response.data); // 데이터 확인
 				const { messages: resp }: { messages: MessageType[] } = response.data;
+
+				// 기존 메시지 업데이트
 				setMessages((prevMessages) => [...prevMessages, ...resp]);
 
-				const systemMessage: MessageType = {
-					text: response.data.messages[0].text,
+				// 시스템 메시지 생성
+				const systemMessages: MessageType[] = resp.map((msg) => ({
+					text: msg.text,
 					type: 'system',
-				};
-				setSystemRes((prevMessages) => [...prevMessages, systemMessage]);
+				}));
+
+				// 시스템 응답 업데이트
+				setSystemRes((prevMessages) => [...prevMessages, ...systemMessages]);
 			} else {
 				console.error(
 					'메시지 전송 실패: ',

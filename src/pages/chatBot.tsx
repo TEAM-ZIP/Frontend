@@ -62,7 +62,7 @@ export const chatBot = ({ hidden }: ChatBotProps): JSX.Element | null => {
 
 				{/* 채팅 메시지 */}
 				<div
-					className="scrollbar-thin scrollbar-thumb-[#9ABFA2] scrollbar-track-transparent pointer-events-auto z-10 mx-[100px] my-10 flex max-h-[80%] w-3/6 flex-col gap-3 self-end overflow-y-auto"
+					className="pointer-events-auto z-10 mx-[100px] my-10 flex max-h-[80%] w-3/6 flex-col gap-3 self-end overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#9ABFA2]"
 					onWheel={(e) => e.stopPropagation()} // 휠 이벤트 차단
 				>
 					{systemRes.map((msg, index) => (
