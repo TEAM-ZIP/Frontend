@@ -30,7 +30,10 @@ const Login = () => {
 						placeholder="비밀번호를 입력해주세요"
 						check={false}
 					/>
-					<p className="text-main_1 flex cursor-pointer justify-end text-[12px] font-light underline">
+					<p
+						className="text-main_1 flex cursor-pointer justify-end text-[12px] font-light underline"
+						onClick={() => nav('/find-pw')}
+					>
 						비밀번호 찾기
 					</p>
 				</div>
