@@ -1,28 +1,28 @@
 html,
 body {
-	margin: 0px;
-	width: 100%;
-	background-color: rgb(246, 246, 246);
-	display: flex;
+  margin: 0px;
+  width: 100%;
+  background-color: rgb(246, 246, 246);
+  display: flex;
 }
 
 #root {
-	background-color: white;
-	max-width: 500px;
-	width: 100%;
-	margin: 0 auto;
-	min-height: calc(var(--vh, 1vh) * 100);
-	box-shadow: rgb(100, 100, 100, 0.2) 0px 0px 29px 0px;
-	padding: 0px;
+  background-color: white;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: calc(var(--vh, 1vh) * 100);
+  box-shadow: rgb(100, 100, 100, 0.2) 0px 0px 29px 0px;
+  padding: 0px;
 }
 
 @supports (-webkit-touch-callout: none) {
-	html,
-	body {
-		height: 100%;
-	}
+  html,
+  body {
+    height: 100%;
+  }
 
-	#root {
-		height: calc(var(--vh, 1vh) * 100);
-	}
+  #root {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }
