@@ -1,6 +1,6 @@
 import EmailIcon from '../../public/icons/login-signup/EmailRounded.svg?react';
 import PasswordIcon from '../../public/icons/login-signup/PasswordRounded.svg?react';
-import NicknameIcon from '../../public/icons/menu-bar/Person_2Rounded.svg';
+import NicknameIcon from '../../public/icons/login-signup/Person_2Rounded.svg?react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 interface InputFieldProps {
 	type: 'email' | 'pw' | 'nickname';
@@ -19,7 +19,7 @@ const InputField = ({
 		type === 'email' ? (
 			<EmailIcon />
 		) : type === 'pw' ? (
-			<PasswordIcon />
+			<PasswordIcon className="h-[20px] w-[20px]" />
 		) : type === 'nickname' ? (
 			<NicknameIcon />
 		) : null;

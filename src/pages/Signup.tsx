@@ -24,6 +24,7 @@ const Signup = () => {
 
 		// 가입 로직
 		console.log('가입');
+		nav('add');
 	};
 
 	return (

@@ -7,6 +7,7 @@ import BookSnap from '../pages/BookSnap';
 import Layout from '../components/Layout';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import SignupAddInfo from '../pages/SignupAddInfo';
 
 export const router = createBrowserRouter([
 	{
@@ -22,4 +23,5 @@ export const router = createBrowserRouter([
 	},
 	{ path: '/login', element: <Login /> },
 	{ path: '/signup', element: <Signup /> },
+	{ path: '/signup/add', element: <SignupAddInfo /> },
 ]);
