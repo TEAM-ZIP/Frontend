@@ -1,5 +1,5 @@
 const BookSnap = () => {
-	return <div>BookSnap</div>;
+  return <div>BookSnap</div>;
 };
 
 export default BookSnap;
