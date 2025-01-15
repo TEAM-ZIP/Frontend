@@ -10,6 +10,7 @@ import Signup from '../pages/Signup';
 import SignupAddInfo from '../pages/SignupAddInfo';
 import FindPw from '../pages/FindPw';
 import FindPw2 from '../pages/FindPw2';
+import ResetPw from '../pages/ResetPw';
 
 export const router = createBrowserRouter([
 	{
@@ -28,4 +29,5 @@ export const router = createBrowserRouter([
 	{ path: '/signup/add', element: <SignupAddInfo /> },
 	{ path: '/find-pw', element: <FindPw /> },
 	{ path: '/find-pw2', element: <FindPw2 /> },
+	{ path: '/reset-pw', element: <ResetPw /> },
 ]);
