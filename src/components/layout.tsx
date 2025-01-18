@@ -10,15 +10,22 @@ const Layout = () => {
   const [heights, setHeights] = useState({ header: 0, menubar: 0 });
 
   useEffect(() => {
-    if (headerHeight.current && menuBarHeight.current) {
-      const header = headerHeight.current.offsetHeight;
-      const menubar = menuBarHeight.current.offsetHeight;
-      setHeights({ header: header, menubar: menubar });
-    }
+    const updateHeights = () => {
+      if (headerHeight.current && menuBarHeight.current) {
+        const header = headerHeight.current.offsetHeight;
+        const menubar = menuBarHeight.current.offsetHeight;
+        setHeights({ header, menubar });
+      }
+    };
+
+    updateHeights();
+
+    window.addEventListener('resize', updateHeights);
+    return () => window.removeEventListener('resize', updateHeights);
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col scrollbar-none">
+    <div className="flex min-h-screen flex-col">
       <div className="fixed w-full max-w-[500px]" ref={headerHeight}>
         <Header />
       </div>
@@ -27,7 +34,6 @@ const Layout = () => {
         style={{
           marginTop: `${heights.header}px`,
           marginBottom: `${heights.menubar}px`,
-          // 이거 100vh로 안하고 이걸로 햇는데... 딱히 적용이 안되는 것 같아서 나중에 확인해봐야함.
           height: `calc(100vh - ${heights.header + heights.menubar}px)`,
         }}
       >
