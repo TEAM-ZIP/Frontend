@@ -1,7 +1,7 @@
-import logo from '../../public/icons/login-signup/Logo.png';
-import Button from '../components/Button';
-import InputField from '../components/InputField';
-import KakaoIcon from '../../public/icons/login-signup/Kakao.svg';
+import logo from '../../../public/icons/login-signup/Logo.png';
+import Button from '../../components/Button';
+import InputField from '../../components/InputField';
+import KakaoIcon from '../../../public/icons/login-signup/Kakao.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {

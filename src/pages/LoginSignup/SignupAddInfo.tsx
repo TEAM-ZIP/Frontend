@@ -1,7 +1,7 @@
 import { FaAngleLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../components/InputField';
-import Button from '../components/Button';
+import InputField from '../../components/InputField';
+import Button from '../../components/Button';
 import { useState } from 'react';
 
 const SignupAddInfo = () => {
