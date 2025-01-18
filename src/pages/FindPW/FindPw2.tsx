@@ -1,8 +1,7 @@
 import { FaAngleLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import check from '../../public/icons/login-signup/Check.png';
-import InputField from '../components/InputField';
+import Button from '../../components/Button';
+import check from '../../../public/icons/login-signup/Check.png';
 
 const FindPw2 = () => {
   const nav = useNavigate();

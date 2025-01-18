@@ -4,13 +4,13 @@ import Zip from '../pages/Zip';
 import MyPage from '../pages/MyPage';
 import Bookie from '../pages/Bookie';
 import BookSnap from '../pages/BookSnap';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import SignupAddInfo from '../pages/SignupAddInfo';
-import FindPw from '../pages/FindPw';
-import FindPw2 from '../pages/FindPw2';
-import ResetPw from '../pages/ResetPw';
 import Layout from '../components/layout';
+import Login from '../pages/LoginSignup/Login';
+import Signup from '../pages/LoginSignup/Signup';
+import SignupAddInfo from '../pages/LoginSignup/SignupAddInfo';
+import FindPw from '../pages/FindPW/FindPw';
+import FindPw2 from '../pages/FindPW/FindPw2';
+import ResetPw from '../pages/FindPW/ResetPw';
 
 export const router = createBrowserRouter([
   {
