@@ -2,7 +2,7 @@ import React from 'react';
 import { BOTTOM_SHEET_HEIGHT } from '../../constants/BottomSheetOption';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
-import Content from './Content';
+import UserLikeZip from '../../pages/UserLikeZip';
 
 function BottomSheet() {
   const { sheet, content } = useBottomSheet();
@@ -17,7 +17,7 @@ function BottomSheet() {
     rounded-t-lg
     shadow-[0_0_10px_rgba(0,0,0,0.6)]
     bg-white
-    transition-transform duration-650 ease-out        
+    transition-transform duration-650 ease-out     
   `}
       style={{
         height: `${BOTTOM_SHEET_HEIGHT}px`,
@@ -27,7 +27,7 @@ function BottomSheet() {
     >
       <Header />
       <div className="overflow-auto overscroll-contain" ref={content}>
-        <Content />
+        <UserLikeZip />
       </div>
     </div>
   );

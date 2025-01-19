@@ -11,6 +11,7 @@ export default {
         main_2: '#DBE5FF',
         main_3: '#4869C3',
         main_4: '#E1ECF6',
+        red_1: '#FF0101',
       },
       backgroundImage: {
         'key-gradient': 'linear-gradient(180deg, #E1ECF6 0%, #DAE4FD 31%, #DBE5FD 61.5%, #EAF1F8 100%)',
