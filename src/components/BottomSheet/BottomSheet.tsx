@@ -1,10 +1,13 @@
 import React from 'react';
-import { BOTTOM_SHEET_HEIGHT } from '../../constants/BottomSheetOption';
+import { BOTTOM_SHEET_HEIGHT, MAX_Y, MIN_Y } from '../../constants/BottomSheetOption';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
-import UserLikeZip from '../../pages/UserLikeZip';
+interface BottomSheet {
+  view: React.ReactNode;
+  isOpen: boolean;
+}
 
-function BottomSheet() {
+function BottomSheet({ view, isOpen }: BottomSheet) {
   const { sheet, content } = useBottomSheet();
 
   return (
@@ -21,13 +24,13 @@ function BottomSheet() {
   `}
       style={{
         height: `${BOTTOM_SHEET_HEIGHT}px`,
-        transform: 'translateY(65px)',
+        transform: `translateY(${isOpen ? '-404px' : '65px'})`,
       }}
       ref={sheet}
     >
       <Header />
-      <div className="overflow-auto overscroll-contain" ref={content}>
-        <UserLikeZip />
+      <div className="overflow-auto overscroll-contain scrollbar-thin scrollbar-thumb-main_2" ref={content}>
+        {view}
       </div>
     </div>
   );

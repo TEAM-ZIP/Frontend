@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import CategoryButton from '../components/CategoryButton';
 import RoundButton from '../components/RoundButton';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
+import UserLikeZip from './UserLikeZip';
+import { useGeoLocation } from '../hooks/useGeolocation';
 
 declare global {
   interface Window {
@@ -10,7 +12,18 @@ declare global {
   }
 }
 
+const geolocationOptions = {
+  enableHighAccuracy: true,
+  timeout: 1000 * 30,
+  maximumAge: 1000 * 3600 * 24,
+};
+
 const Zip = () => {
+  const [bottomSheetContent, setBottomSheetContent] = useState<React.ReactNode>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const { location, error } = useGeoLocation(geolocationOptions);
+
   useEffect(() => {
     let container = document.getElementById(`map`);
     let options = {
@@ -22,11 +35,38 @@ const Zip = () => {
   }, []);
 
   const handleHeart = () => {
-    // 찜한 목록들 마커로 보여주기 && 아이콘 색깔 바꿔야되는데...?
+    // 찜한 목록들 마커로 보여주기 추가 필요
+    if (isLiked) {
+      setIsLiked(false);
+      setIsBottomSheetOpen(false);
+      setBottomSheetContent(null);
+    } else {
+      setIsLiked(true);
+      setBottomSheetContent(<UserLikeZip />);
+      setIsBottomSheetOpen(true);
+    }
   };
 
   const handleCurrentLocation = () => {
-    // 현위치로 돌아오기
+    if (location) {
+      const mapContainer = document.getElementById('map');
+      if (mapContainer) {
+        const options = {
+          center: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+          level: 3,
+        };
+
+        const map = new window.kakao.maps.Map(mapContainer, options);
+
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+        });
+        marker.setMap(map);
+      }
+    } else if (error) {
+      console.error('Geolocation Error:', error);
+      alert('현재 위치를 가져올 수 없습니다. 위치 서비스를 확인해주세요.');
+    }
   };
 
   return (
@@ -47,12 +87,12 @@ const Zip = () => {
         </div>
         {/* 찜버튼 & 현재위치 */}
         <div className="mt-3 flex flex-col gap-3 items-end px-[10px] pointer-events-auto">
-          <RoundButton type="heart" onClick={handleHeart} />
+          <RoundButton type="heart" onClick={handleHeart} isLiked={isLiked} />
           <RoundButton type="current" onClick={handleCurrentLocation} />
         </div>
       </div>
       <div id="map" className="w-full h-full" />
-      <BottomSheet />
+      <BottomSheet view={bottomSheetContent} isOpen={isBottomSheetOpen} />
     </div>
   );
 };
