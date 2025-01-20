@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { MIN_Y, MAX_Y } from '../constants/BottomSheetOption';
+import { MIN_Y, MAX_Y, MID_Y } from '../constants/BottomSheetOption';
 
 interface BottomSheetMetrics {
   touchStart: {
@@ -103,12 +103,22 @@ export default function useBottomSheet() {
       const currentSheetY = sheet.current!.getBoundingClientRect().y;
 
       if (currentSheetY !== MIN_Y) {
+        // 손가락이 아래로 움직이는데...
         if (touchMove.movingDirection === 'down') {
-          sheet.current!.style.setProperty('transform', 'translateY(65px)');
+          if (currentSheetY <= MID_Y && currentSheetY > MIN_Y)
+            sheet.current!.style.setProperty('transform', 'translateY(-404px)');
+          else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
+            sheet.current!.style.setProperty('transform', 'translateY(65px)');
+          }
         }
 
+        // 손가락이 위로 움직이는데...
         if (touchMove.movingDirection === 'up') {
-          sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`);
+          if (currentSheetY <= MID_Y && currentSheetY > MIN_Y) {
+            sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`);
+          } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
+            sheet.current!.style.setProperty('transform', `translateY(-404px)`);
+          }
         }
       }
 
