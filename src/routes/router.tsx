@@ -11,6 +11,7 @@ import SignupAddInfo from '../pages/LoginSignup/SignupAddInfo';
 import FindPw from '../pages/FindPW/FindPw';
 import FindPw2 from '../pages/FindPW/FindPw2';
 import ResetPw from '../pages/FindPW/ResetPw';
+import KakaoLogin from '../components/KakaoLogin';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <Signup /> },
+  { path: '/api/kakao/oauth/login', element: <KakaoLogin /> },
   { path: '/signup/add', element: <SignupAddInfo /> },
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
