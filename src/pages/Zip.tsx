@@ -82,7 +82,7 @@ const Zip = () => {
             <CategoryButton text="📚 독립서점" />
             <CategoryButton text="☕️ 카페가 있는 서점" />
             <CategoryButton text="🐥 아동서점" />
-            <CategoryButton text="🏢 대형서점" />
+            {/* <CategoryButton text="🏢 대형서점" /> */}
           </div>
         </div>
         {/* 찜버튼 & 현재위치 */}

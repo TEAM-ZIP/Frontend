@@ -6,6 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const nav = useNavigate();
+  const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
+  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+
+  const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_URL;
+  };
   return (
     <div className="grid h-screen w-full place-items-center">
       <div className="flex w-full flex-col items-center">
@@ -26,7 +33,10 @@ const Login = () => {
         </div>
         <div className="mb-[30px] flex w-full flex-col gap-[10px] px-[55px]">
           <Button text="로그인" />
-          <button className="flex flex-1 items-center justify-center rounded-[5px] bg-[#FEE500] py-2.5">
+          <button
+            className="flex flex-1 items-center justify-center rounded-[5px] bg-[#FEE500] py-2.5"
+            onClick={handleKakaoLogin}
+          >
             <div className="flex items-center justify-center gap-2 px-6 text-[14px]">
               <img className="h-4 w-4" alt="카카오 로그인" src={KakaoIcon} />
               <h3>카카오로 시작하기</h3>
