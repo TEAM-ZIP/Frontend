@@ -5,6 +5,7 @@ import RoundButton from '../components/RoundButton';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
 import { useGeoLocation } from '../hooks/useGeolocation';
+import SearchZip from './SearchZip';
 
 declare global {
   interface Window {
@@ -24,6 +25,8 @@ const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { location, error } = useGeoLocation(geolocationOptions);
   const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   useEffect(() => {
     const defaultLatitude = 33.450701; // 기본 위도
@@ -85,12 +88,23 @@ const Zip = () => {
     }
   };
 
+  const handleSearch = async () => {
+    // 검색 API 호출
+    try {
+      setSearchResults(['진시황']);
+      setBottomSheetContent(<SearchZip searchResults={searchResults} />);
+      setIsBottomSheetOpen(true);
+    } catch (error) {
+      console.error('검색 중 오류 발생:', error);
+    }
+  };
+
   return (
     <div className="w-full h-full relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full flex flex-col z-10 pointer-events-none">
         {/* 검색바 */}
         <div className="w-full mt-[18px] px-[10px] pointer-events-auto">
-          <SearchBar />
+          <SearchBar setSearchWord={setSearchWord} searchWord={searchWord} onSearch={handleSearch} />
         </div>
         {/* 카테고리 버튼 */}
         <div className="relative mt-2 px-[10px] pointer-events-auto overflow-y-visible">
