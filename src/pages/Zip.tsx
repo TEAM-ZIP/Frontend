@@ -112,21 +112,21 @@ const Zip = () => {
             <CategoryButton
               text="📚 독립서점"
               onClick={() => {
-                setCurrentBookstore('indie');
+                currentBookstore !== 'indie' ? setCurrentBookstore('indie') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'indie'}
             />
             <CategoryButton
               text="☕️ 카페가 있는 서점"
               onClick={() => {
-                setCurrentBookstore('cafe');
+                currentBookstore !== 'cafe' ? setCurrentBookstore('cafe') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'cafe'}
             />
             <CategoryButton
               text="🐥 아동서점"
               onClick={() => {
-                setCurrentBookstore('children');
+                currentBookstore !== 'children' ? setCurrentBookstore('children') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'children'}
             />
