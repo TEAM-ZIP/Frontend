@@ -5,8 +5,6 @@ import RoundButton from '../components/RoundButton';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
 import { useGeoLocation } from '../hooks/useGeolocation';
-import { createCustomMarker } from '../utils/markerUtils';
-import { create } from 'domain';
 
 declare global {
   interface Window {
@@ -25,6 +23,7 @@ const Zip = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { location, error } = useGeoLocation(geolocationOptions);
+  const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
 
   useEffect(() => {
     const defaultLatitude = 33.450701; // 기본 위도
@@ -94,12 +93,29 @@ const Zip = () => {
           <SearchBar />
         </div>
         {/* 카테고리 버튼 */}
-        <div className="relative mt-2 px-[10px] overflow-x-auto scrollbar-hide pointer-events-auto">
+        <div className="relative mt-2 px-[10px] pointer-events-auto overflow-y-visible">
           <div className="flex gap-2 w-max">
-            <CategoryButton text="📚 독립서점" />
-            <CategoryButton text="☕️ 카페가 있는 서점" />
-            <CategoryButton text="🐥 아동서점" />
-            {/* <CategoryButton text="🏢 대형서점" /> */}
+            <CategoryButton
+              text="📚 독립서점"
+              onClick={() => {
+                setCurrentBookstore('indie');
+              }}
+              isSelected={currentBookstore === 'indie'}
+            />
+            <CategoryButton
+              text="☕️ 카페가 있는 서점"
+              onClick={() => {
+                setCurrentBookstore('cafe');
+              }}
+              isSelected={currentBookstore === 'cafe'}
+            />
+            <CategoryButton
+              text="🐥 아동서점"
+              onClick={() => {
+                setCurrentBookstore('children');
+              }}
+              isSelected={currentBookstore === 'children'}
+            />
           </div>
         </div>
         {/* 찜버튼 & 현재위치 */}
