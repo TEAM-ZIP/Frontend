@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import { MIN_Y, MAX_Y, MID_Y } from '../constants/BottomSheetOption';
+import { useRef, useEffect, useState } from 'react';
+import { MIN_Y, MAX_Y, MID_Y, BOTTOM_SHEET_HEIGHT_MAX, BOTTOM_SHEET_HEIGHT_MID } from '../constants/BottomSheetOption';
 
 interface BottomSheetMetrics {
   touchStart: {
@@ -13,10 +13,37 @@ interface BottomSheetMetrics {
   isContentAreaTouched: boolean;
 }
 
-export default function useBottomSheet() {
+export default function useBottomSheet(initialState: 'close' | 'mid' | 'max' = 'close') {
   const sheet = useRef<HTMLDivElement>(null);
-
   const content = useRef<HTMLDivElement>(null);
+  const [currentHeight, setCurrentHeight] = useState(BOTTOM_SHEET_HEIGHT_MAX);
+  const [currentState, setCurrentState] = useState<'close' | 'mid' | 'max'>(initialState);
+  const [translateY, setTranslateY] = useState(`${MAX_Y - MIN_Y}px`);
+
+  useEffect(() => {
+    if (sheet.current) {
+      sheet.current.style.transition = 'transform 0.1s ease, height 0.1s ease'; // Height와 Transform 동기화
+    }
+  }, []);
+
+  useEffect(() => {
+    switch (currentState) {
+      case 'close':
+        setTranslateY(`64px`);
+        setCurrentHeight(BOTTOM_SHEET_HEIGHT_MAX);
+        break;
+      case 'mid':
+        setTranslateY(`${MID_Y - MAX_Y}px`);
+        setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
+        break;
+      case 'max':
+        setTranslateY(`${MIN_Y - MAX_Y}px`);
+        setCurrentHeight(BOTTOM_SHEET_HEIGHT_MAX);
+        break;
+      default:
+        break;
+    }
+  }, [currentState]);
 
   const metrics = useRef<BottomSheetMetrics>({
     touchStart: {
@@ -103,23 +130,35 @@ export default function useBottomSheet() {
       const currentSheetY = sheet.current!.getBoundingClientRect().y;
 
       if (currentSheetY !== MIN_Y) {
-        // 손가락이 아래로 움직이는데...
-        if (touchMove.movingDirection === 'down') {
-          if (currentSheetY <= MID_Y && currentSheetY > MIN_Y)
-            sheet.current!.style.setProperty('transform', 'translateY(-404px)');
-          else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
-            sheet.current!.style.setProperty('transform', 'translateY(65px)');
-          }
-        }
+        const isMovingDown = touchMove.movingDirection === 'down';
+        const isMovingUp = touchMove.movingDirection === 'up';
 
-        // 손가락이 위로 움직이는데...
-        if (touchMove.movingDirection === 'up') {
-          if (currentSheetY <= MID_Y && currentSheetY > MIN_Y) {
-            sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`);
-          } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
-            sheet.current!.style.setProperty('transform', `translateY(-404px)`);
+        if (currentSheetY <= MID_Y && currentSheetY > MIN_Y) {
+          if (isMovingDown) {
+            sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최대 -> 중간
+            setCurrentState('mid');
+            setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
+          } else if (isMovingUp) {
+            sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`); // 중간 -> 최대
+            setCurrentHeight(BOTTOM_SHEET_HEIGHT_MAX);
+            setCurrentState('max');
+          }
+        } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
+          if (isMovingDown) {
+            sheet.current!.style.setProperty('transform', `translateY(64px)`); // 중간 -> 최소
+            setCurrentState('close');
+          } else if (isMovingUp) {
+            sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최소 -> 중간
+            setCurrentState('mid');
+            setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
           }
         }
+      }
+
+      if (currentSheetY <= MID_Y && currentSheetY > MIN_Y) {
+        setCurrentState(currentSheetY < (MID_Y + MIN_Y) / 2 ? 'max' : 'mid');
+      } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
+        setCurrentState(currentSheetY < (MAX_Y + MID_Y) / 2 ? 'mid' : 'close');
       }
 
       // metrics 초기화.
@@ -148,5 +187,5 @@ export default function useBottomSheet() {
     content.current!.addEventListener('touchstart', handleTouchStart);
   }, []);
 
-  return { sheet, content };
+  return { sheet, content, currentHeight, currentState, setCurrentState };
 }

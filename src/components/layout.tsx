@@ -26,8 +26,8 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="flex h-screen flex-col">
-      <div className="fixed w-full max-w-[500px]" ref={headerHeight}>
+    <div className="flex flex-col">
+      <div className="fixed w-full max-w-[500px] z-30" ref={headerHeight}>
         <Header />
       </div>
       <main
@@ -35,7 +35,7 @@ const Layout = () => {
         style={{
           marginTop: `${heights.header}px`,
           marginBottom: `${heights.menubar}px`,
-          height: `calc(100vh - ${heights.header + heights.menubar}px)`,
+          height: `calc(100dvh - ${heights.header + heights.menubar}px)`,
         }}
       >
         <Outlet />

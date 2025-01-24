@@ -25,14 +25,26 @@ const Zip = () => {
   const { location, error } = useGeoLocation(geolocationOptions);
 
   useEffect(() => {
-    let container = document.getElementById(`map`);
-    let options = {
-      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
+    const defaultLatitude = 33.450701; // 기본 위도
+    const defaultLongitude = 126.570667; // 기본 경도
+
+    const initializeMap = (latitude: number, longitude: number) => {
+      let container = document.getElementById(`map`);
+      if (container) {
+        let options = {
+          center: new window.kakao.maps.LatLng(latitude, longitude),
+          level: 3,
+        };
+        new window.kakao.maps.Map(container, options);
+      }
     };
 
-    let map = new window.kakao.maps.Map(container, options);
-  }, []);
+    if (location) {
+      initializeMap(location.latitude, location.longitude);
+    } else {
+      initializeMap(defaultLatitude, defaultLongitude);
+    }
+  }, [location]);
 
   const handleHeart = () => {
     // 찜한 목록들 마커로 보여주기 추가 필요
@@ -53,7 +65,7 @@ const Zip = () => {
       if (mapContainer) {
         const options = {
           center: new window.kakao.maps.LatLng(location.latitude, location.longitude),
-          level: 3,
+          level: 2,
         };
 
         const map = new window.kakao.maps.Map(mapContainer, options);
@@ -63,6 +75,9 @@ const Zip = () => {
         });
         marker.setMap(map);
       }
+      setIsLiked(false);
+      setIsBottomSheetOpen(false);
+      setBottomSheetContent(null);
     } else if (error) {
       console.error('Geolocation Error:', error);
       alert('현재 위치를 가져올 수 없습니다. 위치 서비스를 확인해주세요.');

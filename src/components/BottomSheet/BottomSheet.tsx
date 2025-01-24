@@ -1,30 +1,39 @@
-import React from 'react';
-import { BOTTOM_SHEET_HEIGHT, MAX_Y, MIN_Y } from '../../constants/BottomSheetOption';
+import React, { useEffect } from 'react';
 import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
+import { MAX_Y, MID_Y, MIN_Y } from '../../constants/BottomSheetOption';
 interface BottomSheet {
   view: React.ReactNode;
   isOpen: boolean;
 }
 
 function BottomSheet({ view, isOpen }: BottomSheet) {
-  const { sheet, content } = useBottomSheet();
+  const { sheet, content, currentHeight, currentState, setCurrentState } = useBottomSheet();
+
+  useEffect(() => {
+    setCurrentState(isOpen ? 'mid' : 'close');
+  }, [isOpen, setCurrentState]);
+
+  const translateY =
+    currentState === 'max' ? `${MIN_Y - MAX_Y}px` : currentState === 'mid' ? `${MID_Y - MAX_Y}px` : '65px';
 
   return (
     <div
       className={`
+        ${currentState}
     flex flex-col
-    absolute z-10
-    top-[calc(100%-90px)]
+    absolute top-[calc(100%-90px)]
+    z-10
     left-0 right-0
     rounded-t-lg
     shadow-[0_0_10px_rgba(0,0,0,0.6)]
     bg-white
-    transition-transform duration-650 ease-out     
+    transition-transform duration-650 ease-out 
+    ${currentState == 'max' ? '' : 'pb-[70px]'}
   `}
       style={{
-        height: `${BOTTOM_SHEET_HEIGHT}px`,
-        transform: `translateY(${isOpen ? '-404px' : '65px'})`,
+        height: `${currentHeight}px`,
+        transform: `translateY(${translateY})`,
       }}
       ref={sheet}
     >

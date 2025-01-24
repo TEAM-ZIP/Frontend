@@ -4,7 +4,7 @@ import ZipPreview from '../components/ZipPreview';
 
 export default function userLikeZip() {
   return (
-    <div className="flex mt-[15px] items-center justify-center w-full flex-col px-[30px] mb-[70px]">
+    <div className="flex pt-[15px] items-center justify-center w-full flex-col px-[30px] h-full">
       {/* 제목 및 개수 */}
       <div className="flex items-center justify-center gap-2">
         <div className="rounded-full border-[0.5px] border-[#BCB3B3] w-5 h-5 items-center flex justify-center">
@@ -25,12 +25,17 @@ export default function userLikeZip() {
         <div className="text-[14px] p-2 tracking-[-0.48px]">아동서점</div>
       </div>
       {/* 서점들 */}
-      <ZipPreview />
-      <ZipPreview />
-      <ZipPreview />
-      <ZipPreview />
-      <ZipPreview />
-      <ZipPreview />
+      <div className="w-full overflow-y-auto scrollbar-none">
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+        <ZipPreview />
+      </div>
     </div>
   );
 }

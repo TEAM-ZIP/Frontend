@@ -36,7 +36,7 @@ const RoundButton = ({ type, onClick, isLiked }: RoundButtonProps) => {
 
   return (
     <button
-      className="w-10 h-10 bg-white justify-items-center rounded-full"
+      className="w-10 h-10 bg-white flex items-center justify-center rounded-full"
       onClick={(e) => {
         setIsClicked(true);
         if (onClick) onClick(e);
