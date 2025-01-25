@@ -47,7 +47,7 @@ export default function userLikeZip() {
         {FILTER_OPTIONS.map(({ key, label }) => (
           <div
             key={key}
-            className={`text-[14px] p-2 tracking-[-0.48px] ${isSelected === key ? 'text-black' : 'text-[#979797]'}`}
+            className={`text-[14px] p-2 tracking-[-0.48px] cursor-pointer ${isSelected === key ? 'text-black' : 'text-[#979797]'}`}
             onClick={() => setIsSelected(key)}
           >
             {label}
@@ -55,13 +55,36 @@ export default function userLikeZip() {
         ))}
       </div>
       {/* 서점들 */}
-      <div className="w-full overflow-y-auto scrollbar-none items-center justify-center flex flex-col">
+      <div
+        data-scrollable
+        className="w-full h-full overflow-y-auto flex flex-col items-start z-40"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain',
+        }}
+        onTouchStart={(e) => e.stopPropagation()} // 상위로 이벤트 전파 차단
+        onTouchMove={(e) => e.stopPropagation()} // 상위로 이벤트 전파 차단
+        onDragStart={() => alert('클릭됨!')}
+      >
         {bookstoreList !== '' ? (
-          <ZipPreview />
-        ) : (
           <>
             <Ping className="mt-[30px] mb-[5px]" />
             <p className="text-[#979797] text-[14px]">아직 찜한 서점이 없어요!</p>
+          </>
+        ) : (
+          <>
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
+            <ZipPreview />
           </>
         )}
       </div>
