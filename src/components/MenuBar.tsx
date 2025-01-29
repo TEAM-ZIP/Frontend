@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import HomeIcon from '../../public/icons/menu-bar/HomeRounded.svg?react';
 import ZipIcon from '../../public/icons/menu-bar/MapRounded.svg?react';
@@ -10,7 +10,14 @@ import Indicator from '../../public/icons/menu-bar/Indicator.svg?react';
 
 const MenuBar = () => {
   const nav = useNavigate();
+  const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
+  console.log(location);
+
+  useEffect(() => {
+    const pathnameWithoutSlash = location.pathname.slice(1);
+    setCurrentMenu(pathnameWithoutSlash);
+  }, [location]);
 
   const menus = [
     {
@@ -52,7 +59,6 @@ const MenuBar = () => {
             key={menuItem.name}
             className={`flex cursor-pointer flex-col items-center px-2 ${currentMenu === menuItem.name ? 'pb-[0px] pt-[6px]' : 'py-[6px]'}`}
             onClick={() => {
-              setCurrentMenu(menuItem.name);
               nav(menuItem.name);
             }}
           >
