@@ -8,7 +8,7 @@ const Header = () => {
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
   return (
-    <div className="flex items-center px-2 py-3">
+    <div className="flex items-center px-2 py-3 bg-white">
       {showBackButton && (
         <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={() => nav(-1)}>
           <FaAngleLeft size={24} className="fill-main_1" />
