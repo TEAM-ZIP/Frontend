@@ -8,14 +8,11 @@ interface BottomSheet {
 }
 
 function BottomSheet({ view, isOpen }: BottomSheet) {
-  const { sheet, content, currentHeight, currentState, setCurrentState } = useBottomSheet();
+  const { sheet, content, currentHeight, currentState, setCurrentState } = useBottomSheet(isOpen);
 
   useEffect(() => {
     setCurrentState(isOpen ? 'mid' : 'close');
   }, [isOpen, setCurrentState]);
-
-  const translateY =
-    currentState === 'max' ? `${MIN_Y - MAX_Y}px` : currentState === 'mid' ? `${MID_Y - MAX_Y}px` : '65px';
 
   return (
     <div
@@ -33,7 +30,6 @@ function BottomSheet({ view, isOpen }: BottomSheet) {
   `}
       style={{
         height: `${currentHeight}px`,
-        transform: `translateY(${translateY})`,
       }}
       ref={sheet}
     >

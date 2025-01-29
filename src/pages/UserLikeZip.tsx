@@ -57,14 +57,29 @@ export default function userLikeZip() {
       {/* 서점들 */}
       <div
         data-scrollable
-        className="w-full h-full overflow-y-auto flex flex-col items-start z-40"
+        className="w-full max-h-full overflow-y-auto flex flex-col items-start z-40"
         style={{
           WebkitOverflowScrolling: 'touch',
           overscrollBehavior: 'contain',
         }}
-        onTouchStart={(e) => e.stopPropagation()} // 상위로 이벤트 전파 차단
-        onTouchMove={(e) => e.stopPropagation()} // 상위로 이벤트 전파 차단
-        onDragStart={() => alert('클릭됨!')}
+        onTouchStart={(e) => {
+          console.log('터치 감지');
+          e.stopPropagation();
+        }} // 상위로 이벤트 전파 차단
+        onTouchMove={(e) => {
+          const target = e.target as HTMLElement;
+          const scrollableElement = target.closest('[data-scrollable]'); // 상위 요소 중 data-scrollable 탐색
+          console.log('터치 이벤트 target:', target);
+          console.log('scrollableElement:', scrollableElement);
+
+          if (scrollableElement) {
+            console.log('움직임 감지');
+            e.stopPropagation(); // 내부 스크롤 허용
+          } else {
+            e.preventDefault();
+            console.log('움직임 감지 실패 - data-scrollable 요소가 없음');
+          }
+        }}
       >
         {bookstoreList !== '' ? (
           <>

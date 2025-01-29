@@ -100,8 +100,17 @@ const Zip = () => {
   };
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full flex flex-col z-10 pointer-events-none">
+    <div
+      className="w-full h-full relative"
+      style={{
+        overflow: isBottomSheetOpen ? 'visible' : 'hidden',
+      }}
+    >
+      <div
+        className={`absolute top-0 left-0 w-full h-full flex flex-col z-10 ${
+          isBottomSheetOpen ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
+      >
         {/* 검색바 */}
         <div className="w-full mt-[18px] px-[10px] pointer-events-auto">
           <SearchBar setSearchWord={setSearchWord} searchWord={searchWord} onSearch={handleSearch} />
