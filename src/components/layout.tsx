@@ -26,8 +26,8 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="flex flex-col">
-      <div className="fixed w-full max-w-[500px] z-30" ref={headerHeight}>
+    <div className="relative flex flex-col">
+      <div className="fixed w-full max-w-[500px] z-10" ref={headerHeight}>
         <Header />
       </div>
       <main
@@ -40,7 +40,7 @@ const Layout = () => {
       >
         <Outlet />
       </main>
-      <footer className="fixed bottom-0 w-full max-w-[500px]" ref={menuBarHeight}>
+      <footer className="fixed bottom-0 w-full max-w-[500px] z-30" ref={menuBarHeight}>
         <MenuBar />
       </footer>
     </div>
