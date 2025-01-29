@@ -20,22 +20,29 @@ const FILTER_OPTIONS = [
 
 type FilterType = (typeof FILTER_NAME)[keyof typeof FILTER_NAME];
 
-export default function userLikeZip() {
+export default function userLikeZip({ currentState }: { currentState: string }) {
   const [isSelected, setIsSelected] = useState<FilterType>(FILTER_NAME.ALL);
   const [bookstoreList, setBookstoreList] = useState<string>('');
 
   useEffect(() => {
     // 서점 목록 받아오기
   }, [isSelected]);
+  console.log(currentState);
 
   return (
-    <div className="flex pt-[15px] items-center justify-center w-full flex-col px-[30px] h-full">
+    <div
+      className={`flex items-center justify-center w-full flex-col px-[30px] h-full ${currentState == 'max' ? '' : 'pt-[15px] '}`}
+    >
       {/* 제목 및 개수 */}
       <div className="flex items-center justify-center gap-2">
-        <div className="rounded-full border-[0.5px] border-[#BCB3B3] w-5 h-5 items-center flex justify-center">
-          <FaHeart className="w-3 h-3 fill-red_1" />
-        </div>
-        <div className="text-main_1 text-[16px] font-medium">내가 찜한 서점</div>
+        {currentState !== 'max' && (
+          <>
+            <div className="rounded-full border-[0.5px] border-[#BCB3B3] w-5 h-5 items-center flex justify-center">
+              <FaHeart className="w-3 h-3 fill-red_1" />
+            </div>
+            <div className="text-main_1 text-[16px] font-medium">내가 찜한 서점</div>
+          </>
+        )}
       </div>
       {/* 개수 */}
       <div className="flex items-center gap-1 mt-1">
@@ -81,11 +88,11 @@ export default function userLikeZip() {
           }
         }}
       >
-        {bookstoreList !== '' ? (
-          <>
+        {bookstoreList == '' ? (
+          <div className="flex flex-col items-center justify-center w-full">
             <Ping className="mt-[30px] mb-[5px]" />
             <p className="text-[#979797] text-[14px]">아직 찜한 서점이 없어요!</p>
-          </>
+          </div>
         ) : (
           <>
             <ZipPreview />

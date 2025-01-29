@@ -1,9 +1,11 @@
 import { IoIosArrowDown } from 'react-icons/io';
 import ZipPreview from '../components/ZipPreview';
 import { useState } from 'react';
+import Ping from '../../public/icons/zip/ping.svg?react';
 
 interface SearchZipProps {
   searchResults: any[];
+  currentState: string;
 }
 
 const FILTER_OPTIONS = [
@@ -12,7 +14,7 @@ const FILTER_OPTIONS = [
   { key: 'star', label: '별점 순' },
 ] as const;
 
-export default function SearchZip({ searchResults }: SearchZipProps) {
+export default function SearchZip({ searchResults, currentState }: SearchZipProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentFilter, setCurrentFilter] = useState<'distance' | 'like' | 'star'>('distance');
 
@@ -22,7 +24,7 @@ export default function SearchZip({ searchResults }: SearchZipProps) {
   };
 
   return (
-    <div className="flex w-full flex-col pt-[28px] px-[32px]">
+    <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px] '}`}>
       {/* 필터 */}
       <div
         className="bg-main_2 w-[80px] h-[26px] rounded-[10px] ml-[12px] border border-main_1 pl-[17px] flex items-center gap-1"
@@ -48,9 +50,17 @@ export default function SearchZip({ searchResults }: SearchZipProps) {
       )}
       <div className="w-full bg-[#979797] h-[0.5px] mt-[12px]"></div>
       {/* 검색결과 */}
-      <ZipPreview />
-      <ZipPreview />
-      <ZipPreview />
+      {searchResults[0] == '' ? (
+        <div className="flex flex-col items-center justify-center w-full">
+          <Ping className="mt-[30px] mb-[5px]" />
+          <p className="text-[#979797] text-[14px]">검색된 서점이 없어요!</p>
+        </div>
+      ) : (
+        <>
+          <ZipPreview />
+          <ZipPreview />
+        </>
+      )}
     </div>
   );
 }

@@ -20,13 +20,17 @@ const geolocationOptions = {
 };
 
 const Zip = () => {
-  const [bottomSheetContent, setBottomSheetContent] = useState<React.ReactNode>(null);
+  const [bottomSheetContent, setBottomSheetContent] = useState<
+    ((props: { currentState: string }) => React.ReactNode) | null
+  >(null);
+
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { location, error } = useGeoLocation(geolocationOptions);
   const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [viewName, setViewName] = useState<string>('');
 
   useEffect(() => {
     const defaultLatitude = 33.450701; // 기본 위도
@@ -58,8 +62,12 @@ const Zip = () => {
       setBottomSheetContent(null);
     } else {
       setIsLiked(true);
-      setBottomSheetContent(<UserLikeZip />);
+      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
+        <UserLikeZip currentState={currentState} />
+      ));
+      setViewName('내가 찜한 서점');
       setIsBottomSheetOpen(true);
+      setCurrentBookstore(null);
     }
   };
 
@@ -92,7 +100,16 @@ const Zip = () => {
     // 검색 API 호출
     try {
       setSearchResults(['진시황']);
-      setBottomSheetContent(<SearchZip searchResults={searchResults} />);
+
+      // 모바일 환경에서 검색하면 키보드 닫아주기
+      const searchInput = document.querySelector('input');
+      if (searchInput) searchInput.blur(); // 포커스 해제
+
+      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
+        <SearchZip searchResults={searchResults} currentState={currentState} />
+      ));
+
+      setViewName('검색 결과');
       setIsBottomSheetOpen(true);
     } catch (error) {
       console.error('검색 중 오류 발생:', error);
@@ -106,11 +123,7 @@ const Zip = () => {
         overflow: isBottomSheetOpen ? 'visible' : 'hidden',
       }}
     >
-      <div
-        className={`absolute top-0 left-0 w-full h-full flex flex-col z-10 ${
-          isBottomSheetOpen ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
-      >
+      <div className={`absolute top-0 left-0 w-full h-full flex flex-col z-10 pointer-events-none`}>
         {/* 검색바 */}
         <div className="w-full mt-[18px] px-[10px] pointer-events-auto">
           <SearchBar setSearchWord={setSearchWord} searchWord={searchWord} onSearch={handleSearch} />
@@ -121,6 +134,7 @@ const Zip = () => {
             <CategoryButton
               text="📚 독립서점"
               onClick={() => {
+                setIsLiked(false);
                 currentBookstore !== 'indie' ? setCurrentBookstore('indie') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'indie'}
@@ -128,6 +142,7 @@ const Zip = () => {
             <CategoryButton
               text="☕️ 카페가 있는 서점"
               onClick={() => {
+                setIsLiked(false);
                 currentBookstore !== 'cafe' ? setCurrentBookstore('cafe') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'cafe'}
@@ -135,6 +150,7 @@ const Zip = () => {
             <CategoryButton
               text="🐥 아동서점"
               onClick={() => {
+                setIsLiked(false);
                 currentBookstore !== 'children' ? setCurrentBookstore('children') : setCurrentBookstore(null);
               }}
               isSelected={currentBookstore === 'children'}
@@ -148,7 +164,7 @@ const Zip = () => {
         </div>
       </div>
       <div id="map" className="w-full h-full" />
-      <BottomSheet view={bottomSheetContent} isOpen={isBottomSheetOpen} />
+      <BottomSheet view={bottomSheetContent} isOpen={isBottomSheetOpen} viewName={viewName} />
     </div>
   );
 };

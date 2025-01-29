@@ -45,7 +45,7 @@ const MenuBar = () => {
     },
   ];
   return (
-    <div className="flex border-t border-gray-200">
+    <div className="flex border-t border-gray-200 bg-white">
       <div className="grid w-full grid-cols-5">
         {menus.map((menuItem) => (
           <div
