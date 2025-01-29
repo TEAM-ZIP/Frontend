@@ -6,6 +6,7 @@ import BottomSheet from '../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
 import { useGeoLocation } from '../hooks/useGeolocation';
 import SearchZip from './SearchZip';
+import { currentMarker } from '../utils/currentMarker';
 
 declare global {
   interface Window {
@@ -69,14 +70,16 @@ const Zip = () => {
       if (mapContainer) {
         const options = {
           center: new window.kakao.maps.LatLng(location.latitude, location.longitude),
-          level: 2,
+          level: 3,
         };
 
         const map = new window.kakao.maps.Map(mapContainer, options);
+        const position = new window.kakao.maps.LatLng(location.latitude, location.longitude);
 
-        const marker = new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(location.latitude, location.longitude),
-        });
+        // const marker = new window.kakao.maps.Marker({
+        //   position: new window.kakao.maps.LatLng(location.latitude, location.longitude),
+        // });
+        const marker = currentMarker(map, position);
         marker.setMap(map);
       }
       setIsLiked(false);
