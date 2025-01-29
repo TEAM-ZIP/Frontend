@@ -84,9 +84,6 @@ const Zip = () => {
         const map = new window.kakao.maps.Map(mapContainer, options);
         const position = new window.kakao.maps.LatLng(location.latitude, location.longitude);
 
-        // const marker = new window.kakao.maps.Marker({
-        //   position: new window.kakao.maps.LatLng(location.latitude, location.longitude),
-        // });
         const marker = currentMarker(map, position);
         marker.setMap(map);
       }
@@ -118,6 +115,25 @@ const Zip = () => {
       console.error('검색 중 오류 발생:', error);
     }
   };
+
+  useEffect(() => {
+    if (!currentBookstore) {
+      setIsBottomSheetOpen(false);
+      return;
+    }
+
+    try {
+      const results = ['카페가 있는 서점']; // 검색 결과
+      setSearchResults(results);
+      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
+        <SearchZip searchResults={searchResults} currentState={currentState} />
+      ));
+      setViewName('카페가 있는 서점');
+      setIsBottomSheetOpen(true);
+    } catch (error) {
+      console.error('카테고리 불러오는 중 오류 발생:', error);
+    }
+  }, [currentBookstore]);
 
   return (
     <div
