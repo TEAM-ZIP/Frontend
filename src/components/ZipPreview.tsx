@@ -1,9 +1,17 @@
 import { FaHeart } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
+import { useBottomSheetStore } from '../store/bottomSheetStore';
+import ZipDetail from '../pages/Zip/ZipDetail';
 
 const ZipPreview = () => {
+  const { setBottomSheet } = useBottomSheetStore();
+
+  const openDetail = () => {
+    setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
+  };
+
   return (
-    <div className="border-b-[0.5px] border-main_2 py-3 px-5 flex flex-col w-full ">
+    <div className="border-b-[0.5px] border-main_2 py-3 px-5 flex flex-col w-full" onClick={openDetail}>
       {/* 서점 이름 & 찜 버튼 */}
       <div className="flex justify-between">
         <p className="text-main_1 text-[14px] font-bold tracking-[-0.56px]">진시황 서점</p>

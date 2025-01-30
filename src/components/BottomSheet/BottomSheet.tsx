@@ -3,18 +3,19 @@ import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
 import { IoCloseOutline } from 'react-icons/io5';
 import { BOTTOM_SHEET_HEIGHT_MAX } from '../../constants/BottomSheetOption';
-interface BottomSheet {
-  view: ((props: { currentState: string }) => React.ReactNode) | null;
-  isOpen: boolean;
-  viewName: string;
-}
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
 
-function BottomSheet({ view, isOpen, viewName }: BottomSheet) {
-  const { sheet, content, currentState, setCurrentState } = useBottomSheet(isOpen);
+function BottomSheet() {
+  const { view, viewName, isOpen, closeBottomSheet } = useBottomSheetStore();
+  const { sheet, content, currentState, setCurrentState } = useBottomSheet();
 
   useEffect(() => {
     setCurrentState(isOpen ? 'mid' : 'close');
   }, [isOpen, setCurrentState]);
+
+  useEffect(() => {
+    console.log('바텀시트 상태 변경:', isOpen);
+  }, [isOpen]);
 
   return (
     <div
@@ -39,10 +40,7 @@ function BottomSheet({ view, isOpen, viewName }: BottomSheet) {
     >
       {currentState == 'max' ? (
         <div className="flex items-center px-2 py-3 mb-[-12px] bg-white">
-          <div
-            className="flex cursor-pointer items-center justify-center p-2.5"
-            onClick={() => setCurrentState('close')}
-          >
+          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={closeBottomSheet}>
             <IoCloseOutline size={30} className="stroke-main_1" />
           </div>
           <div className="text-main_1 flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">{viewName}</div>

@@ -7,6 +7,7 @@ import UserLikeZip from './UserLikeZip';
 import { useGeoLocation } from '../../hooks/useGeolocation';
 import SearchZip from './SearchZip';
 import { currentMarker } from '../../utils/currentMarker';
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
 
 declare global {
   interface Window {
@@ -21,17 +22,12 @@ const geolocationOptions = {
 };
 
 const Zip = () => {
-  const [bottomSheetContent, setBottomSheetContent] = useState<
-    ((props: { currentState: string }) => React.ReactNode) | null
-  >(null);
-
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { location, error } = useGeoLocation(geolocationOptions);
   const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [viewName, setViewName] = useState<string>('');
+  const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
 
   useEffect(() => {
     const defaultLatitude = 33.450701; // 기본 위도
@@ -56,20 +52,8 @@ const Zip = () => {
   }, [location]);
 
   const handleHeart = () => {
-    // 찜한 목록들 마커로 보여주기 추가 필요
-    if (isLiked) {
-      setIsLiked(false);
-      setIsBottomSheetOpen(false);
-      setBottomSheetContent(null);
-    } else {
-      setIsLiked(true);
-      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
-        <UserLikeZip currentState={currentState} />
-      ));
-      setViewName('내가 찜한 서점');
-      setIsBottomSheetOpen(true);
-      setCurrentBookstore(null);
-    }
+    setIsLiked((prev) => !prev);
+    setCurrentBookstore(null);
   };
 
   const handleCurrentLocation = () => {
@@ -88,8 +72,7 @@ const Zip = () => {
         marker.setMap(map);
       }
       setIsLiked(false);
-      setIsBottomSheetOpen(false);
-      setBottomSheetContent(null);
+      closeBottomSheet();
     } else if (error) {
       console.error('Geolocation Error:', error);
       alert('현재 위치를 가져올 수 없습니다. 위치 서비스를 확인해주세요.');
@@ -105,41 +88,47 @@ const Zip = () => {
       const searchInput = document.querySelector('input');
       if (searchInput) searchInput.blur(); // 포커스 해제
 
-      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
-        <SearchZip searchResults={searchResults} currentState={currentState} />
-      ));
-
-      setViewName('검색 결과');
-      setIsBottomSheetOpen(true);
+      setBottomSheet(
+        ({ currentState }) => <SearchZip searchResults={searchResults} currentState={currentState} />,
+        '검색 결과',
+      );
     } catch (error) {
       console.error('검색 중 오류 발생:', error);
     }
   };
 
   useEffect(() => {
-    if (!currentBookstore) {
-      setIsBottomSheetOpen(false);
-      return;
+    if (currentBookstore) {
+      setSearchResults(['카페가 있는 서점']);
+      setBottomSheet(
+        ({ currentState }) => <SearchZip searchResults={searchResults} currentState={currentState} />,
+        '독립 서점',
+      );
     }
+  }, [currentBookstore]); // 카테고리 변경 시 바텀시트 유지
 
-    try {
-      const results = ['카페가 있는 서점']; // 검색 결과
-      setSearchResults(results);
-      setBottomSheetContent(() => ({ currentState }: { currentState: string }) => (
-        <SearchZip searchResults={searchResults} currentState={currentState} />
-      ));
-      setViewName('카페가 있는 서점');
-      setIsBottomSheetOpen(true);
-    } catch (error) {
-      console.error('카테고리 불러오는 중 오류 발생:', error);
+  const handleCategorySelect = (category: string) => {
+    if (currentBookstore !== category) {
+      setIsLiked(false); // UI는 바뀌지만 바텀시트는 닫히지 않음
+      setCurrentBookstore(category);
+    } else {
+      setCurrentBookstore(null);
     }
-  }, [currentBookstore]);
+  };
+
+  useEffect(() => {
+    if (isLiked) {
+      setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
+    } else if (!currentBookstore) {
+      closeBottomSheet();
+    }
+  }, [isLiked]);
 
   return (
     <div
       className="w-full h-full relative"
       style={{
-        overflow: isBottomSheetOpen ? 'visible' : 'hidden',
+        overflow: isOpen ? 'visible' : 'hidden',
       }}
     >
       <div className={`absolute top-0 left-0 w-full h-full flex flex-col z-10 pointer-events-none`}>
@@ -152,26 +141,17 @@ const Zip = () => {
           <div className="flex gap-2 w-max">
             <CategoryButton
               text="📚 독립서점"
-              onClick={() => {
-                setIsLiked(false);
-                currentBookstore !== 'indie' ? setCurrentBookstore('indie') : setCurrentBookstore(null);
-              }}
+              onClick={() => handleCategorySelect('indie')}
               isSelected={currentBookstore === 'indie'}
             />
             <CategoryButton
               text="☕️ 카페가 있는 서점"
-              onClick={() => {
-                setIsLiked(false);
-                currentBookstore !== 'cafe' ? setCurrentBookstore('cafe') : setCurrentBookstore(null);
-              }}
+              onClick={() => handleCategorySelect('cafe')}
               isSelected={currentBookstore === 'cafe'}
             />
             <CategoryButton
               text="🐥 아동서점"
-              onClick={() => {
-                setIsLiked(false);
-                currentBookstore !== 'children' ? setCurrentBookstore('children') : setCurrentBookstore(null);
-              }}
+              onClick={() => handleCategorySelect('children')}
               isSelected={currentBookstore === 'children'}
             />
           </div>
@@ -183,7 +163,7 @@ const Zip = () => {
         </div>
       </div>
       <div id="map" className="w-full h-full" />
-      <BottomSheet view={bottomSheetContent} isOpen={isBottomSheetOpen} viewName={viewName} />
+      <BottomSheet />
     </div>
   );
 };
