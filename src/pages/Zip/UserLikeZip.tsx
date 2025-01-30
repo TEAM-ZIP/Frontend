@@ -1,7 +1,7 @@
 import { FaHeart } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
-import Ping from '../../public/icons/zip/ping.svg?react';
-import ZipPreview from '../components/ZipPreview';
+import Ping from '../../../public/icons/zip/ping.svg?react';
+import ZipPreview from '../../components/ZipPreview';
 import { useEffect, useState } from 'react';
 
 export const FILTER_NAME = {

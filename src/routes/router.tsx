@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../pages/Home';
-import Zip from '../pages/Zip';
+import Zip from '../pages/Zip/Zip';
 import MyPage from '../pages/MyPage';
 import Bookie from '../pages/Bookie';
 import BookSnap from '../pages/BookSnap';

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import SearchBar from '../components/SearchBar';
-import CategoryButton from '../components/CategoryButton';
-import RoundButton from '../components/RoundButton';
-import BottomSheet from '../components/BottomSheet/BottomSheet';
+import SearchBar from '../../components/SearchBar';
+import CategoryButton from '../../components/CategoryButton';
+import RoundButton from '../../components/RoundButton';
+import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
-import { useGeoLocation } from '../hooks/useGeolocation';
+import { useGeoLocation } from '../../hooks/useGeolocation';
 import SearchZip from './SearchZip';
-import { currentMarker } from '../utils/currentMarker';
+import { currentMarker } from '../../utils/currentMarker';
 
 declare global {
   interface Window {
