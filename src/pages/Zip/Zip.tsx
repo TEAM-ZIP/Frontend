@@ -62,6 +62,8 @@ const Zip = () => {
   const handleLocationClick = () => {
     handleCurrentLocation();
     setIsLiked(false);
+    setCurrentBookstore(null);
+    closeBottomSheet();
   };
 
   const handleSearch = async () => {
