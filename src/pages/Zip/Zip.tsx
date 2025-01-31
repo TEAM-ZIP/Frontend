@@ -30,7 +30,7 @@ const Zip = () => {
   useEffect(() => {
     if (isLiked) {
       setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
-    } else if (!currentBookstore) {
+    } else if (!currentBookstore && searchWord == '') {
       closeBottomSheet();
     }
   }, [isLiked]);
@@ -62,10 +62,10 @@ const Zip = () => {
   const handleLocationClick = () => {
     handleCurrentLocation();
     setIsLiked(false);
-    closeBottomSheet();
   };
 
   const handleSearch = async () => {
+    setIsLiked(false);
     // 검색 API 호출
     try {
       setSearchResults(['진시황']);
