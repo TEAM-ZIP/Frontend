@@ -19,37 +19,24 @@ function BottomSheet() {
 
   return (
     <div
-      className={`
-        ${currentState}
-    flex flex-col
-    fixed top-[calc(100%-165px)]
-    max-w-[500px]
-    z-20
-    left-0 right-0
-    mx-auto
-    rounded-t-lg
-    shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)]
-    bg-white
-    transition-transform duration-650 ease-out 
-    ${currentState == 'max' ? '' : 'pb-[280px]'}
-  `}
+      className={` ${currentState} duration-650 fixed left-0 right-0 top-[calc(100%-165px)] z-20 mx-auto flex max-w-[500px] flex-col rounded-t-lg bg-white shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)] transition-transform ease-out ${currentState == 'max' ? '' : 'pb-[280px]'} `}
       style={{
         height: `${BOTTOM_SHEET_HEIGHT_MAX}px`,
       }}
       ref={sheet}
     >
       {currentState == 'max' ? (
-        <div className="flex items-center px-2 py-3 mb-[-12px] bg-white">
+        <div className="mb-[-12px] flex items-center bg-white px-2 py-3">
           <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={closeBottomSheet}>
             <IoCloseOutline size={30} className="stroke-main_1" />
           </div>
-          <div className="text-main_1 flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">{viewName}</div>
+          <div className="flex-1 text-center text-[20px] font-medium tracking-[-0.8px] text-main_1">{viewName}</div>
           <div className="w-11" />
         </div>
       ) : (
         <Header />
       )}
-      <div className="overflow-auto overscroll-contain scrollbar-thin scrollbar-thumb-main_2" ref={content}>
+      <div className="overflow-auto overscroll-contain scrollbar-hide" ref={content}>
         {view ? view({ currentState }) : null}
       </div>
     </div>
