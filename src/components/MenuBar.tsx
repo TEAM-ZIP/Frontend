@@ -12,7 +12,6 @@ const MenuBar = () => {
   const nav = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
-  console.log(location);
 
   useEffect(() => {
     const pathnameWithoutSlash = location.pathname.slice(1);
