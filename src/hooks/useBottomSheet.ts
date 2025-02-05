@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { MIN_Y, MAX_Y, MID_Y, BOTTOM_SHEET_HEIGHT_MAX, BOTTOM_SHEET_HEIGHT_MID } from '../constants/BottomSheetOption';
+import { useBottomSheetStore } from '../store/bottomSheetStore';
 
 interface BottomSheetMetrics {
   touchStart: {
@@ -13,7 +14,8 @@ interface BottomSheetMetrics {
   isContentAreaTouched: boolean;
 }
 
-export default function useBottomSheet(isOpen: boolean) {
+export default function useBottomSheet() {
+  const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const sheet = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const [currentHeight, setCurrentHeight] = useState(BOTTOM_SHEET_HEIGHT_MAX);
@@ -228,7 +230,6 @@ export default function useBottomSheet(isOpen: boolean) {
       metrics.current!.isContentAreaTouched = true;
     };
     content.current!.addEventListener('touchstart', handleTouchStart);
-    console.log(metrics.current!.isContentAreaTouched);
   }, []);
 
   return { sheet, content, currentHeight, currentState, setCurrentState };

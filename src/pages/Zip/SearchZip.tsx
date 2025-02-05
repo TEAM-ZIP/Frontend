@@ -1,7 +1,7 @@
 import { IoIosArrowDown } from 'react-icons/io';
-import ZipPreview from '../components/ZipPreview';
+import ZipPreview from '../../components/ZipPreview';
 import { useState } from 'react';
-import Ping from '../../public/icons/zip/ping.svg?react';
+import Ping from '../../../public/icons/zip/ping.svg?react';
 
 interface SearchZipProps {
   searchResults: any[];

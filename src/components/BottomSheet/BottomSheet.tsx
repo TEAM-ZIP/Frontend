@@ -3,55 +3,40 @@ import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
 import { IoCloseOutline } from 'react-icons/io5';
 import { BOTTOM_SHEET_HEIGHT_MAX } from '../../constants/BottomSheetOption';
-interface BottomSheet {
-  view: ((props: { currentState: string }) => React.ReactNode) | null;
-  isOpen: boolean;
-  viewName: string;
-}
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
 
-function BottomSheet({ view, isOpen, viewName }: BottomSheet) {
-  const { sheet, content, currentState, setCurrentState } = useBottomSheet(isOpen);
+function BottomSheet() {
+  const { view, viewName, isOpen, closeBottomSheet } = useBottomSheetStore();
+  const { sheet, content, currentState, setCurrentState } = useBottomSheet();
 
   useEffect(() => {
     setCurrentState(isOpen ? 'mid' : 'close');
   }, [isOpen, setCurrentState]);
 
+  useEffect(() => {
+    console.log('바텀시트 상태 변경:', isOpen);
+  }, [isOpen]);
+
   return (
     <div
-      className={`
-        ${currentState}
-    flex flex-col
-    fixed top-[calc(100%-165px)]
-    max-w-[500px]
-    z-20
-    left-0 right-0
-    mx-auto
-    rounded-t-lg
-    shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)]
-    bg-white
-    transition-transform duration-650 ease-out 
-    ${currentState == 'max' ? '' : 'pb-[280px]'}
-  `}
+      className={` ${currentState} duration-650 fixed left-0 right-0 top-[calc(100%-165px)] z-20 mx-auto flex max-w-[500px] flex-col rounded-t-lg bg-white shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)] transition-transform ease-out ${currentState == 'max' ? '' : 'pb-[280px]'} `}
       style={{
         height: `${BOTTOM_SHEET_HEIGHT_MAX}px`,
       }}
       ref={sheet}
     >
       {currentState == 'max' ? (
-        <div className="flex items-center px-2 py-3 mb-[-12px] bg-white">
-          <div
-            className="flex cursor-pointer items-center justify-center p-2.5"
-            onClick={() => setCurrentState('close')}
-          >
+        <div className="mb-[-12px] flex items-center bg-white px-2 py-3">
+          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={closeBottomSheet}>
             <IoCloseOutline size={30} className="stroke-main_1" />
           </div>
-          <div className="text-main_1 flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">{viewName}</div>
+          <div className="flex-1 text-center text-[20px] font-medium tracking-[-0.8px] text-main_1">{viewName}</div>
           <div className="w-11" />
         </div>
       ) : (
         <Header />
       )}
-      <div className="overflow-auto overscroll-contain scrollbar-thin scrollbar-thumb-main_2" ref={content}>
+      <div className="overflow-auto overscroll-contain scrollbar-hide" ref={content}>
         {view ? view({ currentState }) : null}
       </div>
     </div>

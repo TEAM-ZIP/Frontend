@@ -5,7 +5,14 @@ interface ILocation {
   longitude: number;
 }
 
-export const useGeoLocation = (options = {}) => {
+const geolocationOptions = {
+  enableHighAccuracy: true,
+  timeout: 1000 * 30,
+  maximumAge: 1000 * 3600 * 24,
+};
+
+export const useGeoLocation = () => {
+  const options = geolocationOptions;
   const [location, setLocation] = useState<ILocation>();
   const [error, setError] = useState('');
 
