@@ -3,6 +3,9 @@ import { IoIosCall } from 'react-icons/io';
 import { FaClock } from 'react-icons/fa';
 import ButtonShort from '../../components/ButtonShort';
 import ZipReview from '../../components/ZipReview';
+import { useNavigate } from 'react-router-dom';
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
+import ZipInfo from '../../components/ZipInfo';
 
 interface ZipDetailProps {
   currentState: string;

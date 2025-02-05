@@ -230,7 +230,6 @@ export default function useBottomSheet() {
       metrics.current!.isContentAreaTouched = true;
     };
     content.current!.addEventListener('touchstart', handleTouchStart);
-    console.log(metrics.current!.isContentAreaTouched);
   }, []);
 
   return { sheet, content, currentHeight, currentState, setCurrentState };

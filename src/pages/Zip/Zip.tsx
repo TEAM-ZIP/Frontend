@@ -23,6 +23,7 @@ const Zip = () => {
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
+  const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
 
   useMap(location?.latitude, location?.longitude);
   const handleCurrentLocation = useCurrentLocation(location, error);
@@ -30,10 +31,12 @@ const Zip = () => {
   useEffect(() => {
     if (isLiked) {
       setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
-    } else if (!currentBookstore && searchWord == '') {
+    }
+    // prevView가 없다면 닫기 (돌아왔을 때만 닫힘)
+    else if (!prevView && !currentBookstore && searchWord === '') {
       closeBottomSheet();
     }
-  }, [isLiked]);
+  }, [isLiked, currentBookstore, searchWord, prevView]);
 
   useEffect(() => {
     if (currentBookstore) {
@@ -87,19 +90,19 @@ const Zip = () => {
 
   return (
     <div
-      className="w-full h-full relative"
+      className="relative h-full w-full"
       style={{
         overflow: isOpen ? 'visible' : 'hidden',
       }}
     >
-      <div className={`absolute top-0 left-0 w-full h-full flex flex-col z-10 pointer-events-none`}>
+      <div className={`pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full flex-col`}>
         {/* 검색바 */}
-        <div className="w-full mt-[18px] px-[10px] pointer-events-auto">
+        <div className="pointer-events-auto mt-[18px] w-full px-[10px]">
           <SearchBar setSearchWord={setSearchWord} searchWord={searchWord} onSearch={handleSearch} />
         </div>
         {/* 카테고리 버튼 */}
-        <div className="relative mt-2 px-[10px] pointer-events-auto overflow-y-visible">
-          <div className="flex gap-2 w-max">
+        <div className="pointer-events-auto relative mt-2 overflow-y-visible px-[10px]">
+          <div className="flex w-max gap-2">
             {BOOKSTORE_OPTIONS.map((type) => (
               <CategoryButton
                 key={type.key}
@@ -111,12 +114,12 @@ const Zip = () => {
           </div>
         </div>
         {/* 찜버튼 & 현재위치 */}
-        <div className="mt-3 flex flex-col gap-3 items-end px-[10px] pointer-events-auto">
+        <div className="pointer-events-auto mt-3 flex flex-col items-end gap-3 px-[10px]">
           <RoundButton type="heart" onClick={handleHeart} isLiked={isLiked} />
           <RoundButton type="current" onClick={handleLocationClick} />
         </div>
       </div>
-      <div id="map" className="w-full h-full" />
+      <div id="map" className="h-full w-full" />
       <BottomSheet />
     </div>
   );

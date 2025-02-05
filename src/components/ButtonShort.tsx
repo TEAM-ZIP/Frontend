@@ -17,7 +17,7 @@ interface DefaultType {
   icon: ReactElement;
 }
 
-const ButtonShort = ({ type }: ButtonShortProps) => {
+const ButtonShort = ({ type, onClick }: ButtonShortProps) => {
   const DEFAULT_TYPE = {
     buttonText: '',
     icon: <></>,
@@ -40,7 +40,7 @@ const ButtonShort = ({ type }: ButtonShortProps) => {
     }
   }, []);
   return (
-    <div className="flex h-[26px] items-center gap-[6px] rounded-[10px] bg-main_1 px-[10px] py-[6px]">
+    <div className="flex h-[26px] items-center gap-[6px] rounded-[10px] bg-main_1 px-[10px] py-[6px]" onClick={onClick}>
       {buttonType.icon}
       <p className="font-normal text-white">{buttonType.buttonText}</p>
     </div>
