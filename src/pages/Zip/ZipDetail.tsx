@@ -1,6 +1,3 @@
-import { FaHeart, FaStar } from 'react-icons/fa';
-import { IoIosCall } from 'react-icons/io';
-import { FaClock } from 'react-icons/fa';
 import ButtonShort from '../../components/ButtonShort';
 import ZipReview from '../../components/ZipReview';
 import { useNavigate } from 'react-router-dom';
@@ -12,42 +9,18 @@ interface ZipDetailProps {
 }
 
 const ZipDetail = ({ currentState }: ZipDetailProps) => {
+  const nav = useNavigate();
+  const { setBottomSheet } = useBottomSheetStore();
+
+  const handleWriteReview = () => {
+    setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
+    nav('create-review');
+  };
+
   return (
     <div className={`flex w-full flex-col px-[32px] pt-[32px] text-base tracking-normal`}>
       {/* 서점 정보 */}
-      <div className="flex justify-between border-b-[0.5px] border-main_2 pb-[18px]">
-        <div className="flex flex-col">
-          {/* 서점 이름 */}
-          <p className="mb-[2px] text-[14px] font-bold tracking-[-0.56px] text-main_1">진시황 서점</p>
-          {/* 별점 및 종류 */}
-          <div className="flex items-center gap-[6px]">
-            <div className="flex items-center gap-1">
-              <FaStar className="h-[10px] w-[10px] fill-[#0000008A]" />
-              <p className="text-gray_1">4.3</p>
-            </div>
-            <div className="h-[10px] w-[1px] bg-[#D9D9D9]"></div>
-            <p className="text-gray_1">카페가 있는 서점</p>
-          </div>
-          {/* 전화번호 */}
-          <div className="flex items-center gap-[2px]">
-            <IoIosCall className="h-[12px] w-[12px] fill-[#0000008A]" />
-            <p className="text-gray_1">02-0000-0000</p>
-          </div>
-          {/* 영업시간 */}
-          <div className="flex items-center gap-[4px]">
-            <FaClock className="h-[10px] w-[10px] fill-[#0000008A]" />
-            <p className="text-gray_1">10:30 ~ 22:00</p>
-          </div>
-          {/* 위치 */}
-          <p className="text-gray_1">인천 연수구 청능대로113번길 37</p>
-        </div>
-        <div className="flex flex-col items-center gap-1">
-          <div className="flex h-5 w-5 items-center justify-center rounded-full border-[0.5px] border-[#BCB3B3]">
-            <FaHeart className="h-3 w-3 fill-red_1" />
-          </div>
-          <p className="text-gray_1">12</p>
-        </div>
-      </div>
+      <ZipInfo />
       {/* 한줄소개 */}
       <div className="flex flex-col gap-[10px] border-b-[0.5px] border-gray_1 py-[10px]">
         <p className="text-[13px] font-medium text-gray_1">한 줄 소개</p>
@@ -62,7 +35,7 @@ const ZipDetail = ({ currentState }: ZipDetailProps) => {
             <p>• 최신 순</p>
             <p className="text-gray_1">• 별점 순</p>
           </div>
-          <ButtonShort type="review" />
+          <ButtonShort type="review" onClick={handleWriteReview} />
         </div>
         {/* 리뷰 보여주기 */}
         <div className="mt-[2px]">

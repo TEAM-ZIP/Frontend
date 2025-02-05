@@ -12,6 +12,7 @@ import FindPw from '../pages/FindPW/FindPw';
 import FindPw2 from '../pages/FindPW/FindPw2';
 import ResetPw from '../pages/FindPW/ResetPw';
 import KakaoLogin from '../components/KakaoLogin';
+import CreateReview from '../pages/Zip/CreateReview';
 
 export const router = createBrowserRouter([
   {
@@ -32,4 +33,5 @@ export const router = createBrowserRouter([
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
   { path: '/reset-pw', element: <ResetPw /> },
+  { path: '/zip/create-review', element: <CreateReview /> },
 ]);
