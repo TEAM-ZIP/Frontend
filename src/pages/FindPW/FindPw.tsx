@@ -3,14 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import key from '../../../public/icons/login-signup/Key.png';
 import Button from '../../components/Button/Button';
 import InputField from '../../components/Login/InputField';
+import { useState } from 'react';
+import instance from '../../api/instance';
 
 const FindPw = () => {
   const nav = useNavigate();
+  const [email, setEmail] = useState('');
 
-  const handleSubmit = () => {
-    // 이메일로 비번 전송
-    console.log('비번 전송');
-    nav('/find-pw2');
+  const handleSubmit = async () => {
+    try {
+      const response = await instance.post('api/new-password', { email: email });
+      if (response.status == 200) {
+        nav('/find-pw2');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -34,7 +42,7 @@ const FindPw = () => {
         <p className="mt-[13px] border-t pt-[18px] text-[14px] leading-4">가입된 이메일로</p>
         <p className="text-[14px]">임시 비밀번호를 전송해드리겠습니다.</p>
         <div className="mt-[31px] w-full">
-          <InputField type="email" placeholder="이메일을 입력해주세요" />
+          <InputField type="email" placeholder="이메일을 입력해주세요" onChange={(e) => setEmail(e.target.value)} />
         </div>
         {/* 버튼 */}
         <div className="mt-[18px] flex w-full">
