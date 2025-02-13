@@ -14,7 +14,7 @@ function BottomSheet() {
   }, [isOpen, setCurrentState]);
 
   useEffect(() => {
-    console.log('바텀시트 상태 변경:', isOpen);
+    // console.log('바텀시트 상태 변경:', isOpen);
   }, [isOpen]);
 
   return (

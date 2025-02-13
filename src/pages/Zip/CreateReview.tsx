@@ -1,9 +1,9 @@
-import Header from '../../components/Header';
-import ZipInfo from '../../components/ZipInfo';
+import Header from '../../components/Common/Header';
+import ZipInfo from '../../components/Zip/ZipInfo';
 import addImage from '../../../public/icons/zip/addImage.png';
-import WritingReview from '../../components/WritingReview';
-import Button from '../../components/Button';
-import Star from '../../components/Star';
+import WritingReview from '../../components/Zip/WritingReview';
+import Button from '../../components/Button/Button';
+import Star from '../../components/Zip/Star';
 import { ChangeEvent, useState } from 'react';
 
 const CreateReview = () => {

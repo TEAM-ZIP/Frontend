@@ -1,6 +1,6 @@
 import { FaAngleLeft } from 'react-icons/fa6';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useBottomSheetStore } from '../store/bottomSheetStore';
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
 
 interface HeaderProps {
   title?: string;

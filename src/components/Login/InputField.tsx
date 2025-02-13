@@ -1,6 +1,6 @@
-import EmailIcon from '../../public/icons/login-signup/EmailRounded.svg?react';
-import PasswordIcon from '../../public/icons/login-signup/PasswordRounded.svg?react';
-import NicknameIcon from '../../public/icons/login-signup/Person_2Rounded.svg?react';
+import EmailIcon from '../../../public/icons/login-signup/EmailRounded.svg?react';
+import PasswordIcon from '../../../public/icons/login-signup/PasswordRounded.svg?react';
+import NicknameIcon from '../../../public/icons/login-signup/Person_2Rounded.svg?react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 interface InputFieldProps {
   type: 'email' | 'pw' | 'nickname';
@@ -23,11 +23,11 @@ const InputField = ({ placeholder, type, check, onChange }: InputFieldProps) => 
 
   return (
     <label className="relative block">
-      <div className="text-main_1 absolute left-3 top-1/2 -translate-y-1/2">{icon}</div>
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-main_1">{icon}</div>
       <input
         type={`${type === 'pw' ? 'password' : 'text'}`}
         placeholder={placeholder}
-        className="border-main_1 focus:border-main_2 w-full border-b bg-gradient-to-b from-[#FFF] to-[#EAF1F8] py-3 pl-10 pr-3 text-sm text-gray-800 focus:outline-none"
+        className="w-full border-b border-main_1 bg-gradient-to-b from-[#FFF] to-[#EAF1F8] py-3 pl-10 pr-3 text-sm text-gray-800 focus:border-main_2 focus:outline-none"
         onChange={onChange}
       />
       {check && (

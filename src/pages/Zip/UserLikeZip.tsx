@@ -1,7 +1,7 @@
 import { FaHeart } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import Ping from '../../../public/icons/zip/ping.svg?react';
-import ZipPreview from '../../components/ZipPreview';
+import ZipPreview from '../../components/Zip/ZipPreview';
 import { useEffect, useState } from 'react';
 
 export const FILTER_NAME = {
@@ -27,34 +27,33 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
   useEffect(() => {
     // 서점 목록 받아오기
   }, [isSelected]);
-  console.log(currentState);
 
   return (
     <div
-      className={`flex items-center justify-center w-full flex-col px-[30px] h-full ${currentState == 'max' ? '' : 'pt-[15px] '}`}
+      className={`flex h-full w-full flex-col items-center justify-center px-[30px] ${currentState == 'max' ? '' : 'pt-[15px]'}`}
     >
       {/* 제목 및 개수 */}
       <div className="flex items-center justify-center gap-2">
         {currentState !== 'max' && (
           <>
-            <div className="rounded-full border-[0.5px] border-[#BCB3B3] w-5 h-5 items-center flex justify-center">
-              <FaHeart className="w-3 h-3 fill-red_1" />
+            <div className="flex h-5 w-5 items-center justify-center rounded-full border-[0.5px] border-[#BCB3B3]">
+              <FaHeart className="h-3 w-3 fill-red_1" />
             </div>
-            <div className="text-main_1 text-[16px] font-medium">내가 찜한 서점</div>
+            <div className="text-[16px] font-medium text-main_1">내가 찜한 서점</div>
           </>
         )}
       </div>
       {/* 개수 */}
-      <div className="flex items-center gap-1 mt-1">
-        <FaLocationDot className="w-3 h-3 fill-[#CFCCD4]" />
-        <div className="text-[13px] text-[#CFCCD4] font-medium">12개</div>
+      <div className="mt-1 flex items-center gap-1">
+        <FaLocationDot className="h-3 w-3 fill-[#CFCCD4]" />
+        <div className="text-[13px] font-medium text-[#CFCCD4]">12개</div>
       </div>
       {/* 필터 */}
-      <div className="mt-[11px] flex justify-start items-start w-full border-b-[0.5px] border-[#979797]">
+      <div className="mt-[11px] flex w-full items-start justify-start border-b-[0.5px] border-[#979797]">
         {FILTER_OPTIONS.map(({ key, label }) => (
           <div
             key={key}
-            className={`text-[14px] p-2 tracking-[-0.48px] cursor-pointer ${isSelected === key ? 'text-black' : 'text-[#979797]'}`}
+            className={`cursor-pointer p-2 text-[14px] tracking-[-0.48px] ${isSelected === key ? 'text-black' : 'text-[#979797]'}`}
             onClick={() => setIsSelected(key)}
           >
             {label}
@@ -64,7 +63,7 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
       {/* 서점들 */}
       <div
         data-scrollable
-        className="w-full max-h-full overflow-y-auto flex flex-col items-start z-40"
+        className="z-40 flex max-h-full w-full flex-col items-start overflow-y-auto"
         style={{
           WebkitOverflowScrolling: 'touch',
           overscrollBehavior: 'contain',
@@ -89,9 +88,9 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
         }}
       >
         {bookstoreList == '' ? (
-          <div className="flex flex-col items-center justify-center w-full">
-            <Ping className="mt-[30px] mb-[5px]" />
-            <p className="text-[#979797] text-[14px]">아직 찜한 서점이 없어요!</p>
+          <div className="flex w-full flex-col items-center justify-center">
+            <Ping className="mb-[5px] mt-[30px]" />
+            <p className="text-[14px] text-[#979797]">아직 찜한 서점이 없어요!</p>
           </div>
         ) : (
           <>

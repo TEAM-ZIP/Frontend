@@ -7,8 +7,8 @@ export default {
         sans: ['Pretendard', 'sans-serif'],
       },
       fontSize: {
-        base: '12px',
-        lg: '14px',
+        base: '14px',
+        lg: '16px',
       },
       letterSpacing: {
         normal: '-0.48px',

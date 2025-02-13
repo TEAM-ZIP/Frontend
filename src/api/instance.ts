@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://43.201.210.211:8080';
+const baseURL = import.meta.env.VITE_BASE_URL;
 const instance = axios.create({
   baseURL: baseURL,
   timeout: 1000000,

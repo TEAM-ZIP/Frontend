@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import SearchBar from '../../components/SearchBar';
-import CategoryButton from '../../components/CategoryButton';
-import RoundButton from '../../components/RoundButton';
+import SearchBar from '../../components/Zip/SearchBar';
+import CategoryButton from '../../components/Button/CategoryButton';
+import RoundButton from '../../components/Button/RoundButton';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
 import { useGeoLocation } from '../../hooks/useGeolocation';
@@ -9,12 +9,6 @@ import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
-
-const BOOKSTORE_OPTIONS = [
-  { key: 'indie', label: '📚 독립서점' },
-  { key: 'cafe', label: '☕️ 카페가 있는 서점' },
-  { key: 'children', label: '🐥 아동서점' },
-] as const;
 
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -24,6 +18,12 @@ const Zip = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
+
+  const BOOKSTORE_OPTIONS = [
+    { key: 'indie', label: '📚 독립서점' },
+    { key: 'cafe', label: '☕️ 카페가 있는 서점' },
+    { key: 'children', label: '🐥 아동서점' },
+  ] as const;
 
   useMap(location?.latitude, location?.longitude);
   const handleCurrentLocation = useCurrentLocation(location, error);

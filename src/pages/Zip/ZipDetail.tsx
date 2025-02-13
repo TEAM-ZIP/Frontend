@@ -1,8 +1,8 @@
-import ButtonShort from '../../components/ButtonShort';
-import ZipReview from '../../components/ZipReview';
+import ButtonShort from '../../components/Button/ButtonShort';
+import ZipReview from '../../components/Zip/ZipReview';
 import { useNavigate } from 'react-router-dom';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
-import ZipInfo from '../../components/ZipInfo';
+import ZipInfo from '../../components/Zip/ZipInfo';
 
 interface ZipDetailProps {
   currentState: string;

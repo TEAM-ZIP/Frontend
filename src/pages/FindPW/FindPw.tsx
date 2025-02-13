@@ -1,8 +1,8 @@
 import { FaAngleLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import key from '../../../public/icons/login-signup/Key.png';
-import Button from '../../components/Button';
-import InputField from '../../components/InputField';
+import Button from '../../components/Button/Button';
+import InputField from '../../components/Login/InputField';
 
 const FindPw = () => {
   const nav = useNavigate();
@@ -21,16 +21,16 @@ const FindPw = () => {
           <FaAngleLeft size={24} className="fill-main_1" />
         </div>
 
-        <div className="text-main_1 flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">비밀번호 찾기</div>
+        <div className="flex-1 text-center text-[20px] font-medium tracking-[-0.8px] text-main_1">비밀번호 찾기</div>
         <div className="w-11" />
       </div>
       {/* 메인 */}
       <div className="mt-[100px] flex flex-col items-center justify-center px-[55px]">
         {/* 아이콘 */}
-        <div className="bg-key-gradient flex rounded-[40px] p-6">
+        <div className="flex rounded-[40px] bg-key-gradient p-6">
           <img src={key} className="w-[150px]" />
         </div>
-        <p className="text-main_1 mt-[54px] text-[20px] font-semibold tracking-[-0.8px]">비밀번호를 잊으셨나요?</p>
+        <p className="mt-[54px] text-[20px] font-semibold tracking-[-0.8px] text-main_1">비밀번호를 잊으셨나요?</p>
         <p className="mt-[13px] border-t pt-[18px] text-[14px] leading-4">가입된 이메일로</p>
         <p className="text-[14px]">임시 비밀번호를 전송해드리겠습니다.</p>
         <div className="mt-[31px] w-full">
