@@ -17,11 +17,11 @@ const Header = ({ title }: HeaderProps) => {
 
   const nav = useNavigate();
   // 앞으로 추가
-  const showBackButtonPaths = ['/mypage/change-nickname', '/zip/create-review'];
+  const showBackButtonPaths = ['/mypage/change-nickname', '/zip/create-review', '/booksnap/create'];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
   return (
-    <div className="flex items-center bg-white px-2 py-3">
+    <div className="flex items-center border-b-2 border-gray-100 bg-white px-2 py-3">
       {showBackButton && (
         <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
           <FaAngleLeft size={24} className="fill-main_1" />
