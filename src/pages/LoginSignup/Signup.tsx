@@ -28,7 +28,6 @@ const Signup = () => {
       password: pw,
     };
 
-    // 가입 로직
     try {
       const response = await instance.post('/signup', payload);
       if (response.status == 200) {
