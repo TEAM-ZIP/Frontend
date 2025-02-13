@@ -35,14 +35,14 @@ const ButtonShort = ({ type, onClick }: ButtonShortProps) => {
       case BUTTON_TYPE.ADD:
         setButtonType({
           buttonText: '책 담기',
-          icon: <MdBookmarkAdd />,
+          icon: <MdBookmarkAdd className="fill-main_2" />,
         });
     }
   }, []);
   return (
     <div className="flex h-[26px] items-center gap-[6px] rounded-[10px] bg-main_1 px-[10px] py-[6px]" onClick={onClick}>
       {buttonType.icon}
-      <p className="font-normal text-white">{buttonType.buttonText}</p>
+      <p className="text-[13px] font-normal tracking-normal text-main_2">{buttonType.buttonText}</p>
     </div>
   );
 };

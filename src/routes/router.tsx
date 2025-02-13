@@ -3,7 +3,7 @@ import Home from '../pages/Home';
 import Zip from '../pages/Zip/Zip';
 import MyPage from '../pages/MyPage';
 import Bookie from '../pages/Bookie';
-import BookSnap from '../pages/BookSnap';
+import BookSnap from '../pages/Booksnap/BookSnap';
 import Layout from '../components/layout';
 import Login from '../pages/LoginSignup/Login';
 import Signup from '../pages/LoginSignup/Signup';
