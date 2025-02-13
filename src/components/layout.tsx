@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import MenuBar from './MenuBar';
+import Header from './Common/Header';
+import MenuBar from './Common/MenuBar';
 import { useEffect, useRef, useState } from 'react';
 
 const Layout = () => {
@@ -27,7 +27,7 @@ const Layout = () => {
 
   return (
     <div className="relative flex flex-col">
-      <div className="fixed w-full max-w-[500px] z-10" ref={headerHeight}>
+      <div className="fixed z-10 w-full max-w-[500px]" ref={headerHeight}>
         <Header />
       </div>
       <main
@@ -40,7 +40,7 @@ const Layout = () => {
       >
         <Outlet />
       </main>
-      <footer className="fixed bottom-0 w-full max-w-[500px] z-30" ref={menuBarHeight}>
+      <footer className="fixed bottom-0 z-30 w-full max-w-[500px]" ref={menuBarHeight}>
         <MenuBar />
       </footer>
     </div>

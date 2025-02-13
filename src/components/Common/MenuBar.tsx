@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import HomeIcon from '../../public/icons/menu-bar/HomeRounded.svg?react';
-import ZipIcon from '../../public/icons/menu-bar/MapRounded.svg?react';
-import BookieIcon from '../../public/icons/menu-bar/RateReviewRounded.svg?react';
-import BooksnapIcon from '../../public/icons/menu-bar/CommentRounded.svg?react';
-import MyPageIcon from '../../public/icons/menu-bar/Person_2Rounded.svg?react';
-import Indicator from '../../public/icons/menu-bar/Indicator.svg?react';
+import HomeIcon from '../../../public/icons/menu-bar/HomeRounded.svg?react';
+import ZipIcon from '../../../public/icons/menu-bar/MapRounded.svg?react';
+import BookieIcon from '../../../public/icons/menu-bar/RateReviewRounded.svg?react';
+import BooksnapIcon from '../../../public/icons/menu-bar/CommentRounded.svg?react';
+import MyPageIcon from '../../../public/icons/menu-bar/Person_2Rounded.svg?react';
+import Indicator from '../../../public/icons/menu-bar/Indicator.svg?react';
 
 const MenuBar = () => {
   const nav = useNavigate();
@@ -66,7 +66,7 @@ const MenuBar = () => {
             >
               {currentMenu === menuItem.name ? menuItem.active : menuItem.inactive}
               <p
-                className={`text-center ${currentMenu === menuItem.name ? 'text-main_1 text-[12px] font-semibold' : 'text-[12px] text-gray-500'}`}
+                className={`text-center ${currentMenu === menuItem.name ? 'text-[12px] font-semibold text-main_1' : 'text-[12px] text-gray-500'}`}
               >
                 {menuItem.menu}
               </p>

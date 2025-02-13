@@ -1,8 +1,9 @@
 import { FaAngleLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../../components/InputField';
-import Button from '../../components/Button';
+import InputField from '../../components/Login/InputField';
+import Button from '../../components/Button/Button';
 import { useState } from 'react';
+import instance from '../../api/instance';
 
 const Signup = () => {
   const nav = useNavigate();
@@ -19,12 +20,26 @@ const Signup = () => {
   // 비밀번호 확인
   const isPwMatch = pw === confirmPw;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isEmailValid || !isPwValid || !isPwMatch) return;
 
+    const payload = {
+      email: email,
+      password: pw,
+    };
+
     // 가입 로직
-    console.log('가입');
-    nav('add');
+    try {
+      const response = await instance.post('/signup', payload);
+      if (response.status == 200) {
+        let tempToken = response.headers['authorization'];
+        localStorage.setItem('token', tempToken);
+        console.log(tempToken);
+        nav('/signup/add');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -35,14 +50,14 @@ const Signup = () => {
           <FaAngleLeft size={24} className="fill-main_1" />
         </div>
 
-        <div className="text-main_1 flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">회원가입</div>
+        <div className="flex-1 text-center text-[20px] font-medium tracking-[-0.8px] text-main_1">회원가입</div>
         <div className="w-11" />
       </div>
       {/* 메인 */}
       <div className="mt-[150px] flex flex-col items-center justify-center px-[55px]">
         {/* 기본 회원가입 */}
         <div className="mb-[25px] flex w-full flex-col gap-[7px]">
-          <p className="text-main_1 text-[14px] font-light">이메일</p>
+          <p className="text-[14px] font-light text-main_1">이메일</p>
           <InputField
             type="email"
             placeholder="이메일을 입력해주세요"
@@ -51,7 +66,7 @@ const Signup = () => {
           />
         </div>
         <div className="flex w-full flex-col gap-[7px]">
-          <p className="text-main_1 text-[14px] font-light">비밀번호</p>
+          <p className="text-[14px] font-light text-main_1">비밀번호</p>
           <div className="flex flex-col gap-[15px]">
             <InputField
               type="pw"
@@ -70,7 +85,7 @@ const Signup = () => {
             />
           </div>
           {pw !== confirmPw && confirmPw !== '' && (
-            <p className="text-main_1 text-[12px] font-light">비밀번호가 일치하지 않습니다</p>
+            <p className="text-[12px] font-light text-main_1">비밀번호가 일치하지 않습니다</p>
           )}
         </div>
         {/* 버튼 */}

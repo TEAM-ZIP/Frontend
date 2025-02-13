@@ -1,5 +1,5 @@
 import { FaStar } from 'react-icons/fa';
-import image from '../../public/icons/zip/image.png';
+import image from '../../../public/icons/zip/image.png';
 
 const ZipReview = () => {
   return (

@@ -1,5 +1,5 @@
 import { IoIosArrowDown } from 'react-icons/io';
-import ZipPreview from '../../components/ZipPreview';
+import ZipPreview from '../../components/Zip/ZipPreview';
 import { useState } from 'react';
 import Ping from '../../../public/icons/zip/ping.svg?react';
 
@@ -24,23 +24,23 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
   };
 
   return (
-    <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px] '}`}>
+    <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px]'}`}>
       {/* 필터 */}
       <div
-        className="bg-main_2 w-[80px] h-[26px] rounded-[10px] ml-[12px] border border-main_1 pl-[17px] flex items-center gap-1"
+        className="ml-[12px] flex h-[26px] w-[80px] items-center gap-1 rounded-[10px] border border-main_1 bg-main_2 pl-[17px]"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className="text-[12px]">{FILTER_OPTIONS.find((option) => option.key === currentFilter)?.label}</p>
-        <IoIosArrowDown className="w-3 h-3" />
+        <IoIosArrowDown className="h-3 w-3" />
       </div>
       {isOpen && (
-        <div className="absolute w-[80px] bg-[#F0F4FF] left-11 mt-[33px] rounded-[10px] border border-main_1">
+        <div className="absolute left-11 mt-[33px] w-[80px] rounded-[10px] border border-main_1 bg-[#F0F4FF]">
           {FILTER_OPTIONS.map((option, index) => (
             <div
               key={option.key}
               className={`w-full py-[2px] text-[12px] ${
                 index !== FILTER_OPTIONS.length - 1 ? 'border-b-[0.5px] border-main_1' : ''
-              } text-[#979797] cursor-pointer`}
+              } cursor-pointer text-[#979797]`}
               onClick={() => handleFilterClick(option.key)}
             >
               <p className="ml-[17px]">{option.label}</p>
@@ -48,12 +48,12 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
           ))}
         </div>
       )}
-      <div className="w-full bg-[#979797] h-[0.5px] mt-[12px]"></div>
+      <div className="mt-[12px] h-[0.5px] w-full bg-[#979797]"></div>
       {/* 검색결과 */}
       {searchResults[0] == '' ? (
-        <div className="flex flex-col items-center justify-center w-full">
-          <Ping className="mt-[30px] mb-[5px]" />
-          <p className="text-[#979797] text-[14px]">검색된 서점이 없어요!</p>
+        <div className="flex w-full flex-col items-center justify-center">
+          <Ping className="mb-[5px] mt-[30px]" />
+          <p className="text-[14px] text-[#979797]">검색된 서점이 없어요!</p>
         </div>
       ) : (
         <>

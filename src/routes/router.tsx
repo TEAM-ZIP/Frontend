@@ -11,7 +11,7 @@ import SignupAddInfo from '../pages/LoginSignup/SignupAddInfo';
 import FindPw from '../pages/FindPW/FindPw';
 import FindPw2 from '../pages/FindPW/FindPw2';
 import ResetPw from '../pages/FindPW/ResetPw';
-import KakaoLogin from '../components/KakaoLogin';
+import KakaoLogin from '../components/Login/KakaoLogin';
 import CreateReview from '../pages/Zip/CreateReview';
 
 export const router = createBrowserRouter([
