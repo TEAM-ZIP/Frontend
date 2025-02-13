@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
-  const REDIRECT_URI = 'http://localhost:5173/api/kakao/oauth/login';
+  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const handleKakaoLogin = () => {

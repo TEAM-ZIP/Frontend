@@ -3,7 +3,7 @@ import { IoIosCall } from 'react-icons/io';
 
 const ZipInfo = () => {
   return (
-    <div className="flex justify-between border-b-[0.5px] border-main_2 pb-[18px]">
+    <div className="flex justify-between border-b-[0.5px] border-main_2 pb-[18px] text-[14px]">
       <div className="flex flex-col">
         {/* 서점 이름 */}
         <p className="mb-[2px] text-[15px] font-bold tracking-[-0.56px] text-main_1">진시황 서점</p>

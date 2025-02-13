@@ -3,6 +3,7 @@ import FilterBar, { FilterType } from '../../components/Booksnap/FilterBar';
 import ReviewPreview from '../../components/Booksnap/ReviewPreview';
 import { BooksnapPreview } from '../../model/booksnap.model';
 import Loading from '../Loading';
+import WriteButton from '../../components/Booksnap/WriteButton';
 
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('Latest');
@@ -57,11 +58,11 @@ const BookSnap = () => {
     <div className="flex flex-col">
       <FilterBar filter={filter} setFilter={setFilter} />
       <div className="mt-8 flex flex-col gap-6 px-8 py-8">
-        <ReviewPreview review={review[0]} />
-        <ReviewPreview review={review[1]} />
-        <ReviewPreview review={review[1]} />
-        <ReviewPreview review={review[1]} />
+        {review.map((preview, index) => (
+          <ReviewPreview review={preview} key={index} />
+        ))}
       </div>
+      <WriteButton />
     </div>
   );
 };

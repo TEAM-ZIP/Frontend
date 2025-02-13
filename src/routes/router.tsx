@@ -13,6 +13,8 @@ import FindPw2 from '../pages/FindPW/FindPw2';
 import ResetPw from '../pages/FindPW/ResetPw';
 import KakaoLogin from '../components/Login/KakaoLogin';
 import CreateReview from '../pages/Zip/CreateReview';
+import ProtectedRoute from '../components/ProtectedRoute';
+import CreateBooksnapReview from '../pages/Booksnap/CreateBooksnapReview';
 
 export const router = createBrowserRouter([
   {
@@ -33,5 +35,20 @@ export const router = createBrowserRouter([
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
   { path: '/reset-pw', element: <ResetPw /> },
-  { path: '/zip/create-review', element: <CreateReview /> },
+  {
+    path: 'zip/create-review',
+    element: (
+      <ProtectedRoute>
+        <CreateReview />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: 'booksnap/create',
+    element: (
+      <ProtectedRoute>
+        <CreateBooksnapReview />
+      </ProtectedRoute>
+    ),
+  },
 ]);

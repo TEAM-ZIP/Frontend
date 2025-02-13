@@ -23,14 +23,14 @@ const ZipDetail = ({ currentState }: ZipDetailProps) => {
       <ZipInfo />
       {/* 한줄소개 */}
       <div className="flex flex-col gap-[10px] border-b-[0.5px] border-gray_1 py-[10px]">
-        <p className="text-[13px] font-medium text-gray_1">한 줄 소개</p>
-        <p className="text-gray_1">
+        <p className="text-[14px] font-medium text-gray_1">한 줄 소개</p>
+        <p className="text-[13px] text-gray_1">
           다양한 책과 함께 카페, 편안한 독서 공간을 제공하여 독서와 힐링을 동시에 즐길 수 있는 서점
         </p>
       </div>
       <div>
         {/* 리뷰 쓰기 */}
-        <div className="mt-5 flex justify-between">
+        <div className="mt-5 flex justify-between text-[13px]">
           <div className="flex items-center gap-4">
             <p>• 최신 순</p>
             <p className="text-gray_1">• 별점 순</p>
