@@ -6,21 +6,27 @@ const KakaoLogin = () => {
   const code = useSearchParams()[0].get('code');
   const nav = useNavigate();
 
-  useEffect(() => {
-    const postCode = async () => {
-      try {
-        const response = await instance.post('/api/kakao/oauth/login');
-        if (response.status == 200) {
-          console.log('성공!');
+  const postCode = async () => {
+    try {
+      const response = await instance.get(`/api/kakao/oauth/login?code=${code}`);
+      if (response.status == 200) {
+        if (response.data.accessToken) {
+          console.log('로그인 성공');
+          nav('/');
+        } else {
+          let tempToken = response.headers['authorization'];
+          localStorage.setItem('token', tempToken);
           nav('/signup/add');
         }
-      } catch (error) {
-        console.log(error);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     postCode();
-  }, []);
+  }, [code]);
 
   return null;
 };

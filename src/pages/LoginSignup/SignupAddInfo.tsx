@@ -17,20 +17,19 @@ const SignupAddInfo = () => {
 
     let tempToken = localStorage.getItem('token');
     const headers = {
-      Authorization: `Bearer ${tempToken}`,
+      Authorization: `${tempToken}`,
     };
 
     try {
-      const response = await instance.post('/signup/add', nickname, { headers });
-      if (response.status == 200) {
-        console.log(response.data);
-        nav('/');
+      const response = await instance.post('/signup/add', { nickname }, { headers });
+
+      if (response.status === 200) {
+        localStorage.removeItem('token');
+        nav('/login');
       }
     } catch (err) {
       console.log(err);
     }
-
-    nav('/');
   };
 
   return (
