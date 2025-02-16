@@ -42,9 +42,13 @@ const CreateBooksnapReview = () => {
         ) : (
           ''
         )}
-        <div className="mb-4 flex w-full items-center justify-center">
-          <MoreButton />
-        </div>
+        {!isEnd ? (
+          <div className="mb-4 flex w-full items-center justify-center">
+            <MoreButton />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
