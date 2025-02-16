@@ -14,7 +14,8 @@ import ResetPw from '../pages/FindPW/ResetPw';
 import KakaoLogin from '../components/Login/KakaoLogin';
 import CreateReview from '../pages/Zip/CreateReview';
 import ProtectedRoute from '../components/ProtectedRoute';
-import CreateBooksnapReview from '../pages/Booksnap/CreateBooksnapReview';
+import CreateBooksnapReview1 from '../pages/Booksnap/CreateBooksnapReview1';
+import CreateBooksnapReview2 from '../pages/Booksnap/CreateBooksnapReview2';
 
 export const router = createBrowserRouter([
   {
@@ -44,10 +45,18 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: 'booksnap/create',
+    path: 'booksnap/create/1',
     element: (
       <ProtectedRoute>
-        <CreateBooksnapReview />
+        <CreateBooksnapReview1 />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: 'booksnap/create/2',
+    element: (
+      <ProtectedRoute>
+        <CreateBooksnapReview2 />
       </ProtectedRoute>
     ),
   },
