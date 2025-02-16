@@ -19,9 +19,9 @@ const BookSnap = () => {
           '너무 억압당하는 채로 살아가지 마세요! 병납니다. 실패에도 용기가 있다는 걸 알려주는 책입니다. 근데 주인공은 실패하는 걸 너무 두려웠습니다.',
         isLiked: true,
         bookInfo: {
-          bookId: '8996991341 9788996991342',
+          isbn: '8996991341 9788996991342',
           title: '미움받을 용기',
-          thumbnail:
+          bookImageUrl:
             'https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1467038',
           authors: ['기시미 이치로', '고가 후미타케'],
           star: 4.3,
@@ -36,9 +36,9 @@ const BookSnap = () => {
           '너무 억압당하는 채로 살아가지 마세요! 병납니다. 실패에도 용기가 있다는 걸 알려주는 책입니다. 근데 주인공은 실패하는 걸 너무 두려웠습니다.',
         isLiked: false,
         bookInfo: {
-          bookId: '8996991341 9788996991342',
+          isbn: '8996991341 9788996991342',
           title: '미움받을 용기',
-          thumbnail:
+          bookImageUrl:
             'https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1467038',
           authors: ['기시미 이치로', '고가 후미타케'],
           star: 4.3,

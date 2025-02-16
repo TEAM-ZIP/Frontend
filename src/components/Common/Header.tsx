@@ -21,7 +21,7 @@ const Header = ({ title }: HeaderProps) => {
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
   return (
-    <div className="flex items-center border-b-2 border-gray-100 bg-white px-2 py-3">
+    <div className="fixed left-0 right-0 m-auto flex w-full max-w-[500px] items-center border-b-2 border-gray-100 bg-white px-2 py-3">
       {showBackButton && (
         <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
           <FaAngleLeft size={24} className="fill-main_1" />
