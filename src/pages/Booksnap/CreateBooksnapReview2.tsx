@@ -5,6 +5,7 @@ import Star from '../../components/Zip/Star';
 import { useState } from 'react';
 import WritingReview from '../../components/Zip/WritingReview';
 import Button from '../../components/Button/Button';
+import { postBookReview } from '../../api/booksnap.api';
 
 const CreateBooksnapReview2 = () => {
   const location = useLocation();
@@ -13,7 +14,16 @@ const CreateBooksnapReview2 = () => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
-  const handleReviewPost = () => {};
+  const handleReviewPost = () => {
+    const payload = {
+      isbn: book.isbn,
+      rating: rating,
+      reviewText: review,
+    };
+    postBookReview(payload).then((data) => {
+      console.log('리뷰 등록 성공');
+    });
+  };
 
   return (
     <div className="mt-[70px] flex w-full flex-col">

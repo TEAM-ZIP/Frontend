@@ -17,3 +17,10 @@ export interface BookDetailInfo {
   publisher: string;
   star?: number;
 }
+
+// 북스냅 리뷰
+export interface BookReview {
+  isbn: string;
+  rating: number;
+  reviewText: string;
+}
