@@ -9,6 +9,7 @@ import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
+import { searchBookstore } from '../../api/zip.api';
 
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -73,6 +74,9 @@ const Zip = () => {
     setIsLiked(false);
     // 검색 API 호출
     try {
+      searchBookstore(searchWord).then((data) => {
+        console.log(data);
+      });
       setSearchResults(['진시황']);
 
       // 모바일 환경에서 검색하면 키보드 닫아주기
