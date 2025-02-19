@@ -10,7 +10,7 @@ const Loading = ({ text }: LoadingProps) => {
       <img src={loading_logo} className="h-36 w-36" />
       <div className="flex flex-col items-center">
         <h1 className="text-2xl font-bold leading-10">{text}</h1>
-        <h1 className="text-base font-normal leading-7 text-gray-600">잠시후 다시 시도해주세요!</h1>
+        <h1 className="text-base font-normal leading-7 text-gray-600">잠시만 기다려주세요!</h1>
       </div>
     </div>
   );
