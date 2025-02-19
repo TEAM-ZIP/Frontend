@@ -16,13 +16,13 @@ const WritingReview = ({ onChange, value }: WritingReviewProps) => {
   return (
     <div>
       <textarea
-        className="h-[80px] w-full resize-none rounded-[10px] border-[0.5px] border-gray_1 px-[15px] py-[10px] focus:border-main_1 focus:outline-none focus:ring-[0.5px] focus:ring-main_1"
+        className="h-[100px] w-full resize-none rounded-[10px] border-[0.5px] border-gray_1 px-[15px] py-[10px] text-body4 focus:border-main_1 focus:outline-none focus:ring-[0.5px] focus:ring-main_1"
         placeholder="리뷰를 작성해주세요"
         maxLength={200}
         onChange={handleChange}
         value={value}
       />
-      <p className="flex justify-end text-gray_1">{length}/200</p>
+      <p className="flex justify-end text-[13px] text-gray_1">{length}/200</p>
     </div>
   );
 };

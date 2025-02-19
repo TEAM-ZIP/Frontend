@@ -43,7 +43,7 @@ const CreateReview = () => {
         </div>
         <div className="mt-[18px] flex flex-col gap-[18px]">
           {/* 별점 */}
-          <Star setRating={setRating} rating={rating} />
+          <Star setRating={setRating} rating={rating} size={18} />
           {/* 사진 추가 */}
           <div className="relative flex h-[80px] gap-[14px]">
             {/* 사진 추가 버튼 */}

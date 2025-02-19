@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import instance from '../../api/instance';
+import Loading from '../../pages/Loading';
 
 const KakaoLogin = () => {
   const code = useSearchParams()[0].get('code');
@@ -28,7 +29,7 @@ const KakaoLogin = () => {
     postCode();
   }, [code]);
 
-  return null;
+  return <Loading text="회원 확인 중..." />;
 };
 
 export default KakaoLogin;
