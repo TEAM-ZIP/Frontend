@@ -94,6 +94,7 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
           </div>
         ) : (
           <>
+            {/* <ZipPreview />
             <ZipPreview />
             <ZipPreview />
             <ZipPreview />
@@ -104,8 +105,7 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
             <ZipPreview />
             <ZipPreview />
             <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
+            <ZipPreview /> */}
           </>
         )}
       </div>
