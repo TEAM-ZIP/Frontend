@@ -26,8 +26,9 @@ const Zip = () => {
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
+  const [locations, setLocations] = useState<{ address: string }[]>([]);
 
-  useMap(location?.latitude, location?.longitude);
+  useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location, error);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const Zip = () => {
   useEffect(() => {
     if (currentBookstore) {
       getCategoryBookstore(currentBookstore).then((data) => {
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address.slice(8) })));
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
           '독립 서점',
