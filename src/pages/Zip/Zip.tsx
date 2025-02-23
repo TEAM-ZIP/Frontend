@@ -80,6 +80,7 @@ const Zip = () => {
     try {
       searchBookstore(searchWord).then((data) => {
         setSearchResults(data);
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
 
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
