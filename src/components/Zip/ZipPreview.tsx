@@ -3,6 +3,7 @@ import { FaStar } from 'react-icons/fa';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import ZipDetail from '../../pages/Zip/ZipDetail';
 import { getZipPreview } from '../../model/zip.model';
+import { BOOKSTORE_OPTIONS } from '../../pages/Zip/Zip';
 
 interface ZipPreviewProps {
   bookstore: getZipPreview;
@@ -13,6 +14,12 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
 
   const openDetail = () => {
     setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
+  };
+
+  // 카테고리 이름 변환
+  const getLabelByKey = (key: string) => {
+    const option = BOOKSTORE_OPTIONS.find((option) => option.key === key);
+    return option ? option.label : '';
   };
 
   console.log(bookstore);
@@ -33,7 +40,7 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
           <p className="text-[12px] tracking-[-0.48px] text-[#979797]">4.3</p>
         </div>
         <div className="h-[10px] w-[1px] bg-[#D9D9D9]"></div>
-        <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{bookstore.bookstoreCategory}</p>
+        <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{getLabelByKey(bookstore.bookstoreCategory)}</p>
       </div>
       {/* 주소 */}
       <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{bookstore.address}</p>
