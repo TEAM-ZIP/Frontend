@@ -2,9 +2,9 @@ import { BookReview } from '../model/booksnap.model';
 import instance from './instance';
 
 // 책 검색
-export const getSearchBook = async (searchWord: string) => {
+export const getSearchBook = async (searchWord: string, page: number) => {
   try {
-    const response = await instance.get(`api/booksnap/book-search?query=${searchWord}`);
+    const response = await instance.get(`api/booksnap/book-search?query=${searchWord}&page=${page}`);
     if (response.status == 200) {
       return response.data;
     }
