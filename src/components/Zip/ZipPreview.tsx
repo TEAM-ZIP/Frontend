@@ -22,8 +22,6 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
     return option ? option.label : '';
   };
 
-  console.log(bookstore);
-
   return (
     <div className="flex w-full flex-col border-b-[0.5px] border-main_2 px-5 py-3" onClick={openDetail}>
       {/* 서점 이름 & 찜 버튼 */}

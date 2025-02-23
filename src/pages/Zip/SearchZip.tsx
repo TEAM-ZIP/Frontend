@@ -24,9 +24,6 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
     setIsOpen(false);
   };
 
-  console.log(searchResults);
-  console.log(currentState);
-
   return (
     <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px]'}`}>
       {/* 필터 */}
