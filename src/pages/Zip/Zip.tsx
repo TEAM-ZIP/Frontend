@@ -9,28 +9,36 @@ import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
+import { getCategoryBookstore, getHeartBookstore, searchBookstore } from '../../api/zip.api';
+import { getZipPreview } from '../../model/zip.model';
+
+export const BOOKSTORE_OPTIONS = [
+  { key: 'INDEP', label: '📚 독립서점' },
+  { key: 'CAFE', label: '☕️ 카페가 있는 서점' },
+  { key: 'CHILD', label: '🐥 아동서점' },
+] as const;
 
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { location, error } = useGeoLocation();
   const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
   const [searchWord, setSearchWord] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
+  const [locations, setLocations] = useState<{ address: string }[]>([]);
 
-  const BOOKSTORE_OPTIONS = [
-    { key: 'indie', label: '📚 독립서점' },
-    { key: 'cafe', label: '☕️ 카페가 있는 서점' },
-    { key: 'children', label: '🐥 아동서점' },
-  ] as const;
-
-  useMap(location?.latitude, location?.longitude);
+  useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location, error);
 
   useEffect(() => {
     if (isLiked) {
-      setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
+      getHeartBookstore().then((data) => {
+        setBottomSheet(
+          ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data} />,
+          '내가 찜한 서점',
+        );
+      });
     }
     // prevView가 없다면 닫기 (돌아왔을 때만 닫힘)
     else if (!prevView && !currentBookstore && searchWord === '') {
@@ -40,11 +48,13 @@ const Zip = () => {
 
   useEffect(() => {
     if (currentBookstore) {
-      setSearchResults(['카페가 있는 서점']);
-      setBottomSheet(
-        ({ currentState }) => <SearchZip searchResults={searchResults} currentState={currentState} />,
-        '독립 서점',
-      );
+      getCategoryBookstore(currentBookstore).then((data) => {
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
+        setBottomSheet(
+          ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
+          '독립 서점',
+        );
+      });
     }
   }, [currentBookstore]);
 
@@ -55,7 +65,7 @@ const Zip = () => {
 
   const handleCategorySelect = (category: string) => {
     if (currentBookstore !== category) {
-      setIsLiked(false); // UI는 바뀌지만 바텀시트는 닫히지 않음
+      setIsLiked(false);
       setCurrentBookstore(category);
     } else {
       setCurrentBookstore(null);
@@ -73,16 +83,19 @@ const Zip = () => {
     setIsLiked(false);
     // 검색 API 호출
     try {
-      setSearchResults(['진시황']);
+      searchBookstore(searchWord).then((data) => {
+        setSearchResults(data);
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
+
+        setBottomSheet(
+          ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
+          '검색 결과',
+        );
+      });
 
       // 모바일 환경에서 검색하면 키보드 닫아주기
       const searchInput = document.querySelector('input');
       if (searchInput) searchInput.blur(); // 포커스 해제
-
-      setBottomSheet(
-        ({ currentState }) => <SearchZip searchResults={searchResults} currentState={currentState} />,
-        '검색 결과',
-      );
     } catch (error) {
       console.error('검색 중 오류 발생:', error);
     }
