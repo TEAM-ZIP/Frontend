@@ -18,7 +18,6 @@ const ResetPw = () => {
   const handleSubmit = () => {
     if (!isPwValid || !isPwMatch) return;
 
-    // 비밀번호 재설정
     console.log('비밀번호 재설정 완료');
     nav('add');
   };
@@ -62,7 +61,6 @@ const ResetPw = () => {
         <div className="h-7 w-2/5 border-b border-[#D9D9D9]"></div>
         <div className="flex flex-col items-center gap-[10px] pt-[18px] text-[12px]">
           <p className="items-center text-[#747070]">보안을 위해서 비밀번호를 재설정해주세요</p>
-          <p className="font-medium text-main_1 underline">다음에 변경하기</p>
         </div>
 
         {/* 버튼 */}

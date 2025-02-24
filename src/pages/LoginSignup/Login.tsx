@@ -3,8 +3,8 @@ import Button from '../../components/Button/Button';
 import InputField from '../../components/Login/InputField';
 import KakaoIcon from '../../../public/icons/login-signup/Kakao.svg';
 import { useNavigate } from 'react-router-dom';
-import instance from '../../api/instance';
 import { useState } from 'react';
+import { IsTempPw, SignIn } from '../../api/login.api';
 
 const Login = () => {
   const nav = useNavigate();
@@ -19,20 +19,15 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const payload = {
-      email: email,
-      password: password,
-    };
-
-    try {
-      const response = await instance.post('/signin', payload);
-      if (response.status == 200) {
-        console.log('성공');
-        nav('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    SignIn(email, password).then((data) => {
+      IsTempPw().then((data) => {
+        if (data.result == false) {
+          nav('/reset-pw');
+        } else {
+          nav('/');
+        }
+      });
+    });
   };
 
   return (

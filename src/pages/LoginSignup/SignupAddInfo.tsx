@@ -4,6 +4,7 @@ import InputField from '../../components/Login/InputField';
 import Button from '../../components/Button/Button';
 import { useState } from 'react';
 import instance from '../../api/instance';
+import { SignUpAdd } from '../../api/login.api';
 
 const SignupAddInfo = () => {
   const nav = useNavigate();
@@ -15,21 +16,9 @@ const SignupAddInfo = () => {
   const handleSubmit = async () => {
     if (!isNicknameValid) return;
 
-    let tempToken = localStorage.getItem('token');
-    const headers = {
-      Authorization: `${tempToken}`,
-    };
-
-    try {
-      const response = await instance.post('/signup/add', { nickname }, { headers });
-
-      if (response.status === 200) {
-        localStorage.removeItem('token');
-        nav('/login');
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    SignUpAdd(nickname).then((data) => {
+      nav('/login');
+    });
   };
 
   return (

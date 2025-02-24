@@ -34,7 +34,6 @@ export const router = createBrowserRouter([
   { path: '/signup/add', element: <SignupAddInfo /> },
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
-  { path: '/reset-pw', element: <ResetPw /> },
   { path: '/bookie', element: <Bookie /> },
   {
     path: 'zip/create-review',
@@ -60,4 +59,5 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  { path: '/reset-pw', element: <ResetPw /> },
 ]);
