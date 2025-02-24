@@ -1,8 +1,9 @@
 import { FaHeart } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import Ping from '../../../public/icons/zip/ping.svg?react';
-import ZipPreview from '../../components/Zip/ZipPreview';
 import { useEffect, useState } from 'react';
+import { getZipPreview } from '../../model/zip.model';
+import ZipPreview from '../../components/Zip/ZipPreview';
 
 export const FILTER_NAME = {
   ALL: 'all',
@@ -20,13 +21,13 @@ const FILTER_OPTIONS = [
 
 type FilterType = (typeof FILTER_NAME)[keyof typeof FILTER_NAME];
 
-export default function userLikeZip({ currentState }: { currentState: string }) {
-  const [isSelected, setIsSelected] = useState<FilterType>(FILTER_NAME.ALL);
-  const [bookstoreList, setBookstoreList] = useState<string>('');
+interface useLikeZipProps {
+  bookstoreList: getZipPreview[];
+  currentState: string;
+}
 
-  useEffect(() => {
-    // 서점 목록 받아오기
-  }, [isSelected]);
+export default function userLikeZip({ currentState, bookstoreList }: useLikeZipProps) {
+  const [isSelected, setIsSelected] = useState<FilterType>(FILTER_NAME.ALL);
 
   return (
     <div
@@ -46,7 +47,7 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
       {/* 개수 */}
       <div className="mt-1 flex items-center gap-1">
         <FaLocationDot className="h-3 w-3 fill-[#CFCCD4]" />
-        <div className="text-[13px] font-medium text-[#CFCCD4]">12개</div>
+        <div className="text-[13px] font-medium text-[#CFCCD4]">{bookstoreList.length}개</div>
       </div>
       {/* 필터 */}
       <div className="mt-[11px] flex w-full items-start justify-start border-b-[0.5px] border-[#979797]">
@@ -87,26 +88,13 @@ export default function userLikeZip({ currentState }: { currentState: string }) 
           }
         }}
       >
-        {bookstoreList == '' ? (
+        {bookstoreList.length == 0 ? (
           <div className="flex w-full flex-col items-center justify-center">
             <Ping className="mb-[5px] mt-[30px]" />
             <p className="text-[14px] text-[#979797]">아직 찜한 서점이 없어요!</p>
           </div>
         ) : (
-          <>
-            {/* <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview />
-            <ZipPreview /> */}
-          </>
+          bookstoreList.map((zip, index) => <ZipPreview key={index} bookstore={zip} />)
         )}
       </div>
     </div>

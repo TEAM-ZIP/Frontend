@@ -9,7 +9,7 @@ import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
-import { getCategoryBookstore, searchBookstore } from '../../api/zip.api';
+import { getCategoryBookstore, getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 
 export const BOOKSTORE_OPTIONS = [
@@ -33,7 +33,12 @@ const Zip = () => {
 
   useEffect(() => {
     if (isLiked) {
-      setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
+      getHeartBookstore().then((data) => {
+        setBottomSheet(
+          ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data} />,
+          '내가 찜한 서점',
+        );
+      });
     }
     // prevView가 없다면 닫기 (돌아왔을 때만 닫힘)
     else if (!prevView && !currentBookstore && searchWord === '') {
