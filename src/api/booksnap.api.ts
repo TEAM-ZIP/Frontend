@@ -24,3 +24,15 @@ export const postBookReview = async (payload: BookReview) => {
     console.log(error);
   }
 };
+
+// 리뷰 피드 가져오기
+export const getReview = async (page: number, size: number) => {
+  try {
+    const response = await instance.get(`api/booksnap/recent?page=${page}&size=${size}`);
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

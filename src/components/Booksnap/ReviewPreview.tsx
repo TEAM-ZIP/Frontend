@@ -3,12 +3,23 @@ import { BooksnapPreview } from '../../model/booksnap.model';
 import { timeAgo } from '../../utils/timeDifference';
 import { IoMdThumbsUp } from 'react-icons/io';
 import ButtonShort from '../Button/ButtonShort';
+import { useState } from 'react';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
 }
 
 const ReviewPreview = ({ review }: ReviewPreviewProps) => {
+  const [isLiked, setIsLiked] = useState<boolean>(review.isLiked);
+  const [likeCount, setLikeCount] = useState<number>(review.like);
+
+  // 좋아요 관리
+  const handleLike = () => {
+    setLikeCount((prev) => (isLiked ? +prev - 1 : +prev + 1));
+    setIsLiked(!isLiked);
+
+    // 좋아요 api 요청
+  };
   return (
     <div
       className="w-full rounded-[10px] border-[0.5px] border-solid border-main_2"
@@ -21,8 +32,8 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
           <p className="text-[13px] font-light tracking-normal">{timeAgo(review.createdAt)}</p>
           <div className="h-1 w-1 rounded-full bg-gray_2" />
           <div className="flex items-center gap-[3px]">
-            <IoMdThumbsUp className={`h-4 w-4 ${review.isLiked ? 'fill-main_1' : ''}`} />
-            <p className="text-[13px] font-light tracking-normal">{review.like}</p>
+            <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} onClick={handleLike} />
+            <p className="text-[13px] font-light tracking-normal">{likeCount}</p>
           </div>
         </div>
       </div>
@@ -30,7 +41,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
       <div className="flex gap-6 bg-gradient-to-b from-[#DBE5FF] to-[#FFF] px-4 py-3">
         <img
           src={review.bookInfo.bookImageUrl}
-          className="w-[60px]"
+          className="w-[80px]"
           style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
         />
         <div className="flex w-full flex-col">
@@ -51,7 +62,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
             {/* 별점 */}
             <div className="flex items-center gap-1">
               <FaStar className="h-[10px] w-[10px] fill-[#0000008A]" />
-              <p className="text-[13px] tracking-[-0.48px] text-gray_2">4.3</p>
+              <p className="text-[13px] tracking-[-0.48px] text-gray_2">{review.rating}</p>
             </div>
           </div>
           {/* 책 담기 버튼 */}

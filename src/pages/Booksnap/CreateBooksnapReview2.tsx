@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Common/Header';
 import image from '../../../public/icons/book-snap/image.png';
 import Star from '../../components/Zip/Star';
@@ -10,6 +10,7 @@ import { postBookReview } from '../../api/booksnap.api';
 const CreateBooksnapReview2 = () => {
   const location = useLocation();
   const book = location.state.book || false;
+  const nav = useNavigate();
 
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
@@ -22,6 +23,7 @@ const CreateBooksnapReview2 = () => {
     };
     postBookReview(payload).then((data) => {
       console.log('리뷰 등록 성공');
+      nav('/book-snap');
     });
   };
 

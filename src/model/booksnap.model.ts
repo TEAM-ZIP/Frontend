@@ -1,10 +1,11 @@
 // 북스냅 피드 조회
 export interface BooksnapPreview {
   userName: string;
-  createdAt: Date;
-  like: string;
+  createdAt: string;
+  like: number;
   review: string;
   isLiked: boolean;
+  rating: number;
   bookInfo: BookDetailInfo;
 }
 
@@ -15,7 +16,6 @@ export interface BookDetailInfo {
   bookImageUrl: string;
   authors: string[];
   publisher: string;
-  star?: number;
 }
 
 // 북스냅 리뷰
