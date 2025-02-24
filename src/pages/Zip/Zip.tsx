@@ -9,7 +9,7 @@ import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
-import { getCategoryBookstore, searchBookstore } from '../../api/zip.api';
+import { getCategoryBookstore, getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 
 export const BOOKSTORE_OPTIONS = [
@@ -26,13 +26,19 @@ const Zip = () => {
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
+  const [locations, setLocations] = useState<{ address: string }[]>([]);
 
-  useMap(location?.latitude, location?.longitude);
+  useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location, error);
 
   useEffect(() => {
     if (isLiked) {
-      setBottomSheet(({ currentState }) => <UserLikeZip currentState={currentState} />, '내가 찜한 서점');
+      getHeartBookstore().then((data) => {
+        setBottomSheet(
+          ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data} />,
+          '내가 찜한 서점',
+        );
+      });
     }
     // prevView가 없다면 닫기 (돌아왔을 때만 닫힘)
     else if (!prevView && !currentBookstore && searchWord === '') {
@@ -43,6 +49,7 @@ const Zip = () => {
   useEffect(() => {
     if (currentBookstore) {
       getCategoryBookstore(currentBookstore).then((data) => {
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
           '독립 서점',
@@ -78,6 +85,7 @@ const Zip = () => {
     try {
       searchBookstore(searchWord).then((data) => {
         setSearchResults(data);
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
 
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
