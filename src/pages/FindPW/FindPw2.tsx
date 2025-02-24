@@ -7,8 +7,6 @@ const FindPw2 = () => {
   const nav = useNavigate();
 
   const handleSubmit = () => {
-    // 이메일로 비번 전송
-    console.log('비번 전송');
     nav('/login');
   };
 

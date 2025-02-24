@@ -4,6 +4,7 @@ import InputField from '../../components/Login/InputField';
 import Button from '../../components/Button/Button';
 import { useState } from 'react';
 import instance from '../../api/instance';
+import { SignUp } from '../../api/login.api';
 
 const Signup = () => {
   const nav = useNavigate();
@@ -23,22 +24,12 @@ const Signup = () => {
   const handleSubmit = async () => {
     if (!isEmailValid || !isPwValid || !isPwMatch) return;
 
-    const payload = {
-      email: email,
-      password: pw,
-    };
-
-    try {
-      const response = await instance.post('/signup', payload);
-      if (response.status == 200) {
-        let tempToken = response.headers['authorization'];
-        localStorage.setItem('token', tempToken);
-        console.log(tempToken);
-        nav('/signup/add');
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    SignUp(email, pw).then((data) => {
+      let tempToken = data?.headers['authorization'];
+      localStorage.setItem('token', tempToken);
+      console.log(tempToken);
+      nav('/signup/add');
+    });
   };
 
   return (

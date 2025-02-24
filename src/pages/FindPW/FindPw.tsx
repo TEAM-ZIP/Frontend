@@ -4,21 +4,16 @@ import key from '../../../public/icons/login-signup/Key.png';
 import Button from '../../components/Button/Button';
 import InputField from '../../components/Login/InputField';
 import { useState } from 'react';
-import instance from '../../api/instance';
+import { getTempPw } from '../../api/login.api';
 
 const FindPw = () => {
   const nav = useNavigate();
   const [email, setEmail] = useState('');
 
   const handleSubmit = async () => {
-    try {
-      const response = await instance.post('api/new-password', { email: email });
-      if (response.status == 200) {
-        nav('/find-pw2');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    getTempPw(email).then((data) => {
+      nav('/login');
+    });
   };
 
   return (
