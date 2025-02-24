@@ -15,10 +15,20 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
 
   // 좋아요 관리
   const handleLike = () => {
-    setLikeCount((prev) => (isLiked ? +prev - 1 : +prev + 1));
-    setIsLiked(!isLiked);
+    const newLike = !isLiked;
+    setLikeCount((prev) => (newLike ? +prev + 1 : +prev - 1));
+    setIsLiked(newLike);
 
     // 좋아요 api 요청
+    // if (newLike) {
+    //   postLike(review.bookReviewId).then((data) => {
+    //     console.log('좋아요 성공');
+    //   });
+    // } else {
+    //   deleteLike(revaiew.bookReviewId).then((data) => {
+    //     console.log('좋아요 취소 성공');
+    //   });
+    // }
   };
   return (
     <div
@@ -26,8 +36,8 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
       style={{ boxShadow: '0px 4px 4px 0px #DBE5FF, 5px 0px 4px 0px #DBE5FF' }}
     >
       {/* 유저 정보 */}
-      <div className="flex items-center justify-between p-3 text-gray_2">
-        <p className="font-medium tracking-large">{review.userName}</p>
+      <div className="flex items-center justify-between p-[10px] text-gray_2">
+        <p className="text-body4 font-medium tracking-large">{review.userName}</p>
         <div className="flex items-center gap-2">
           <p className="text-[13px] font-light tracking-normal">{timeAgo(review.createdAt)}</p>
           <div className="h-1 w-1 rounded-full bg-gray_2" />

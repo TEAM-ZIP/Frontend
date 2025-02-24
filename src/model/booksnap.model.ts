@@ -1,5 +1,6 @@
 // 북스냅 피드 조회
 export interface BooksnapPreview {
+  bookReviewId: number;
   userName: string;
   createdAt: string;
   like: number;

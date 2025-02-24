@@ -36,3 +36,30 @@ export const getReview = async (page: number, size: number) => {
     console.log(error);
   }
 };
+
+// 좋아요 등록
+export const postLike = async (bookReviewId: number) => {
+  try {
+    const response = await instance.post(`api/booksnap/like`, { bookReviewId: bookReviewId });
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 좋아요 취소
+export const deleteLike = async (bookReviewId: number) => {
+  try {
+    const response = await instance.delete(`api/booksnap/unlike`, {
+      data: { bookReviewId: bookReviewId },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
