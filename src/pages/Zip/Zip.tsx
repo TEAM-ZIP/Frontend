@@ -44,7 +44,7 @@ const Zip = () => {
   useEffect(() => {
     if (currentBookstore) {
       getCategoryBookstore(currentBookstore).then((data) => {
-        setLocations(data.map((store: getZipPreview) => ({ address: store.address.slice(8) })));
+        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
           '독립 서점',
