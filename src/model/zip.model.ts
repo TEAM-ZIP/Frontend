@@ -3,8 +3,6 @@ export interface getZipPreview {
   address: string;
   bookstoreCategory: string;
   bookstoreId: number;
-  description: string;
-  hours: string;
+  rating: number;
   name: string;
-  phone: string;
 }
