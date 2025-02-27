@@ -5,4 +5,5 @@ export interface getZipPreview {
   bookstoreId: number;
   rating: number;
   name: string;
+  liked: boolean;
 }
