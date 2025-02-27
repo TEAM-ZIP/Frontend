@@ -34,6 +34,7 @@ const Zip = () => {
   useEffect(() => {
     if (isLiked) {
       getHeartBookstore().then((data) => {
+        setLocations(data.data.bookstores.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data.data.bookstores} />,
           '내가 찜한 서점',
