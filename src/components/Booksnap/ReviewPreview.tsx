@@ -4,6 +4,7 @@ import { timeAgo } from '../../utils/timeDifference';
 import { IoMdThumbsUp } from 'react-icons/io';
 import ButtonShort from '../Button/ButtonShort';
 import { useState } from 'react';
+import { deleteLike, pickBook, postLike } from '../../api/booksnap.api';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
@@ -20,16 +21,24 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
     setIsLiked(newLike);
 
     // 좋아요 api 요청
-    // if (newLike) {
-    //   postLike(review.bookReviewId).then((data) => {
-    //     console.log('좋아요 성공');
-    //   });
-    // } else {
-    //   deleteLike(revaiew.bookReviewId).then((data) => {
-    //     console.log('좋아요 취소 성공');
-    //   });
-    // }
+    if (newLike) {
+      postLike(review.bookReviewId).then((data) => {
+        console.log('좋아요 성공');
+      });
+    } else {
+      deleteLike(review.bookReviewId).then((data) => {
+        console.log('좋아요 취소 성공');
+      });
+    }
   };
+
+  // 책 담기
+  const handlePickBook = () => {
+    pickBook(review.bookInfo.isbn).then((data) => {
+      console.log('책 저장 완료');
+    });
+  };
+
   return (
     <div
       className="w-full rounded-[10px] border-[0.5px] border-solid border-main_2"
@@ -77,7 +86,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
           </div>
           {/* 책 담기 버튼 */}
           <div className="flex justify-end">
-            <ButtonShort type="book" />
+            <ButtonShort type="book" onClick={handlePickBook} />
           </div>
         </div>
       </div>

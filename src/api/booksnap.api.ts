@@ -63,3 +63,15 @@ export const deleteLike = async (bookReviewId: number) => {
     console.log(error);
   }
 };
+
+// 책 담기
+export const pickBook = async (isbn: string) => {
+  try {
+    const response = await instance.post(`api/pick-book`, { isbn: isbn });
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
