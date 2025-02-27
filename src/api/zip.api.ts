@@ -35,3 +35,15 @@ export const getHeartBookstore = async () => {
     console.log(error);
   }
 };
+
+// 서점 찜하기
+export const likeZip = async (bookstoreId: number) => {
+  try {
+    const response = await instance.post(`api/bookstores/${bookstoreId}/toggle-like`);
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

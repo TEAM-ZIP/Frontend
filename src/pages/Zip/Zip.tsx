@@ -34,8 +34,9 @@ const Zip = () => {
   useEffect(() => {
     if (isLiked) {
       getHeartBookstore().then((data) => {
+        setLocations(data.data.bookstores.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
-          ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data} />,
+          ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data.data.bookstores} />,
           '내가 찜한 서점',
         );
       });
@@ -49,9 +50,9 @@ const Zip = () => {
   useEffect(() => {
     if (currentBookstore) {
       getCategoryBookstore(currentBookstore).then((data) => {
-        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
+        setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
-          ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
+          ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
           '독립 서점',
         );
       });
@@ -84,11 +85,11 @@ const Zip = () => {
     // 검색 API 호출
     try {
       searchBookstore(searchWord).then((data) => {
-        setSearchResults(data);
-        setLocations(data.map((store: getZipPreview) => ({ address: store.address })));
+        setSearchResults(data.data);
+        setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
 
         setBottomSheet(
-          ({ currentState }) => <SearchZip searchResults={data} currentState={currentState} />,
+          ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
           '검색 결과',
         );
       });

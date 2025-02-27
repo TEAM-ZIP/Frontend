@@ -4,6 +4,8 @@ import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import ZipDetail from '../../pages/Zip/ZipDetail';
 import { getZipPreview } from '../../model/zip.model';
 import { BOOKSTORE_OPTIONS } from '../../pages/Zip/Zip';
+import { useState } from 'react';
+import { likeZip } from '../../api/zip.api';
 
 interface ZipPreviewProps {
   bookstore: getZipPreview;
@@ -11,9 +13,22 @@ interface ZipPreviewProps {
 
 const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
   const { setBottomSheet } = useBottomSheetStore();
+  const [isLiked, setIsLiked] = useState<boolean>(bookstore.liked);
 
   const openDetail = () => {
     setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
+  };
+
+  const handleLike = (e: React.MouseEvent<HTMLOrSVGElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const newLike = !isLiked;
+    setIsLiked(newLike);
+
+    likeZip(bookstore.bookstoreId).then((data) => {
+      console.log('좋아요 성공');
+    });
   };
 
   // 카테고리 이름 변환
@@ -28,7 +43,7 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
       <div className="flex justify-between">
         <p className="text-[14px] font-bold tracking-[-0.56px] text-main_1">{bookstore.name}</p>
         <div className="flex h-5 w-5 items-center justify-center rounded-full border-[0.5px] border-[#BCB3B3]">
-          <FaHeart className="h-3 w-3 fill-red_1" />
+          <FaHeart className={`h-3 w-3 ${isLiked ? 'fill-red_1' : 'fill-gray_1'}`} onClick={handleLike} />
         </div>
       </div>
       {/* 별점 & 카테고리 */}
