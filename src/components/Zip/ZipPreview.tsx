@@ -4,7 +4,7 @@ import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import ZipDetail from '../../pages/Zip/ZipDetail';
 import { getZipPreview } from '../../model/zip.model';
 import { BOOKSTORE_OPTIONS } from '../../pages/Zip/Zip';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { likeZip } from '../../api/zip.api';
 
 interface ZipPreviewProps {
@@ -18,6 +18,10 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
   const openDetail = () => {
     setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
   };
+
+  useEffect(() => {
+    setIsLiked(bookstore.liked);
+  }, [bookstore]);
 
   const handleLike = (e: React.MouseEvent<HTMLOrSVGElement>) => {
     e.preventDefault();
