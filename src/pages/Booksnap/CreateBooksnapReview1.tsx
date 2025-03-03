@@ -9,15 +9,20 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateBooksnapReview = () => {
   const [searchWord, setSearchWord] = useState('');
-  const [bookInfo, setBookInfo] = useState<BookDetailInfo[]>();
+  const [bookInfo, setBookInfo] = useState<BookDetailInfo[]>([]);
   const [isEnd, setIsEnd] = useState<boolean>(true);
+  const [page, setPage] = useState(1);
   const nav = useNavigate();
 
-  const handleSearch = async () => {
-    // 검색 API 호출
-    getSearchBook(searchWord).then((data) => {
+  const handleSearch = async (isNewSearch = false) => {
+    if (isNewSearch) {
+      setPage(1); // 🔥 새 검색이면 페이지 초기화
+    }
+
+    getSearchBook(searchWord, isNewSearch ? 1 : page).then((data) => {
       setIsEnd(data.data.isEnd);
-      setBookInfo(data.data.bookData);
+      setBookInfo(isNewSearch ? data.data.bookData : (prev) => [...prev, ...data.data.bookData]);
+      setPage((prevPage) => prevPage + 1); // 페이지 증가
     });
   };
 
@@ -40,7 +45,7 @@ const CreateBooksnapReview = () => {
         <p className="mt-3 text-body3 font-medium text-main_1">STEP 1</p>
         <div className="mt-2 h-[1px] w-[66px] bg-main_2" />
         <p className="mb-6 mt-4 text-[15px] font-light text-gray_1">리뷰할 책을 골라주세요</p>
-        <SearchBar searchWord={searchWord} setSearchWord={setSearchWord} onSearch={handleSearch} />
+        <SearchBar searchWord={searchWord} setSearchWord={setSearchWord} onSearch={() => handleSearch(true)} />
         {bookInfo ? (
           <div className="my-6 grid grid-cols-3 gap-8">
             {bookInfo.map((book) => (
@@ -52,7 +57,7 @@ const CreateBooksnapReview = () => {
         )}
         {!isEnd ? (
           <div className="mb-4 flex w-full items-center justify-center">
-            <MoreButton />
+            <MoreButton onClick={() => handleSearch()} />
           </div>
         ) : (
           ''

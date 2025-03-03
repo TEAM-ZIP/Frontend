@@ -1,6 +1,9 @@
-export const timeAgo = (createdAt: Date): string => {
+export const timeAgo = (createdAt: string): string => {
+  const createdDate = new Date(createdAt);
+  if (isNaN(createdDate.getTime())) return '날짜 정보 없음';
+
   const now = new Date();
-  const diffMs = now.getTime() - createdAt.getTime(); // 밀리초 차이 계산
+  const diffMs = now.getTime() - createdDate.getTime(); // 밀리초 차이 계산
   const diffMinutes = Math.floor(diffMs / (1000 * 60)); // 분 단위 변환
   const diffHours = Math.floor(diffMinutes / 60); // 시간 단위 변환
   const diffDays = Math.floor(diffHours / 24); // 일 단위 변환
