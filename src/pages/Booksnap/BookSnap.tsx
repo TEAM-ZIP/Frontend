@@ -7,16 +7,15 @@ import WriteButton from '../../components/Booksnap/WriteButton';
 import { getReview } from '../../api/booksnap.api';
 
 const BookSnap = () => {
-  const [filter, setFilter] = useState<FilterType>('Latest');
+  const [filter, setFilter] = useState<FilterType>('createdAt');
   const [review, setReview] = useState<BooksnapPreview[]>();
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    getReview(page, 10).then((data) => {
-      setPage((prev) => prev + 1);
+    getReview(filter, page).then((data) => {
       setReview(data.data.booksnapPreview);
     });
-  }, []);
+  }, [filter]);
 
   if (!review) {
     return <Loading text="데이터를 불러오는 데 실패했습니다!" />;

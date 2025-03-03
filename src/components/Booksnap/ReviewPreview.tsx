@@ -3,7 +3,7 @@ import { BooksnapPreview } from '../../model/booksnap.model';
 import { timeAgo } from '../../utils/timeDifference';
 import { IoMdThumbsUp } from 'react-icons/io';
 import ButtonShort from '../Button/ButtonShort';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { deleteLike, pickBook, postLike } from '../../api/booksnap.api';
 
 interface ReviewPreviewProps {
@@ -13,6 +13,11 @@ interface ReviewPreviewProps {
 const ReviewPreview = ({ review }: ReviewPreviewProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(review.isLiked);
   const [likeCount, setLikeCount] = useState<number>(review.like);
+
+  useEffect(() => {
+    setIsLiked(review.isLiked);
+    setLikeCount(review.like);
+  }, [review]);
 
   // 좋아요 관리
   const handleLike = () => {
