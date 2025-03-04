@@ -9,7 +9,7 @@ import { getReview } from '../../api/booksnap.api';
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('createdAt');
   const [review, setReview] = useState<BooksnapPreview[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement>(null);
