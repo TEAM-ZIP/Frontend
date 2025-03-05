@@ -85,7 +85,10 @@ const BookSnap = () => {
   }
 
   return (
-    <div ref={mainRef} className="h-full overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent">
+    <div
+      ref={mainRef}
+      className="relative h-full overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent"
+    >
       <div className="flex flex-col">
         <FilterBar filter={filter} setFilter={setFilter} />
         <div className="mt-8 flex flex-col gap-6 px-8 py-8">
