@@ -25,9 +25,9 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.data?.accessToken && response.data?.refreshToken) {
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
+    if (response.data.data?.accessToken && response.data.data?.refreshToken) {
+      localStorage.setItem('accessToken', response.data.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.data.refreshToken);
     }
     return response;
   },
@@ -50,7 +50,7 @@ instance.interceptors.response.use(
         }
 
         // 새 토큰으로 헤더 업데이트 후 재요청
-        error.config.headers.Authorization = `Bearer ${res.data.accessToken}`;
+        error.config.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
         return axios(error.config);
       } catch (refreshErr) {
         console.log('Token 갱신 실패: ', refreshErr);
