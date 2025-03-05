@@ -5,6 +5,7 @@ import { IoMdThumbsUp } from 'react-icons/io';
 import ButtonShort from '../Button/ButtonShort';
 import { useEffect, useState } from 'react';
 import { deleteLike, pickBook, postLike } from '../../api/booksnap.api';
+import { MdBookmarkAdd } from 'react-icons/md';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
@@ -52,52 +53,46 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
       {/* 유저 정보 */}
       <div className="flex items-center justify-between p-[10px] text-gray_2">
         <p className="text-body4 font-medium tracking-large">{review.userName}</p>
-        <div className="flex items-center gap-2">
-          <p className="text-[13px] font-light tracking-normal">{timeAgo(review.createdAt)}</p>
-          <div className="h-1 w-1 rounded-full bg-gray_2" />
-          <div className="flex items-center gap-[3px]">
-            <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} onClick={handleLike} />
-            <p className="text-[13px] font-light tracking-normal">{likeCount}</p>
-          </div>
-        </div>
+        <p className="text-[13px] font-light tracking-normal">{timeAgo(review.createdAt)}</p>
       </div>
       {/* 책 정보 */}
-      <div className="flex gap-6 bg-gradient-to-b from-[#DBE5FF] to-[#FFF] px-4 py-3">
-        <img
-          src={review.bookInfo.bookImageUrl}
-          className="w-[80px]"
-          style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
+      <div className="relative h-36 w-full overflow-hidden">
+        {/* 책 배경 흐리게 */}
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-md"
+          style={{ backgroundImage: `url(${review.bookInfo.bookImageUrl})` }}
         />
-        <div className="flex w-full flex-col">
-          <div className="flex flex-col gap-1 tracking-normal text-gray_2">
-            {/* 제목 */}
-            <p className="text-[15px] font-medium tracking-large">{review.bookInfo.title}</p>
-            {/* 저자 */}
-            <div className="flex items-center gap-1">
-              {review.bookInfo.authors.map((author, i) => (
-                <div key={i} className="flex items-center text-[13px] font-light text-gray_2">
-                  {author}
-                  {i + 1 !== review.bookInfo.authors.length && (
-                    <div className="ml-1 h-[3px] w-[3px] rounded-full bg-gray_2" />
-                  )}
-                </div>
-              ))}
-            </div>
-            {/* 별점 */}
-            <div className="flex items-center gap-1">
-              <FaStar className="h-[10px] w-[10px] fill-[#0000008A]" />
-              <p className="text-[13px] tracking-[-0.48px] text-gray_2">{review.rating}</p>
-            </div>
-          </div>
-          {/* 책 담기 버튼 */}
-          <div className="flex justify-end">
-            <ButtonShort type="book" onClick={handlePickBook} />
-          </div>
+        {/* 책 사진 */}
+        <div className="relative z-10 mt-10 flex h-full items-center justify-center">
+          <img
+            src={review.bookInfo.bookImageUrl}
+            className="scale-110 transform object-cover object-center shadow-md"
+          />
         </div>
       </div>
       {/* 리뷰 */}
-      <div className="mx-4 border-t-[1px] py-[10px]">
-        <p className="text-[13px] font-light tracking-normal text-gray_2">{review.review}</p>
+      <div className="border-gray_3 flex flex-col gap-1 border-b-[0.5px] px-4 py-[10px]">
+        <div className="flex items-center gap-2">
+          <p className="text-[15px] font-semibold">{review.bookInfo.title}</p>
+          <div className="flex items-center gap-1">
+            <FaStar className="h-[11px] w-[11px] fill-main_3" />
+            <p className="text-[14px] tracking-[-0.48px] text-main_3">{review.rating}</p>
+          </div>
+        </div>
+        <p className="text-[14px] font-light tracking-normal text-gray_2">{review.review}</p>
+      </div>
+      {/* 좋아요 및 담기 */}
+      <div className="my-2 flex justify-around text-[13px] tracking-normal text-gray_2">
+        <div className="flex flex-1 items-center justify-center gap-1">
+          <MdBookmarkAdd className="h-4 w-4 fill-gray_2" />
+          <p>담기</p>
+        </div>
+        <div className="border-gray_3 border-x-[0.5px]"></div>
+        <div className="flex flex-1 items-center justify-center gap-1">
+          <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} onClick={handleLike} />
+          <p>좋아요</p>
+          <p>{likeCount}</p>
+        </div>
       </div>
     </div>
   );
