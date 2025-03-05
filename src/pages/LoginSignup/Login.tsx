@@ -21,7 +21,7 @@ const Login = () => {
   const handleLogin = async () => {
     SignIn(email, password).then((data) => {
       IsTempPw().then((data) => {
-        if (data.result == false) {
+        if (data.result == true) {
           nav('/reset-pw');
         } else {
           nav('/');
