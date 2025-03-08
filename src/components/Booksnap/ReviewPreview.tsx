@@ -9,9 +9,11 @@ import { MdBookmarkAdd } from 'react-icons/md';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
+  setToast: React.Dispatch<React.SetStateAction<boolean>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ReviewPreview = ({ review }: ReviewPreviewProps) => {
+const ReviewPreview = ({ review, setToast, setTitle }: ReviewPreviewProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(review.isLiked);
   const [likeCount, setLikeCount] = useState<number>(review.like);
 
@@ -41,7 +43,13 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
   // 책 담기
   const handlePickBook = () => {
     pickBook(review.bookInfo.isbn).then((data) => {
-      console.log('책 저장 완료');
+      if (data?.success) {
+        setToast(true);
+        setTitle(`${review.bookInfo.title}을(를) 책장에 담았어요!`);
+      } else {
+        setToast(true);
+        setTitle(data?.message || '책 담기에 실패했습니다.');
+      }
     });
   };
 

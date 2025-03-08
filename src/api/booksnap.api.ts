@@ -68,10 +68,13 @@ export const deleteLike = async (bookReviewId: number) => {
 export const pickBook = async (isbn: string) => {
   try {
     const response = await instance.post(`api/pick-book`, { isbn: isbn });
-    if (response.status == 200) {
-      return response.data;
+    if (response.status == 201) {
+      return { success: true, message: '책이 정상적으로 담겼습니다!' };
     }
-  } catch (error) {
+  } catch (error: any) {
+    if (error.response?.status === 409) {
+      return { success: false, message: '이미 담긴 책입니다!' };
+    }
     console.log(error);
   }
 };
