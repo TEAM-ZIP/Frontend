@@ -28,13 +28,13 @@ const CreateBooksnapReview2 = () => {
   };
 
   return (
-    <div className="mt-[70px] flex w-full flex-col">
+    <div className="mt-[70px] flex h-full w-full flex-col bg-white">
       {/* 헤더 */}
       <div className="fixed left-0 right-0 top-0 m-auto w-full max-w-[500px]">
         <Header title="리뷰 쓰기" />
       </div>
       {/* 내용 */}
-      <div className="mt-[50px] flex w-full flex-col items-center px-8">
+      <div className="mt-[40px] flex w-full flex-col items-center px-8">
         <div className="flex items-center gap-4">
           <div className="h-[10px] w-7 rounded-full bg-main_1" />
           <div className="h-5 w-5 rounded-full bg-main_1" />

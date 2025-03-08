@@ -31,13 +31,13 @@ const CreateBooksnapReview = () => {
   };
 
   return (
-    <div className="mt-[70px] flex flex-col">
+    <div className="mt-[70px] flex h-full flex-col bg-white">
       {/* 헤더 */}
       <div className="fixed left-0 right-0 top-0 m-auto w-full max-w-[500px]">
         <Header title="리뷰 쓰기" />
       </div>
       {/* 내용 */}
-      <div className="mt-[40px] flex flex-col items-center px-8">
+      <div className="mt-[40px] flex flex-col items-center bg-white px-8">
         <div className="flex items-center gap-4">
           <div className="h-5 w-5 rounded-full bg-main_1" />
           <div className="h-[10px] w-7 rounded-full bg-main_1" />
@@ -47,7 +47,7 @@ const CreateBooksnapReview = () => {
         <p className="mb-6 mt-4 text-[15px] font-light text-gray_1">리뷰할 책을 골라주세요</p>
         <SearchBar searchWord={searchWord} setSearchWord={setSearchWord} onSearch={() => handleSearch(true)} />
         {bookInfo ? (
-          <div className="my-6 grid grid-cols-3 gap-8">
+          <div className="my-6 grid grid-cols-3 gap-8 overflow-y-auto">
             {bookInfo.map((book) => (
               <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
             ))}
