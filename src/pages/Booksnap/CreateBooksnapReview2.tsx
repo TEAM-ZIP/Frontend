@@ -23,7 +23,7 @@ const CreateBooksnapReview2 = () => {
     };
     postBookReview(payload).then((data) => {
       console.log('리뷰 등록 성공');
-      nav('/book-snap');
+      nav('/booksnap');
     });
   };
 

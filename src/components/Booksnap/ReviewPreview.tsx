@@ -9,9 +9,11 @@ import { MdBookmarkAdd } from 'react-icons/md';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
+  setToast: React.Dispatch<React.SetStateAction<boolean>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ReviewPreview = ({ review }: ReviewPreviewProps) => {
+const ReviewPreview = ({ review, setToast, setTitle }: ReviewPreviewProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(review.isLiked);
   const [likeCount, setLikeCount] = useState<number>(review.like);
 
@@ -41,7 +43,13 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
   // 책 담기
   const handlePickBook = () => {
     pickBook(review.bookInfo.isbn).then((data) => {
-      console.log('책 저장 완료');
+      if (data?.success) {
+        setToast(true);
+        setTitle(`${review.bookInfo.title}을(를) 책장에 담았어요!`);
+      } else {
+        setToast(true);
+        setTitle(data?.message || '책 담기에 실패했습니다.');
+      }
     });
   };
 
@@ -71,7 +79,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
         </div>
       </div>
       {/* 리뷰 */}
-      <div className="border-gray_3 flex flex-col gap-1 border-b-[0.5px] px-4 py-[10px]">
+      <div className="flex flex-col gap-1 border-b-[0.5px] border-gray_3 px-4 py-[10px]">
         <div className="flex items-center gap-2">
           <p className="text-[15px] font-semibold">{review.bookInfo.title}</p>
           <div className="flex items-center gap-1">
@@ -83,13 +91,13 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
       </div>
       {/* 좋아요 및 담기 */}
       <div className="my-2 flex justify-around text-[13px] tracking-normal text-gray_2">
-        <div className="flex flex-1 items-center justify-center gap-1">
+        <div className="flex flex-1 items-center justify-center gap-1" onClick={handlePickBook}>
           <MdBookmarkAdd className="h-4 w-4 fill-gray_2" />
           <p>담기</p>
         </div>
-        <div className="border-gray_3 border-x-[0.5px]"></div>
-        <div className="flex flex-1 items-center justify-center gap-1">
-          <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} onClick={handleLike} />
+        <div className="border-x-[0.5px] border-gray_3"></div>
+        <div className="flex flex-1 items-center justify-center gap-1" onClick={handleLike}>
+          <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} />
           <p>좋아요</p>
           <p>{likeCount}</p>
         </div>
