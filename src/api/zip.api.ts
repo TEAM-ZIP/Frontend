@@ -25,9 +25,9 @@ export const getCategoryBookstore = async (category: string, lat: number, lng: n
 };
 
 // 사용자가 찜한 서점
-export const getHeartBookstore = async () => {
+export const getHeartBookstore = async (lat: number, lng: number) => {
   try {
-    const response = await instance.get(`api/bookstores/liked`);
+    const response = await instance.get(`api/bookstores/liked?lat=${lat}&lng=${lng}`);
     if (response.status == 200) {
       return response.data;
     }

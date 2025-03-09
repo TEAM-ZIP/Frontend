@@ -33,7 +33,7 @@ const Zip = () => {
 
   useEffect(() => {
     if (isLiked) {
-      getHeartBookstore().then((data) => {
+      getHeartBookstore(location!.latitude, location!.longitude).then((data) => {
         setLocations(data.data.bookstores.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data.data.bookstores} />,
