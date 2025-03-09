@@ -49,7 +49,7 @@ const Zip = () => {
 
   useEffect(() => {
     if (currentBookstore) {
-      getCategoryBookstore(currentBookstore).then((data) => {
+      getCategoryBookstore(currentBookstore, location!.latitude, location!.longitude).then((data) => {
         setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,

@@ -8,8 +8,8 @@ declare global {
   }
 }
 
-const defaultLatitude = 33.450701;
-const defaultLongitude = 126.570667;
+const defaultLatitude = 37.5618588;
+const defaultLongitude = 126.9468339;
 
 export const useMap = (latitude?: number, longitude?: number, locations: { address: string }[] = []) => {
   const [map, setMap] = useState<any>(null);
