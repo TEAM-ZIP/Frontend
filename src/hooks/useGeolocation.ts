@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 
+const defaultLocation = {
+  latitude: 37.562,
+  longitude: 126.947,
+};
+
 interface ILocation {
   latitude: number;
   longitude: number;
@@ -27,6 +32,7 @@ export const useGeoLocation = () => {
 
   const handleError = (err: GeolocationPositionError) => {
     setError(err.message);
+    setLocation(defaultLocation);
   };
 
   useEffect(() => {
@@ -34,6 +40,7 @@ export const useGeoLocation = () => {
 
     if (!geolocation) {
       setError('Geolocation is not supported.');
+      setLocation(defaultLocation);
       return;
     }
 
