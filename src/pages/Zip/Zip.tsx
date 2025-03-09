@@ -84,7 +84,7 @@ const Zip = () => {
     setIsLiked(false);
     // 검색 API 호출
     try {
-      searchBookstore(searchWord).then((data) => {
+      searchBookstore(searchWord, location!.latitude, location!.longitude).then((data) => {
         setSearchResults(data.data);
         setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
 
