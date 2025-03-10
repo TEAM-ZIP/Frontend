@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-const defaultLocation = {
+export const defaultLocation = {
   latitude: 37.562,
   longitude: 126.947,
 };
 
-interface ILocation {
+export interface ILocation {
   latitude: number;
   longitude: number;
 }

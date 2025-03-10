@@ -41,13 +41,11 @@ export const useMap = (latitude?: number, longitude?: number, locations: { addre
       const bounds = new window.kakao.maps.LatLngBounds(); // 🔥 지도 범위 객체 생성
 
       const newMarkers = await Promise.all(
-        locations.map(async ({ address }, index) => {
-          await new Promise((res) => setTimeout(res, index * 100)); // 🔥 API 요청 간격 100ms 추가
-
+        locations.map(async ({ address }) => {
           try {
             const { lat, lng } = await getLatLngFromAddress(address);
             const position = new window.kakao.maps.LatLng(lat, lng);
-            bounds.extend(position); // 🔥 지도 범위 확장
+            bounds.extend(position);
 
             const marker = createCustomMarker(map, position);
             return marker;
