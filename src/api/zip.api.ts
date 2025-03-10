@@ -1,9 +1,9 @@
 import instance from './instance';
 
 // 서점 검색
-export const searchBookstore = async (name: string) => {
+export const searchBookstore = async (name: string, lat: number, lng: number) => {
   try {
-    const response = await instance.get(`/api/bookstores/search?keyword=${name}`);
+    const response = await instance.get(`/api/bookstores/search?keyword=${name}&lat=${lat}&lng=${lng}`);
     if (response.status == 200) {
       return response.data;
     }
@@ -13,9 +13,9 @@ export const searchBookstore = async (name: string) => {
 };
 
 // 카테고리 검색
-export const getCategoryBookstore = async (category: string) => {
+export const getCategoryBookstore = async (category: string, lat: number, lng: number) => {
   try {
-    const response = await instance.get(`api/bookstores?category=${category}`);
+    const response = await instance.get(`api/bookstores?category=${category}&lat=${lat}&lng=${lng}`);
     if (response.status == 200) {
       return response.data;
     }
@@ -25,9 +25,9 @@ export const getCategoryBookstore = async (category: string) => {
 };
 
 // 사용자가 찜한 서점
-export const getHeartBookstore = async () => {
+export const getHeartBookstore = async (lat: number, lng: number) => {
   try {
-    const response = await instance.get(`api/bookstores/liked`);
+    const response = await instance.get(`api/bookstores/liked?lat=${lat}&lng=${lng}`);
     if (response.status == 200) {
       return response.data;
     }

@@ -4,7 +4,7 @@ import CategoryButton from '../../components/Button/CategoryButton';
 import RoundButton from '../../components/Button/RoundButton';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
-import { useGeoLocation } from '../../hooks/useGeolocation';
+import { defaultLocation, ILocation, useGeoLocation } from '../../hooks/useGeolocation';
 import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
@@ -20,7 +20,7 @@ export const BOOKSTORE_OPTIONS = [
 
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const { location, error } = useGeoLocation();
+  const [location, setLocation] = useState<ILocation>(defaultLocation);
   const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
@@ -29,11 +29,11 @@ const Zip = () => {
   const [locations, setLocations] = useState<{ address: string }[]>([]);
 
   useMap(location?.latitude, location?.longitude, locations);
-  const handleCurrentLocation = useCurrentLocation(location, error);
+  const handleCurrentLocation = useCurrentLocation(location);
 
   useEffect(() => {
     if (isLiked) {
-      getHeartBookstore().then((data) => {
+      getHeartBookstore(location!.latitude, location!.longitude).then((data) => {
         setLocations(data.data.bookstores.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <UserLikeZip currentState={currentState} bookstoreList={data.data.bookstores} />,
@@ -49,7 +49,7 @@ const Zip = () => {
 
   useEffect(() => {
     if (currentBookstore) {
-      getCategoryBookstore(currentBookstore).then((data) => {
+      getCategoryBookstore(currentBookstore, location!.latitude, location!.longitude).then((data) => {
         setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
           ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
@@ -84,7 +84,7 @@ const Zip = () => {
     setIsLiked(false);
     // 검색 API 호출
     try {
-      searchBookstore(searchWord).then((data) => {
+      searchBookstore(searchWord, location!.latitude, location!.longitude).then((data) => {
         setSearchResults(data.data);
         setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
 
