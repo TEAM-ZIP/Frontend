@@ -11,7 +11,7 @@ const KakaoLogin = () => {
     try {
       const response = await instance.get(`/api/kakao/oauth/login?code=${code}`);
       if (response.status == 200) {
-        if (response.data.accessToken) {
+        if (response.data.data.accessToken) {
           console.log('로그인 성공');
           nav('/');
         } else {
