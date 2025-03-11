@@ -15,8 +15,6 @@ const BookSnap = () => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const isLastRef = useRef<boolean>(false);
-  const [toast, setToast] = useState(false);
-  const [title, setTitle] = useState('');
 
   // 리뷰 목록 받아오기
   const getReviews = async () => {
@@ -93,12 +91,12 @@ const BookSnap = () => {
         <FilterBar filter={filter} setFilter={setFilter} />
         <div className="mt-8 flex flex-col gap-6 px-8 py-8">
           {review.map((preview, index) => (
-            <ReviewPreview review={preview} key={index} setToast={setToast} setTitle={setTitle} />
+            <ReviewPreview review={preview} key={index} />
           ))}
         </div>
         <WriteButton />
       </div>
-      {toast && <Toast title={title} setToast={setToast} />}
+      <Toast />
     </div>
   );
 };
