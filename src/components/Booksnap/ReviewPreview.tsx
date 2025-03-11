@@ -2,18 +2,16 @@ import { FaStar } from 'react-icons/fa';
 import { BooksnapPreview } from '../../model/booksnap.model';
 import { timeAgo } from '../../utils/timeDifference';
 import { IoMdThumbsUp } from 'react-icons/io';
-import ButtonShort from '../Button/ButtonShort';
 import { useEffect, useState } from 'react';
 import { deleteLike, pickBook, postLike } from '../../api/booksnap.api';
 import { MdBookmarkAdd } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
-  setToast: React.Dispatch<React.SetStateAction<boolean>>;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ReviewPreview = ({ review, setToast, setTitle }: ReviewPreviewProps) => {
+const ReviewPreview = ({ review }: ReviewPreviewProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(review.isLiked);
   const [likeCount, setLikeCount] = useState<number>(review.like);
 
@@ -24,33 +22,39 @@ const ReviewPreview = ({ review, setToast, setTitle }: ReviewPreviewProps) => {
 
   // 좋아요 관리
   const handleLike = () => {
-    const newLike = !isLiked;
-    setLikeCount((prev) => (newLike ? +prev + 1 : +prev - 1));
-    setIsLiked(newLike);
-
-    // 좋아요 api 요청
-    if (newLike) {
-      postLike(review.bookReviewId).then((data) => {
-        console.log('좋아요 성공');
-      });
+    if (!localStorage.getItem('accessToken')) {
+      toast.error('로그인이 필요한 서비스입니다.');
     } else {
-      deleteLike(review.bookReviewId).then((data) => {
-        console.log('좋아요 취소 성공');
-      });
+      const newLike = !isLiked;
+      setLikeCount((prev) => (newLike ? +prev + 1 : +prev - 1));
+      setIsLiked(newLike);
+
+      // 좋아요 api 요청
+      if (newLike) {
+        postLike(review.bookReviewId).then((data) => {
+          console.log('좋아요 성공');
+        });
+      } else {
+        deleteLike(review.bookReviewId).then((data) => {
+          console.log('좋아요 취소 성공');
+        });
+      }
     }
   };
 
   // 책 담기
   const handlePickBook = () => {
-    pickBook(review.bookInfo.isbn).then((data) => {
-      if (data?.success) {
-        setToast(true);
-        setTitle(`${review.bookInfo.title}을(를) 책장에 담았어요!`);
-      } else {
-        setToast(true);
-        setTitle(data?.message || '책 담기에 실패했습니다.');
-      }
-    });
+    if (!localStorage.getItem('accessToken')) {
+      toast.error('로그인이 필요한 서비스입니다.');
+    } else {
+      pickBook(review.bookInfo.isbn).then((data) => {
+        if (data?.success) {
+          toast.success(`${review.bookInfo.title}을(를) 책장에 담았어요!`);
+        } else {
+          toast.error(`${data?.message}`);
+        }
+      });
+    }
   };
 
   return (
@@ -96,8 +100,8 @@ const ReviewPreview = ({ review, setToast, setTitle }: ReviewPreviewProps) => {
           <p>담기</p>
         </div>
         <div className="border-x-[0.5px] border-gray_3"></div>
-        <div className="flex flex-1 items-center justify-center gap-1" onClick={handleLike}>
-          <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} />
+        <div className="flex flex-1 items-center justify-center gap-1">
+          <IoMdThumbsUp className={`h-4 w-4 ${isLiked ? 'fill-main_1' : ''}`} onClick={handleLike} />
           <p>좋아요</p>
           <p>{likeCount}</p>
         </div>
