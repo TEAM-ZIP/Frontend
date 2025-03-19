@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { CiSearch } from 'react-icons/ci';
+import { IoSearch } from 'react-icons/io5';
 
 interface SearchBarProps {
   setSearchWord: (value: string) => void;
   searchWord: string;
   onSearch: () => void;
+  text?: string;
 }
-const SearchBar = ({ setSearchWord, searchWord, onSearch }: SearchBarProps) => {
+const SearchBar = ({ setSearchWord, searchWord, onSearch, text }: SearchBarProps) => {
   const [isComposing, setIsComposing] = useState(false);
 
   const handleEnter = (e: React.KeyboardEvent) => {
@@ -16,11 +17,11 @@ const SearchBar = ({ setSearchWord, searchWord, onSearch }: SearchBarProps) => {
   };
 
   return (
-    <label className="relative block">
-      <CiSearch className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-main_1" />
+    <label className="relative block w-full">
+      <IoSearch className="absolute left-3 top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#C6B8B8]" />
       <input
-        placeholder="서점 이름, 지역 검색"
-        className="w-full rounded-[12px] bg-white py-[10px] pl-[46px] text-[14px] focus:outline-none focus:ring-1 focus:ring-main_1"
+        placeholder={text}
+        className="bg-bg_2 w-full rounded-[12px] py-[5px] pl-[38px] text-[14px] text-[#C6B8B8] focus:outline-none focus:ring-1 focus:ring-white"
         onChange={(e) => setSearchWord(e.target.value)}
         value={searchWord}
         onKeyDown={handleEnter}
