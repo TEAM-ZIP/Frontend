@@ -27,9 +27,6 @@ const Layout = () => {
 
   return (
     <div className="relative flex flex-col">
-      {/* <div className="fixed z-10 w-full max-w-[500px]" ref={headerHeight}>
-        <Header />
-      </div> */}
       <main
         className="overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent"
         style={{
