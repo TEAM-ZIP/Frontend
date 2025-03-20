@@ -13,8 +13,8 @@ const MenuBar = () => {
   const [currentMenu, setCurrentMenu] = useState<string>('home');
 
   useEffect(() => {
-    const pathnameWithoutSlash = location.pathname.slice(1);
-    setCurrentMenu(pathnameWithoutSlash);
+    const pathnameWithoutSlash = location.pathname.split('/');
+    setCurrentMenu(pathnameWithoutSlash[1]);
   }, [location]);
 
   const menus = [
