@@ -6,8 +6,9 @@ import Loading from '../Loading';
 import WriteButton from '../../components/Booksnap/WriteButton';
 import { getReview } from '../../api/booksnap.api';
 import Toast from '../../components/Common/Toast';
+import Logo from '../../../public/icons/menu-bar/logo.svg?react';
+import { IoSearch } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import BooksnapHeader from '../../components/Header/BooksnapHeader';
 
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('createdAt');
@@ -94,8 +95,15 @@ const BookSnap = () => {
       className="bg-bg h-screen overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent"
     >
       {/* 헤더 */}
-      <BooksnapHeader />
-      <div className="mt-[50px] flex flex-col">
+      <div className="bg-bg fixed z-30 flex w-full items-center justify-around gap-[65px] border-b-[1px] border-[#544F4F] p-[10px]">
+        <Logo />
+        <div className="text-body1 font-bold">
+          <span className="text-[#F9D6E7]">BOOK</span>
+          <span className="text-[#C0E0D8]">SNAP</span>
+        </div>
+        <IoSearch className="h-6 w-6 fill-[#C6B8B8]" onClick={() => nav('search')} />
+      </div>
+      <div className="mt-[53px] flex flex-col">
         <FilterBar filter={filter} setFilter={setFilter} />
         <div className="mt-8 flex flex-col gap-6 px-8 py-8">
           {review.map((preview, index) => (

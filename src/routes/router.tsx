@@ -26,8 +26,6 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: '/zip', element: <Zip /> },
       { path: '/mypage', element: <MyPage /> },
-      { path: '/booksnap', element: <BookSnap /> },
-      { path: '/booksnap/search', element: <BookSearch /> },
     ],
   },
   { path: '/login', element: <Login /> },
@@ -37,6 +35,8 @@ export const router = createBrowserRouter([
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
   { path: '/bookie', element: <Bookie /> },
+  { path: '/booksnap', element: <BookSnap /> },
+  { path: '/booksnap/search', element: <BookSearch /> },
   {
     path: 'zip/create-review',
     element: (

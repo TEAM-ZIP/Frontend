@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import HomeIcon from '../../../public/icons/menu-bar/HomeRounded.svg?react';
-import BooksnapIconActive from '../../../public/icons/menu-bar/CommentRounded.svg?react';
-import BooksnapIcon from '../../../public/icons/menu-bar/Booksnap.svg?react';
-import Search from '../../../public/icons/menu-bar/search.svg?react';
-import SearchActive from '../../../public/icons/menu-bar/searchActive.svg?react';
+import ZipIcon from '../../../public/icons/menu-bar/MapRounded.svg?react';
+import BookieIcon from '../../../public/icons/menu-bar/RateReviewRounded.svg?react';
+import BooksnapIcon from '../../../public/icons/menu-bar/CommentRounded.svg?react';
+import MyPageIcon from '../../../public/icons/menu-bar/Person_2Rounded.svg?react';
+import Indicator from '../../../public/icons/menu-bar/Indicator.svg?react';
 
 const MenuBar = () => {
   const nav = useNavigate();
@@ -13,28 +14,45 @@ const MenuBar = () => {
   const [currentMenu, setCurrentMenu] = useState<string>('home');
 
   useEffect(() => {
-    const pathnameWithoutSlash = location.pathname.split('/');
-    setCurrentMenu(pathnameWithoutSlash[1]);
+    const pathnameWithoutSlash = location.pathname.slice(1);
+    setCurrentMenu(pathnameWithoutSlash);
   }, [location]);
 
   const menus = [
     {
-      menu: 'Search',
-      name: 'search',
-      inactive: <Search className="h-7 w-7" />,
-      active: <SearchActive className="h-7 w-7" />,
+      menu: 'Home',
+      name: '',
+      inactive: <HomeIcon className="h-7 w-7" />,
+      active: <HomeIcon />,
+    },
+    {
+      menu: '서점ZIP가기',
+      name: 'zip',
+      inactive: <ZipIcon className="h-7 w-7" />,
+      active: <ZipIcon className="h-7 w-7" />,
     },
     {
       menu: 'Booksnap',
       name: 'booksnap',
       inactive: <BooksnapIcon className="h-7 w-7" />,
-      active: <BooksnapIconActive className="h-7 w-7" />,
+      active: <BooksnapIcon className="h-7 w-7" />,
+    },
+    {
+      menu: 'Bookie',
+      name: 'bookie',
+      inactive: <BookieIcon className="h-7 w-7" />,
+      active: <BookieIcon className="h-7 w-7" />,
+    },
+    {
+      menu: 'My Page',
+      name: 'mypage',
+      inactive: <MyPageIcon className="h-7 w-7" />,
+      active: <MyPageIcon className="h-7 w-7" />,
     },
   ];
-
   return (
-    <div className="relative flex bg-black px-6">
-      <div className="flex w-full justify-between">
+    <div className="flex border-t border-gray-200 bg-white">
+      <div className="grid w-full grid-cols-5">
         {menus.map((menuItem) => (
           <div
             key={menuItem.name}
@@ -43,24 +61,19 @@ const MenuBar = () => {
               nav(menuItem.name);
             }}
           >
-            <div className={`flex flex-col items-center gap-1 pb-[2px] pt-[9px]`}>
+            <div
+              className={`flex flex-col items-center gap-1 ${currentMenu === menuItem.name ? 'pb-[0px] pt-[4px]' : 'pb-[2px] pt-[9px]'}`}
+            >
               {currentMenu === menuItem.name ? menuItem.active : menuItem.inactive}
               <p
-                className={`text-center ${currentMenu === menuItem.name ? 'text-orange text-[12px] font-semibold' : 'text-blue text-[12px]'}`}
+                className={`text-center ${currentMenu === menuItem.name ? 'text-[12px] font-semibold text-main_1' : 'text-[12px] text-gray-500'}`}
               >
                 {menuItem.menu}
               </p>
+              {currentMenu === menuItem.name ? <Indicator className="h-[6px]" /> : ''}
             </div>
           </div>
         ))}
-      </div>
-      <div
-        className="absolute -top-8 left-1/2 flex h-20 w-20 -translate-x-1/2 transform rounded-full bg-black p-2"
-        onClick={() => nav('/')}
-      >
-        <div className={`flex h-full w-full rounded-full p-4 ${currentMenu === '' ? 'bg-orange' : 'bg-blue'}`}>
-          <HomeIcon />
-        </div>
       </div>
     </div>
   );
