@@ -27,13 +27,10 @@ const Layout = () => {
 
   return (
     <div className="relative flex flex-col">
-      <div className="fixed z-10 w-full max-w-[500px]" ref={headerHeight}>
-        <Header />
-      </div>
       <main
         className="overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent"
         style={{
-          marginTop: `${heights.header}px`,
+          // marginTop: `${heights.header}px`,
           marginBottom: `${heights.menubar}px`,
           height: `calc(100dvh - ${heights.header + heights.menubar}px)`,
         }}
