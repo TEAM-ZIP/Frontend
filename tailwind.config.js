@@ -31,6 +31,10 @@ export default {
         gray_1: '#979797',
         gray_2: '#747070',
         gray_3: '#D9D9D9',
+        orange: '#E27451',
+        green: '#C1D201',
+        bg: '#302D2D',
+        bg_2: '#544F4F',
       },
       backgroundImage: {
         'key-gradient': 'linear-gradient(180deg, #E1ECF6 0%, #DAE4FD 31%, #DBE5FD 61.5%, #EAF1F8 100%)',

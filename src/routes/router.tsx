@@ -16,6 +16,7 @@ import CreateReview from '../pages/Zip/CreateReview';
 import ProtectedRoute from '../components/ProtectedRoute';
 import CreateBooksnapReview1 from '../pages/Booksnap/CreateBooksnapReview1';
 import CreateBooksnapReview2 from '../pages/Booksnap/CreateBooksnapReview2';
+import BookSearch from '../pages/Booksnap/BookSearch';
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,6 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: '/zip', element: <Zip /> },
-      { path: '/booksnap', element: <BookSnap /> },
       { path: '/mypage', element: <MyPage /> },
     ],
   },
@@ -35,6 +35,8 @@ export const router = createBrowserRouter([
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
   { path: '/bookie', element: <Bookie /> },
+  { path: '/booksnap', element: <BookSnap /> },
+  { path: '/booksnap/search', element: <BookSearch /> },
   {
     path: 'zip/create-review',
     element: (
