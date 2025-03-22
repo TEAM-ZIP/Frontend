@@ -15,7 +15,7 @@ const BookInfo = ({ bookInfo, onClick }: BookInfoProps) => {
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
       />
       <div className="flex flex-col gap-[10px]">
-        <p className="text-[15px] font-bold tracking-[-0.56px] text-gray_2">
+        <p className="text-[15px] font-semibold tracking-[-0.56px] text-white">
           {bookInfo.title.length > 14 ? bookInfo.title.substring(0, 14) + '⋯' : bookInfo.title}
         </p>
         <div>

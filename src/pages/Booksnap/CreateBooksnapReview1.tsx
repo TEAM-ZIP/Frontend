@@ -7,6 +7,7 @@ import { getSearchBook } from '../../api/booksnap.api';
 import MoreButton from '../../components/Booksnap/MoreButton';
 import { useNavigate } from 'react-router-dom';
 import Step from '../../components/Booksnap/Step';
+import ReviewAdd from '../../components/Booksnap/ReviewAdd';
 
 const CreateBooksnapReview = () => {
   const [searchWord, setSearchWord] = useState('');
@@ -44,15 +45,18 @@ const CreateBooksnapReview = () => {
           onSearch={() => handleSearch(true)}
           text="리뷰를 남기고 싶은 책을 찾아보세요!"
         />
-        {bookInfo ? (
-          <div className="my-6 grid grid-cols-3 gap-8 overflow-y-auto">
-            {bookInfo.map((book) => (
-              <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
-            ))}
-          </div>
-        ) : (
-          ''
-        )}
+        <div className="my-6">
+          {bookInfo.length > 0 ? (
+            <div className="grid grid-cols-3 gap-8 overflow-y-auto">
+              {bookInfo.map((book) => (
+                <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
+              ))}
+            </div>
+          ) : (
+            <ReviewAdd title={'독립 출판물에 대한 리뷰를\n남기고 싶으신가요?'} />
+          )}
+        </div>
+
         {!isEnd ? (
           <div className="mb-4 flex w-full items-center justify-center">
             <MoreButton onClick={() => handleSearch()} />
