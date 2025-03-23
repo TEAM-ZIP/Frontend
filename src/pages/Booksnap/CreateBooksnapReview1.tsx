@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SearchBar from '../../components/Zip/SearchBar';
 import Header from '../../components/Common/Header';
 import BookInfo from '../../components/Booksnap/BookInfo';
 import { BookDetailInfo } from '../../model/booksnap.model';
-import { getSearchBook } from '../../api/booksnap.api';
+import { getSearchBook, getSearchBookByAuthor } from '../../api/booksnap.api';
 import MoreButton from '../../components/Booksnap/MoreButton';
 import { useNavigate } from 'react-router-dom';
 import Step from '../../components/Booksnap/Step';
 import ReviewAdd from '../../components/Booksnap/ReviewAdd';
+import FilterBar from '../../components/Common/FilterBar';
 
 const CreateBooksnapReview = () => {
   const [searchWord, setSearchWord] = useState('');
@@ -15,17 +16,23 @@ const CreateBooksnapReview = () => {
   const [isEnd, setIsEnd] = useState<boolean>(true);
   const [page, setPage] = useState(1);
   const nav = useNavigate();
+  const [searchType, setSearchType] = useState('책 제목');
 
-  const handleSearch = async (isNewSearch = false) => {
-    if (isNewSearch) {
-      setPage(1); // 🔥 새 검색이면 페이지 초기화
-    }
+  const handleSearch = async (isNewSearch = false, type = searchType) => {
+    if (isNewSearch) setPage(1);
+    const currentPage = isNewSearch ? 1 : page;
+    const fetchFunction = type === '책 제목' ? getSearchBook : getSearchBookByAuthor;
+    const data = await fetchFunction(searchWord, currentPage);
 
-    getSearchBook(searchWord, isNewSearch ? 1 : page).then((data) => {
-      setIsEnd(data.data.isEnd);
-      setBookInfo(isNewSearch ? data.data.bookData : (prev) => [...prev, ...data.data.bookData]);
-      setPage((prevPage) => prevPage + 1); // 페이지 증가
-    });
+    setIsEnd(data.data.isEnd);
+    setBookInfo(isNewSearch ? data.data.bookData : (prev) => [...prev, ...data.data.bookData]);
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handleFilterChange = (selected: string) => {
+    setSearchType(selected);
+    setPage(1);
+    handleSearch(true, selected);
   };
 
   const goToStep2 = (book: BookDetailInfo) => {
@@ -47,10 +54,13 @@ const CreateBooksnapReview = () => {
         />
         <div className="my-6">
           {bookInfo.length > 0 ? (
-            <div className="grid grid-cols-3 gap-8 overflow-y-auto">
-              {bookInfo.map((book) => (
-                <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
-              ))}
+            <div className="flex flex-col gap-6">
+              <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} />
+              <div className="grid grid-cols-3 gap-7 overflow-y-auto">
+                {bookInfo.map((book) => (
+                  <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
+                ))}
+              </div>
             </div>
           ) : (
             <ReviewAdd title={'독립 출판물에 대한 리뷰를\n남기고 싶으신가요?'} />

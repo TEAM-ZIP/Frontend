@@ -8,7 +8,7 @@ interface BookInfoProps {
 const BookInfo = ({ bookInfo, onClick }: BookInfoProps) => {
   const author = bookInfo.authors.join(', ');
   return (
-    <div className="flex flex-col gap-5" onClick={onClick}>
+    <div className="flex flex-col gap-4" onClick={onClick}>
       <img
         src={bookInfo.bookImageUrl == '' ? image : bookInfo.bookImageUrl}
         className="w-20"
