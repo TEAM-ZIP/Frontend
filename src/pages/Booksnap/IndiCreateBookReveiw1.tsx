@@ -10,7 +10,7 @@ import Step from '../../components/Booksnap/Step';
 import ReviewAdd from '../../components/Booksnap/ReviewAdd';
 import FilterBar from '../../components/Common/FilterBar';
 
-const CreateBooksnapReview = () => {
+const IndiCreateBookReview = () => {
   const [searchWord, setSearchWord] = useState('');
   const [bookInfo, setBookInfo] = useState<BookDetailInfo[]>([]);
   const [isEnd, setIsEnd] = useState<boolean>(true);
@@ -45,7 +45,7 @@ const CreateBooksnapReview = () => {
       <Header title="리뷰 작성하기" />
       {/* 내용 */}
       <div className="mt-[40px] flex flex-col items-center px-8">
-        <Step step={1} text="리뷰할 책을 골라주세요" />
+        <Step step={1} text="리뷰를 남길 독립출판물을 골라주세요." />
         <SearchBar
           searchWord={searchWord}
           setSearchWord={setSearchWord}
@@ -64,9 +64,9 @@ const CreateBooksnapReview = () => {
             </div>
           ) : (
             <ReviewAdd
-              title={'독립 출판물에 대한 리뷰를\n남기고 싶으신가요?'}
+              title={'서점 ZIP에 등록되지 않은\n독립출판물을\n등록하고 싶나요? '}
               onClick={() => nav('/booksnap/create/indi/1')}
-              color="pink"
+              color="mint"
             />
           )}
         </div>
@@ -83,4 +83,4 @@ const CreateBooksnapReview = () => {
   );
 };
 
-export default CreateBooksnapReview;
+export default IndiCreateBookReview;

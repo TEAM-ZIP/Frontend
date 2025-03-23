@@ -1,5 +1,5 @@
 import { FaAngleLeft } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { IoCloseOutline } from 'react-icons/io5';
 
@@ -10,23 +10,25 @@ interface HeaderProps {
 const Header = ({ title }: HeaderProps) => {
   if (!title) title = 'ZIP가기';
   const { restoreBottomSheet } = useBottomSheetStore();
+  const location = useLocation();
 
   const handleGoBack = () => {
     restoreBottomSheet();
     nav(-1);
   };
 
+  const handleClose = () => {
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    console.log(pathSegments[0]);
+    nav(`/${pathSegments[0]}`);
+  };
+
   const nav = useNavigate();
   // 앞으로 추가
-  const showBackButtonPaths = [
-    '/mypage/change-nickname',
-    '/zip/create-review',
-    '/booksnap/create/1',
-    '/booksnap/create/2',
-  ];
+  const showBackButtonPaths = ['/mypage/change-nickname', '/zip/create-review', '/booksnap/create/2'];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
-  const showCloseButtonPaths = ['/bookie'];
+  const showCloseButtonPaths = ['/bookie', '/booksnap/create/indi/1', '/booksnap/create/1'];
   const showCloseButton = showCloseButtonPaths.includes(location.pathname);
 
   return (
@@ -38,7 +40,7 @@ const Header = ({ title }: HeaderProps) => {
           </div>
         )}
         {showCloseButton && (
-          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
+          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleClose}>
             <IoCloseOutline size={30} className="stroke-mint" />
           </div>
         )}

@@ -17,6 +17,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import CreateBooksnapReview1 from '../pages/Booksnap/CreateBooksnapReview1';
 import CreateBooksnapReview2 from '../pages/Booksnap/CreateBooksnapReview2';
 import BookSearch from '../pages/Booksnap/BookSearch';
+import IndiCreateBookReview1 from '../pages/Booksnap/IndiCreateBookReveiw1';
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <CreateBooksnapReview2 />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: 'booksnap/create/indi/1',
+    element: (
+      <ProtectedRoute>
+        <IndiCreateBookReview1 />
       </ProtectedRoute>
     ),
   },
