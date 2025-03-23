@@ -12,7 +12,7 @@ const Star = ({ rating, setRating, size }: StarProps) => {
       {Array.from({ length: 5 }).map((_, index) => (
         <div className="flex cursor-pointer" key={index}>
           <FaStar
-            className={rating > index ? 'text-main_1' : 'text-gray_1'}
+            className={rating > index ? 'text-pink' : 'text-gray_1'}
             size={size}
             onClick={() => setRating(index + 1)}
           />

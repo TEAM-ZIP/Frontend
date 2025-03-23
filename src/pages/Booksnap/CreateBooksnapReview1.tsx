@@ -42,7 +42,7 @@ const CreateBooksnapReview = () => {
   return (
     <div className="flex h-full flex-col bg-bg pt-[70px]">
       {/* 헤더 */}
-      <Header title="리뷰 쓰기" />
+      <Header title="리뷰 작성하기" />
       {/* 내용 */}
       <div className="mt-[40px] flex flex-col items-center px-8">
         <Step step={1} text="리뷰할 책을 골라주세요" />

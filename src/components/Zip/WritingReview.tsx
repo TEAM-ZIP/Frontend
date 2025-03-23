@@ -16,7 +16,7 @@ const WritingReview = ({ onChange, value }: WritingReviewProps) => {
   return (
     <div>
       <textarea
-        className="h-[100px] w-full resize-none rounded-[10px] border-[0.5px] border-gray_1 px-[15px] py-[10px] text-body4 focus:border-main_1 focus:outline-none focus:ring-[0.5px] focus:ring-main_1"
+        className="focus:border-pink focus:ring-pink h-[100px] w-full resize-none rounded-[10px] border-[0.5px] border-gray_1 bg-bg_2 px-[15px] py-[10px] text-body4 text-white focus:outline-none focus:ring-[0.5px]"
         placeholder="리뷰를 작성해주세요"
         maxLength={200}
         onChange={handleChange}
