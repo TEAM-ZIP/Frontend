@@ -36,7 +36,7 @@ const IndiCreateBookReview = () => {
   };
 
   const goToStep2 = (book: BookDetailInfo) => {
-    nav('/booksnap/create/2', { state: { book: book } });
+    nav('/booksnap/create/indi/2', { state: { book: book } });
   };
 
   return (

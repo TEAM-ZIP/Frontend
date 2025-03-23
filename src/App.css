@@ -2,7 +2,7 @@ html,
 body {
   margin: 0px;
   width: 100%;
-  background-color: #302d2d;
+  background-color: #fff;
   display: flex;
   scrollbar-width: none;
 }

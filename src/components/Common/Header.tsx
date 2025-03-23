@@ -25,7 +25,12 @@ const Header = ({ title }: HeaderProps) => {
 
   const nav = useNavigate();
   // 앞으로 추가
-  const showBackButtonPaths = ['/mypage/change-nickname', '/zip/create-review', '/booksnap/create/2'];
+  const showBackButtonPaths = [
+    '/mypage/change-nickname',
+    '/zip/create-review',
+    '/booksnap/create/2',
+    '/booksnap/create/indi/2',
+  ];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
   const showCloseButtonPaths = ['/bookie', '/booksnap/create/indi/1', '/booksnap/create/1'];
