@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import SearchBar from '../../components/Zip/SearchBar';
 import Header from '../../components/Common/Header';
 import BookInfo from '../../components/Booksnap/BookInfo';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Step from '../../components/Booksnap/Step';
 import ReviewAdd from '../../components/Booksnap/ReviewAdd';
 import FilterBar from '../../components/Common/FilterBar';
+import NoResult from '../../components/Booksnap/NoResult';
 
 const IndiCreateBookReview = () => {
   const [searchWord, setSearchWord] = useState('');
@@ -65,9 +66,10 @@ const IndiCreateBookReview = () => {
           ) : (
             <ReviewAdd
               title={'서점 ZIP에 등록되지 않은\n독립출판물을\n등록하고 싶나요? '}
-              onClick={() => nav('/booksnap/create/indi/1')}
+              onClick={() => nav('/booksnap/create/book')}
               color="mint"
             />
+            // <NoResult />
           )}
         </div>
 
