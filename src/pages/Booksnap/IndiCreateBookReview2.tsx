@@ -7,8 +7,9 @@ import WritingReview from '../../components/Zip/WritingReview';
 import Button from '../../components/Button/Button';
 import { postBookReview } from '../../api/booksnap.api';
 import Step from '../../components/Booksnap/Step';
+import AddBookstore from '../../components/Booksnap/AddBookstore';
 
-const CreateBooksnapReview2 = () => {
+const IndiCreateBookReview2 = () => {
   const location = useLocation();
   const book = location.state.book || false;
   const nav = useNavigate();
@@ -36,7 +37,7 @@ const CreateBooksnapReview2 = () => {
       <div className="mt-[40px] flex w-full flex-col items-center px-8">
         <Step step={2} text="리뷰 내용을 작성해주세요." />
         {/* 책 정보 */}
-        <div className="mb-4 flex flex-col items-center justify-center">
+        <div className="mb-2 flex flex-col items-center justify-center">
           <img
             src={book.bookImageUrl == '' ? image : book.bookImageUrl}
             className="w-20"
@@ -50,6 +51,8 @@ const CreateBooksnapReview2 = () => {
         </div>
         {/* 별졈 */}
         <Star rating={rating} setRating={setRating} size={28} />
+        {/* 발견한 서점 */}
+        <AddBookstore />
         {/* 리뷰 쓰기 */}
         <div className="mt-6 w-full">
           <WritingReview onChange={(e) => setReview(e.target.value)} value={review} />
@@ -63,4 +66,4 @@ const CreateBooksnapReview2 = () => {
   );
 };
 
-export default CreateBooksnapReview2;
+export default IndiCreateBookReview2;

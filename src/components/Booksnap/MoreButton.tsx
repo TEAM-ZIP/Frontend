@@ -5,7 +5,7 @@ interface MoreButtonProps {
 const MoreButton = ({ onClick }: MoreButtonProps) => {
   return (
     <div
-      className="flex h-[1.825rem] w-[6.25rem] items-center justify-center rounded-[20px] bg-main_1 py-4 text-body4 text-white"
+      className="bg-mint flex h-[1.825rem] w-[6.25rem] items-center justify-center rounded-[20px] py-4 text-body4 text-bg"
       onClick={onClick}
     >
       더 보기

@@ -37,6 +37,8 @@ export default {
         bg_2: '#544F4F',
         black: '#1E1E1E',
         blue: '#9DB2CE',
+        mint: '#C0E0D8',
+        pink: '#F9D6E7',
       },
       backgroundImage: {
         'key-gradient': 'linear-gradient(180deg, #E1ECF6 0%, #DAE4FD 31%, #DBE5FD 61.5%, #EAF1F8 100%)',

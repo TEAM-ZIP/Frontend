@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import SearchBar from '../../components/Zip/SearchBar';
 import Header from '../../components/Common/Header';
 import BookInfo from '../../components/Booksnap/BookInfo';
@@ -9,8 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import Step from '../../components/Booksnap/Step';
 import ReviewAdd from '../../components/Booksnap/ReviewAdd';
 import FilterBar from '../../components/Common/FilterBar';
+import NoResult from '../../components/Booksnap/NoResult';
 
-const CreateBooksnapReview = () => {
+const IndiCreateBookReview = () => {
   const [searchWord, setSearchWord] = useState('');
   const [bookInfo, setBookInfo] = useState<BookDetailInfo[]>([]);
   const [isEnd, setIsEnd] = useState<boolean>(true);
@@ -36,7 +37,7 @@ const CreateBooksnapReview = () => {
   };
 
   const goToStep2 = (book: BookDetailInfo) => {
-    nav('/booksnap/create/2', { state: { book: book } });
+    nav('/booksnap/create/indi/2', { state: { book: book } });
   };
 
   return (
@@ -45,7 +46,7 @@ const CreateBooksnapReview = () => {
       <Header title="리뷰 작성하기" />
       {/* 내용 */}
       <div className="mt-[40px] flex flex-col items-center px-8">
-        <Step step={1} text="리뷰할 책을 골라주세요" />
+        <Step step={1} text="리뷰를 남길 독립출판물을 골라주세요." />
         <SearchBar
           searchWord={searchWord}
           setSearchWord={setSearchWord}
@@ -64,10 +65,11 @@ const CreateBooksnapReview = () => {
             </div>
           ) : (
             <ReviewAdd
-              title={'독립 출판물에 대한 리뷰를\n남기고 싶으신가요?'}
-              onClick={() => nav('/booksnap/create/indi/1')}
-              color="pink"
+              title={'서점 ZIP에 등록되지 않은\n독립출판물을\n등록하고 싶나요? '}
+              onClick={() => nav('/booksnap/create/book')}
+              color="mint"
             />
+            // <NoResult />
           )}
         </div>
 
@@ -83,4 +85,4 @@ const CreateBooksnapReview = () => {
   );
 };
 
-export default CreateBooksnapReview;
+export default IndiCreateBookReview;

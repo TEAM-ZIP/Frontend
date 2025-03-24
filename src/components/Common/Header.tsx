@@ -10,10 +10,17 @@ interface HeaderProps {
 const Header = ({ title }: HeaderProps) => {
   if (!title) title = 'ZIP가기';
   const { restoreBottomSheet } = useBottomSheetStore();
+  const location = useLocation();
 
   const handleGoBack = () => {
     restoreBottomSheet();
     nav(-1);
+  };
+
+  const handleClose = () => {
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    console.log(pathSegments[0]);
+    nav(`/${pathSegments[0]}`);
   };
 
   const nav = useNavigate();
@@ -21,30 +28,31 @@ const Header = ({ title }: HeaderProps) => {
   const showBackButtonPaths = [
     '/mypage/change-nickname',
     '/zip/create-review',
-    '/booksnap/create/1',
     '/booksnap/create/2',
+    '/booksnap/create/indi/',
+    '/booksnap/create/book',
   ];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
-  const showCloseButtonPaths = ['/bookie'];
+  const showCloseButtonPaths = ['/bookie', '/booksnap/create/indi/1', '/booksnap/create/1'];
   const showCloseButton = showCloseButtonPaths.includes(location.pathname);
 
   return (
-    <div
-      className={`flex items-center bg-white px-2 py-3 ${location.pathname !== '/bookie' ? 'border-b-2 border-gray-100' : ''}`}
-    >
-      {showBackButton && (
-        <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
-          <FaAngleLeft size={24} className="fill-main_1" />
-        </div>
-      )}
-      {showCloseButton && (
-        <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
-          <IoCloseOutline size={30} className="stroke-main_1" />
-        </div>
-      )}
-      <div className="flex-1 text-center text-[20px] font-medium tracking-[-0.8px] text-main_1">{title}</div>
-      {showBackButton || showCloseButton ? <div className="w-11" /> : ''}
+    <div className="fixed left-0 right-0 top-0 m-auto w-full max-w-[500px]">
+      <div className={`flex items-center bg-bg px-2 py-3`}>
+        {showBackButton && (
+          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
+            <FaAngleLeft size={24} className="fill-mint" />
+          </div>
+        )}
+        {showCloseButton && (
+          <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleClose}>
+            <IoCloseOutline size={30} className="stroke-mint" />
+          </div>
+        )}
+        <div className="text-mint flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">{title}</div>
+        {showBackButton || showCloseButton ? <div className="w-11" /> : ''}
+      </div>
     </div>
   );
 };
