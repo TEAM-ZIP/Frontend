@@ -5,7 +5,7 @@ const WriteButton = () => {
   const nav = useNavigate();
 
   return (
-    <div className="fixed bottom-40 left-1/2 mx-auto w-full max-w-[500px] -translate-x-1/2">
+    <div className="fixed bottom-40 left-1/2 z-40 mx-auto w-full max-w-[500px] -translate-x-1/2">
       <div
         className="absolute right-[14px] flex items-center gap-1 rounded-full bg-[#C0E0D8] p-4"
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}

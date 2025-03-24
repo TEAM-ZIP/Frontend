@@ -2,9 +2,11 @@ html,
 body {
   margin: 0px;
   width: 100%;
-  background-color: #fff;
+  background-color: #302d2d;
   display: flex;
   scrollbar-width: none;
+  height: auto;
+  min-height: 100dvh;
 }
 
 #root {
@@ -20,10 +22,11 @@ body {
 @supports (-webkit-touch-callout: none) {
   html,
   body {
-    height: 100%;
+    height: auto;
+    min-height: 100dvh;
+    background-color: #302d2d;
   }
 
   #root {
-    height: calc(var(--vh, 1vh) * 100);
   }
 }
