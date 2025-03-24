@@ -44,7 +44,7 @@ const CreateBooksnapReview = () => {
       {/* 헤더 */}
       <Header title="리뷰 작성하기" />
       {/* 내용 */}
-      <div className="flex flex-col items-center overflow-auto px-8 pb-[80px] pt-[40px]">
+      <div className="flex flex-col items-center overflow-auto px-8 pt-[40px]">
         <Step step={1} text="리뷰할 책을 골라주세요" />
         <SearchBar
           searchWord={searchWord}
