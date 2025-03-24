@@ -30,7 +30,7 @@ const IndiCreateBookReview2 = () => {
   };
 
   return (
-    <div className="flex h-full flex-col bg-bg pt-[70px]">
+    <div className="flex h-full flex-col bg-bg pb-[50px] pt-[70px]">
       {/* 헤더 */}
       <Header title="리뷰 작성하기" />
       {/* 내용 */}

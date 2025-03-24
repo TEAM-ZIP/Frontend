@@ -40,7 +40,7 @@ const CreateBooksnapReview = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col bg-bg pt-[70px]">
+    <div className="flex h-full flex-col bg-bg pt-[70px]">
       {/* 헤더 */}
       <Header title="리뷰 작성하기" />
       {/* 내용 */}
