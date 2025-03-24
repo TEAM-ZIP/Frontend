@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Common/Header';
 import MenuBar from './Common/MenuBar';
 import { useEffect, useRef, useState } from 'react';
 
@@ -28,11 +27,11 @@ const Layout = () => {
   return (
     <div className="relative flex flex-col">
       <main
-        className="overflow-hidden scrollbar-none"
+        className="overflow-auto scrollbar-none"
         style={{
           // marginTop: `${heights.header}px`,
           marginBottom: `${heights.menubar}px`,
-          height: `calc(100dvh - ${heights.header + heights.menubar}px)`,
+          height: `calc(100dvh - ${heights.menubar}px)`,
         }}
       >
         <Outlet />
