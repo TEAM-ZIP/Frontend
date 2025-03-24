@@ -95,9 +95,9 @@ const BookSnap = () => {
     >
       {/* 헤더 */}
       <BooksnapHeader />
-      <div className="mb-[80px] mt-[50px] flex flex-col">
+      <div className="mt-[50px] flex flex-col">
         <FilterBar filter={filter} setFilter={setFilter} />
-        <div className="mt-8 flex flex-col gap-6 px-8 py-8">
+        <div className="mt-8 flex flex-col gap-6 px-8 pb-[200px] pt-8">
           {review.map((preview, index) => (
             <ReviewPreview review={preview} key={index} />
           ))}

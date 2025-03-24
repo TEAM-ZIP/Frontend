@@ -5,6 +5,7 @@ body {
   background-color: #302d2d;
   display: flex;
   scrollbar-width: none;
+  overflow: hidden;
 }
 
 #root {

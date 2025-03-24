@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import SearchBar from '../../components/Zip/SearchBar';
 import Header from '../../components/Common/Header';
 import BookInfo from '../../components/Booksnap/BookInfo';
@@ -40,11 +40,11 @@ const CreateBooksnapReview = () => {
   };
 
   return (
-    <div className="flex h-full flex-col bg-bg pt-[70px]">
+    <div className="flex h-full flex-col overflow-hidden bg-bg pt-[70px]">
       {/* 헤더 */}
       <Header title="리뷰 작성하기" />
       {/* 내용 */}
-      <div className="mt-[40px] flex flex-col items-center px-8">
+      <div className="flex flex-col items-center overflow-auto px-8 pt-[40px]">
         <Step step={1} text="리뷰할 책을 골라주세요" />
         <SearchBar
           searchWord={searchWord}

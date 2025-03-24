@@ -28,7 +28,7 @@ const Layout = () => {
   return (
     <div className="relative flex flex-col">
       <main
-        className="overflow-y-auto scrollbar-thin scrollbar-none scrollbar-track-transparent"
+        className="overflow-hidden scrollbar-none"
         style={{
           // marginTop: `${heights.header}px`,
           marginBottom: `${heights.menubar}px`,

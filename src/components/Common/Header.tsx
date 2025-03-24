@@ -29,7 +29,7 @@ const Header = ({ title }: HeaderProps) => {
     '/mypage/change-nickname',
     '/zip/create-review',
     '/booksnap/create/2',
-    '/booksnap/create/indi/',
+    '/booksnap/create/indi/2',
     '/booksnap/create/book',
   ];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
