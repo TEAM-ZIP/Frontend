@@ -89,15 +89,12 @@ const BookSnap = () => {
   }
 
   return (
-    <div
-      ref={mainRef}
-      className="h-screen overflow-y-auto bg-bg scrollbar-thin scrollbar-none scrollbar-track-transparent"
-    >
+    <div ref={mainRef} className="h-screen overflow-y-auto bg-bg scrollbar-none">
       {/* 헤더 */}
       <BooksnapHeader />
       <div className="mt-[50px] flex flex-col">
         <FilterBar filter={filter} setFilter={setFilter} />
-        <div className="mt-8 flex flex-col gap-6 px-8 pb-[200px] pt-8">
+        <div className="mt-8 flex flex-col gap-6 px-8 py-8">
           {review.map((preview, index) => (
             <ReviewPreview review={preview} key={index} />
           ))}
