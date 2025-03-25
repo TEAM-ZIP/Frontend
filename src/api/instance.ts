@@ -37,11 +37,8 @@ instance.interceptors.response.use(
     // 토큰 재발급
     if (error.response.status === 401) {
       try {
-        const res = await axios.get(`/api/auth/kakao/reissue`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${refreshToken}`,
-          },
+        const res = await axios.post(`http://api.bookstore-zip.site/auth/reissue`, {
+          refreshToken: refreshToken,
         });
         if (res.status == 200) {
           const { accessToken, refreshToken } = res.data.data;
