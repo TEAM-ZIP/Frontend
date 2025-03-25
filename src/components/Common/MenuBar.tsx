@@ -6,6 +6,10 @@ import BooksnapIconActive from '../../../public/icons/menu-bar/CommentRounded.sv
 import BooksnapIcon from '../../../public/icons/menu-bar/Booksnap.svg?react';
 import Search from '../../../public/icons/menu-bar/search.svg?react';
 import SearchActive from '../../../public/icons/menu-bar/searchActive.svg?react';
+import SearchIcon from '@mui/icons-material/Search';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import Person2Icon from '@mui/icons-material/Person2';
 
 const MenuBar = () => {
   const nav = useNavigate();
@@ -21,19 +25,35 @@ const MenuBar = () => {
     {
       menu: 'Search',
       name: 'search',
-      inactive: <Search className="h-7 w-7" />,
-      active: <SearchActive className="h-7 w-7" />,
+      inactive: <SearchIcon sx={{ fontSize: 30, fill: '#9DB2CE' }} />,
+      active: <SearchIcon sx={{ fontSize: 30, fill: '#E27451' }} />,
     },
     {
       menu: 'Booksnap',
       name: 'booksnap',
-      inactive: <BooksnapIcon className="h-7 w-7" />,
-      active: <BooksnapIconActive className="h-7 w-7" />,
+      inactive: <RateReviewIcon sx={{ fontSize: 30, fill: '#9DB2CE' }} />,
+      active: <RateReviewIcon sx={{ fontSize: 30, fill: '#E27451' }} />,
+    },
+    {
+      menu: 'Booki',
+      name: 'Bookie',
+    },
+    {
+      menu: 'Bookie',
+      name: 'bookie',
+      inactive: <SmartToyIcon sx={{ fontSize: 30, fill: '#9DB2CE' }} />,
+      active: <SmartToyIcon sx={{ fontSize: 30, fill: '#E27451' }} />,
+    },
+    {
+      menu: 'My page',
+      name: 'mypage',
+      inactive: <Person2Icon sx={{ fontSize: 30, fill: '#9DB2CE' }} />,
+      active: <Person2Icon sx={{ fontSize: 30, fill: '#E27451' }} />,
     },
   ];
 
   return (
-    <div className="relative flex bg-black px-6">
+    <div className="relative flex bg-black px-3">
       <div className="flex w-full justify-between">
         {menus.map((menuItem) => (
           <div
@@ -46,7 +66,7 @@ const MenuBar = () => {
             <div className={`flex flex-col items-center gap-1 pb-[2px] pt-[9px]`}>
               {currentMenu === menuItem.name ? menuItem.active : menuItem.inactive}
               <p
-                className={`text-center ${currentMenu === menuItem.name ? 'text-orange text-[12px] font-semibold' : 'text-blue text-[12px]'}`}
+                className={`text-center ${currentMenu === menuItem.name ? 'text-[12px] font-semibold text-orange' : 'text-[12px] text-blue'}`}
               >
                 {menuItem.menu}
               </p>
@@ -55,10 +75,10 @@ const MenuBar = () => {
         ))}
       </div>
       <div
-        className="absolute -top-8 left-1/2 flex h-20 w-20 -translate-x-1/2 transform rounded-full bg-black p-2"
+        className="absolute -top-4 left-1/2 flex h-[70px] w-[70px] -translate-x-1/2 transform rounded-full bg-black p-2"
         onClick={() => nav('/')}
       >
-        <div className={`flex h-full w-full rounded-full p-4 ${currentMenu === '' ? 'bg-orange' : 'bg-blue'}`}>
+        <div className={`flex h-full w-full rounded-full p-3 ${currentMenu === '' ? 'bg-orange' : 'bg-blue'}`}>
           <HomeIcon />
         </div>
       </div>
