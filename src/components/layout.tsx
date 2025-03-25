@@ -5,15 +5,14 @@ import { useEffect, useRef, useState } from 'react';
 const Layout = () => {
   const headerHeight = useRef<HTMLDivElement>(null);
   const menuBarHeight = useRef<HTMLDivElement>(null);
-  const [heights, setHeights] = useState({ header: 0, menubar: 0 });
+  const [heights, setHeights] = useState(0);
 
   useEffect(() => {
     const updateHeights = () => {
-      if (headerHeight.current && menuBarHeight.current) {
+      if (menuBarHeight.current) {
         requestAnimationFrame(() => {
-          const header = headerHeight.current?.offsetHeight || 0;
           const menubar = menuBarHeight.current?.offsetHeight || 0;
-          setHeights({ header, menubar });
+          setHeights(menubar);
         });
       }
     };
@@ -30,8 +29,8 @@ const Layout = () => {
         className="overflow-auto scrollbar-none"
         style={{
           // marginTop: `${heights.header}px`,
-          marginBottom: `${heights.menubar}px`,
-          height: `calc(100dvh - ${heights.menubar}px)`,
+          marginBottom: `${heights}px`,
+          height: `calc(100dvh - ${heights}px)`,
         }}
       >
         <Outlet />
