@@ -10,7 +10,7 @@ interface HomeHeaderProps {
 
 const HomeHeader = ({ onSearch, setSearchWord, searchWord }: HomeHeaderProps) => {
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 m-auto flex max-w-[500px] items-center gap-[15px] border-b-[1px] border-[#544F4F] bg-bg py-[10px] pl-[30px] pr-[30px]">
+    <div className="fixed left-0 right-0 top-0 z-20 m-auto flex max-w-[500px] items-center gap-[15px] border-b-[1px] border-[#544F4F] bg-bg py-[10px] pl-[30px] pr-[30px]">
       <Logo className="h-[30px] w-6" />
       <SearchBar
         searchWord={searchWord}
