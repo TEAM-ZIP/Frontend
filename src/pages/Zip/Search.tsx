@@ -5,11 +5,15 @@ import FilterButton from '../../components/Button/FilterButton';
 import Box from '../../components/Zip/Box';
 import TagBar from '../../components/Zip/TagBar';
 import Ranking from '../../components/Home/Ranking';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const [searchWord, setSearchWord] = useState('');
+  const nav = useNavigate();
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    nav('/zip', { state: { searchWord } });
+  };
 
   return (
     <div className="flex h-full flex-col gap-9 overflow-x-hidden bg-bg px-[20px] pb-7 pt-6 scrollbar-none">

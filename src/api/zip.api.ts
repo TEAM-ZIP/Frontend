@@ -8,7 +8,7 @@ export const searchBookstore = async (name: string, lat: number, lng: number) =>
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

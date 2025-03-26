@@ -9,12 +9,22 @@ import ReportStore from '../components/Home/ReportStore';
 import Contact from '../components/Home/Contact';
 import MadeBy from '../components/Home/MadeBy';
 import Name from '../components/Home/Name';
+import { searchBookstore } from '../api/zip.api';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Home = () => {
+  const nav = useNavigate();
+  const [searchWord, setSearchWord] = useState('');
+
+  const handleSearch = () => {
+    nav('/zip', { state: { searchWord } });
+  };
+
   return (
     <div className="flex h-full flex-col bg-bg px-[20px] pt-[52px] scrollbar-none">
       {/* 헤더 */}
-      <HomeHeader />
+      <HomeHeader searchWord={searchWord} setSearchWord={setSearchWord} onSearch={handleSearch} />
       {/* 내용 */}
       <div className="flex flex-col gap-[10px] pt-[20px]">
         {/* 별 */}

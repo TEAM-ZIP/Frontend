@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import SearchBar from '../../components/Zip/SearchBar';
-import CategoryButton from '../../components/Button/CategoryButton';
 import RoundButton from '../../components/Button/RoundButton';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import UserLikeZip from './UserLikeZip';
-import { defaultLocation, ILocation, useGeoLocation } from '../../hooks/useGeolocation';
+import { defaultLocation, ILocation } from '../../hooks/useGeolocation';
 import SearchZip from './SearchZip';
 import { useBottomSheetStore } from '../../store/bottomSheetStore';
 import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
-import { getCategoryBookstore, getHeartBookstore, searchBookstore } from '../../api/zip.api';
+import { getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 import HomeHeader from '../../components/Header/HomeHeader';
+import { useLocation } from 'react-router-dom';
 
 export const BOOKSTORE_OPTIONS = [
   { key: 'INDEP', label: '📚 독립서점' },
@@ -22,11 +21,14 @@ export const BOOKSTORE_OPTIONS = [
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [location, setLocation] = useState<ILocation>(defaultLocation);
-  const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
   const [locations, setLocations] = useState<{ address: string }[]>([]);
+
+  const locationState = useLocation();
+  const initialSearchWord = locationState.state?.searchWord || '';
+  const [searchWord, setSearchWord] = useState<string>(initialSearchWord);
 
   useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location);
@@ -47,6 +49,12 @@ const Zip = () => {
     }
   }, [isLiked, searchWord, prevView]);
 
+  useEffect(() => {
+    if (initialSearchWord) {
+      handleSearch(); // 최초 진입 시 검색어가 있으면 자동 검색 실행
+    }
+  }, [initialSearchWord]);
+
   // 좋아요 처리
   const handleHeart = () => {
     setIsLiked((prev) => !prev);
@@ -64,21 +72,24 @@ const Zip = () => {
     setIsLiked(false);
     // 검색 API 호출
     try {
-      searchBookstore(searchWord, location!.latitude, location!.longitude).then((data) => {
-        setSearchResults(data.data);
-        setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
+      const data = await searchBookstore(searchWord, location!.latitude, location!.longitude);
 
-        setBottomSheet(
-          ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
-          '검색 결과',
-        );
-      });
-
-      // 모바일 환경에서 검색하면 키보드 닫아주기
-      const searchInput = document.querySelector('input');
-      if (searchInput) searchInput.blur(); // 포커스 해제
-    } catch (error) {
-      console.error('검색 중 오류 발생:', error);
+      // 정상 처리
+      setSearchResults(data);
+      setLocations(data.data.slice(0, 10).map((store: any) => ({ address: store.address })));
+      setBottomSheet(
+        ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
+        '검색 결과',
+      );
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        // 검색 결과 없음
+        setSearchResults([]);
+        setLocations([]);
+        setBottomSheet(({ currentState }) => <SearchZip searchResults={[]} currentState={currentState} />, '검색 결과');
+      } else {
+        console.error('검색 중 에러:', error);
+      }
     }
   };
 
@@ -89,7 +100,7 @@ const Zip = () => {
         overflow: isOpen ? 'visible' : 'hidden',
       }}
     >
-      <HomeHeader />
+      <HomeHeader onSearch={handleSearch} searchWord={searchWord} setSearchWord={setSearchWord} />
       <div className={`pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full flex-col`}>
         {/* 찜버튼 & 현재위치 */}
         <div className="border-3 pointer-events-auto mt-3 flex flex-col items-end gap-3 border-red-400 px-[10px] pt-[52px]">
