@@ -22,7 +22,7 @@ const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [location, setLocation] = useState<ILocation>(defaultLocation);
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
-  const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
+  const { setBottomSheet, closeBottomSheet, isOpen, resultCount } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
   const [locations, setLocations] = useState<{ address: string }[]>([]);
 
@@ -79,7 +79,8 @@ const Zip = () => {
       setLocations(data.data.slice(0, 10).map((store: any) => ({ address: store.address })));
       setBottomSheet(
         ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
-        '검색 결과',
+        'ZIP 검색 결과',
+        data.data.length,
       );
     } catch (error: any) {
       if (error.response?.status === 404) {

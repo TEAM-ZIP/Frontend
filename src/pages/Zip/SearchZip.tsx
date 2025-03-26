@@ -49,16 +49,17 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
           ))}
         </div>
       )}
-      <div className="mt-[12px] h-[0.5px] w-full bg-[#979797]"></div>
+
       {/* 검색결과 */}
       {searchResults.length === 0 ? (
         <div className="flex w-full flex-col items-center justify-center">
+          <div className="mt-[12px] h-[0.5px] w-full bg-[#979797]"></div>
           <Ping className="mb-[5px] mt-[30px]" />
           <p className="text-[14px] text-[#979797]">검색된 서점이 없어요!</p>
           <p className="text-[14px] font-medium leading-7 text-white">독립 서점 제보하러 가기 &gt;</p>
         </div>
       ) : (
-        searchResults.map((zip, index) => <ZipPreview key={index} bookstore={zip} />)
+        searchResults.map((zip, index) => <ZipPreview key={index} index={index} bookstore={zip} />)
       )}
     </div>
   );
