@@ -20,6 +20,7 @@ import BookSearch from '../pages/Booksnap/BookSearch';
 import IndiCreateBookReview1 from '../pages/Booksnap/IndiCreateBookReveiw1';
 import IndiCreateBookReview2 from '../pages/Booksnap/IndiCreateBookReview2';
 import CreateBook from '../pages/Booksnap/CreateBook';
+import Search from '../pages/Zip/Search';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: '/zip', element: <Zip /> },
+      { path: '/search', element: <Search /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/booksnap', element: <BookSnap /> },
       { path: '/booksnap/search', element: <BookSearch /> },
