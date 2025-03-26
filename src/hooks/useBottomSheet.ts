@@ -107,6 +107,8 @@ export default function useBottomSheet() {
       return true;
     };
 
+    if (!sheet.current || !content.current) return;
+
     const handleTouchStart = (e: TouchEvent) => {
       const { touchStart } = metrics.current;
       touchStart.sheetY = sheet.current!.getBoundingClientRect().y;
@@ -194,12 +196,12 @@ export default function useBottomSheet() {
           if (isMovingDown) {
             sheet.current!.style.setProperty('transform', `translateY(64px)`); // 중간 -> 최소
             setCurrentState('close');
-            console.log(currentHeight);
+            console.log('close');
+            closeBottomSheet();
           } else if (isMovingUp) {
             sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최소 -> 중간
             setCurrentState('mid');
             setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
-            console.log(currentHeight);
           }
         }
       }
@@ -218,14 +220,22 @@ export default function useBottomSheet() {
       };
     };
 
-    sheet.current!.addEventListener('touchstart', handleTouchStart);
-    sheet.current!.addEventListener('touchend', handleTouchEnd);
-    sheet.current!.addEventListener('touchmove', handleTouchMove, {
+    sheet.current.addEventListener('touchstart', handleTouchStart);
+    sheet.current.addEventListener('touchend', handleTouchEnd);
+    sheet.current.addEventListener('touchmove', handleTouchMove, {
       passive: false,
     });
+
+    // return () => {
+    //   sheet.current?.removeEventListener('touchstart', handleTouchStart);
+    //   sheet.current?.removeEventListener('touchmove', handleTouchMove);
+    //   sheet.current?.removeEventListener('touchend', handleTouchEnd);
+    // };
   }, []);
 
   useEffect(() => {
+    if (!content.current) return;
+
     const handleTouchStart = () => {
       metrics.current!.isContentAreaTouched = true;
     };
