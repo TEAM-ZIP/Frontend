@@ -28,19 +28,19 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
     <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px]'}`}>
       {/* 필터 */}
       <div
-        className="ml-[12px] flex h-[26px] w-[80px] items-center gap-1 rounded-[10px] border border-main_1 bg-main_2 pl-[17px]"
+        className="ml-[12px] flex h-[26px] w-[80px] items-center gap-1 rounded-[50px] bg-orange pl-[17px]"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className="text-[12px]">{FILTER_OPTIONS.find((option) => option.key === currentFilter)?.label}</p>
         <IoIosArrowDown className="h-3 w-3" />
       </div>
       {isOpen && (
-        <div className="absolute left-11 mt-[33px] w-[80px] rounded-[10px] border border-main_1 bg-[#F0F4FF]">
+        <div className="absolute left-11 mt-[33px] w-[80px] rounded-[10px] border border-orange bg-[#FFDDD2]">
           {FILTER_OPTIONS.map((option, index) => (
             <div
               key={option.key}
               className={`w-full py-[2px] text-[12px] ${
-                index !== FILTER_OPTIONS.length - 1 ? 'border-b-[0.5px] border-main_1' : ''
+                index !== FILTER_OPTIONS.length - 1 ? 'border-b-[0.5px] border-orange' : ''
               } cursor-pointer text-[#979797]`}
               onClick={() => handleFilterClick(option.key)}
             >
@@ -55,6 +55,7 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
         <div className="flex w-full flex-col items-center justify-center">
           <Ping className="mb-[5px] mt-[30px]" />
           <p className="text-[14px] text-[#979797]">검색된 서점이 없어요!</p>
+          <p className="text-[14px] font-medium leading-7 text-white">독립 서점 제보하러 가기 &gt;</p>
         </div>
       ) : (
         searchResults.map((zip, index) => <ZipPreview key={index} bookstore={zip} />)

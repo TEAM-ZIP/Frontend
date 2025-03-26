@@ -19,7 +19,7 @@ function BottomSheet() {
 
   return (
     <div
-      className={` ${currentState} duration-650 fixed left-0 right-0 top-[calc(100%-165px)] z-20 mx-auto flex max-w-[500px] flex-col rounded-t-lg bg-white shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)] transition-transform ease-out ${currentState == 'max' ? '' : 'pb-[280px]'} `}
+      className={` ${currentState} duration-650 fixed left-0 right-0 top-[calc(100%-165px)] z-20 mx-auto flex max-w-[500px] flex-col rounded-t-lg bg-bg shadow-[0_-6px_10px_-5px_rgba(0,0,0,0.6)] transition-transform ease-out ${currentState == 'max' ? '' : 'pb-[280px]'} `}
       style={{
         height: `${BOTTOM_SHEET_HEIGHT_MAX}px`,
       }}
