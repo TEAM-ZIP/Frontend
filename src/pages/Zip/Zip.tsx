@@ -11,6 +11,8 @@ import { getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 import HomeHeader from '../../components/Header/HomeHeader';
 import { useLocation } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import useBottomSheet from '../../hooks/useBottomSheet';
 
 export const BOOKSTORE_OPTIONS = [
   { key: 'INDEP', label: '📚 독립서점' },
@@ -25,10 +27,10 @@ const Zip = () => {
   const { setBottomSheet, closeBottomSheet, isOpen, resultCount } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
   const [locations, setLocations] = useState<{ address: string }[]>([]);
+  const { setCurrentState } = useBottomSheet();
 
   const locationState = useLocation();
-  const initialSearchWord = locationState.state?.searchWord || '';
-  const [searchWord, setSearchWord] = useState<string>(initialSearchWord);
+  const [searchWord, setSearchWord] = useState<string>('');
 
   useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location);
@@ -52,14 +54,22 @@ const Zip = () => {
   }, [isLiked, prevView]);
 
   useEffect(() => {
-    if (initialSearchWord) {
-      handleSearch(); // 최초 진입 시 검색어가 있으면 자동 검색 실행
+    if (locationState.state?.searchWord) {
+      setSearchWord(locationState.state.searchWord);
+      handleSearch();
+      window.history.replaceState({}, '', locationState.pathname);
+    } else {
+      setSearchWord('');
     }
-  }, [initialSearchWord]);
+  }, [locationState.state]);
 
   // 좋아요 처리
   const handleHeart = () => {
-    setIsLiked((prev) => !prev);
+    if (localStorage.getItem('accessToken')) {
+      setIsLiked((prev) => !prev);
+    } else {
+      toast.error('로그인이 필요한 서비스입니다.');
+    }
   };
 
   // 현위치 처리
@@ -79,6 +89,7 @@ const Zip = () => {
       // 정상 처리
       setSearchResults(data);
       setLocations(data.data.slice(0, 10).map((store: any) => ({ address: store.address })));
+      setCurrentState('mid');
       setBottomSheet(
         ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
         'ZIP 검색 결과',
@@ -113,6 +124,7 @@ const Zip = () => {
       </div>
       <div id="map" className="h-full w-full" />
       <BottomSheet />
+      <Toaster />
     </div>
   );
 };

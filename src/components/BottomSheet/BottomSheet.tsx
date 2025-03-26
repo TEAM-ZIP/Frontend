@@ -26,7 +26,7 @@ function BottomSheet() {
       ) : (
         <Header />
       )}
-      <div className="overflow-auto overscroll-contain scrollbar-hide" ref={content}>
+      <div className="overflow-y-auto overscroll-contain scrollbar-hide" ref={content}>
         {view ? view({ currentState }) : null}
       </div>
     </div>

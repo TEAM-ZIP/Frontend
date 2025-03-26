@@ -9,55 +9,59 @@ const instance = axios.create({
   },
 });
 
+// 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    // 요청이 전달되기 전 헤더에 토큰 추가
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
+// 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
-    if (response.data.data?.accessToken && response.data.data?.refreshToken) {
-      localStorage.setItem('accessToken', response.data.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.data.refreshToken);
+    const { accessToken, refreshToken } = response.data.data || {};
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
     }
     return response;
   },
   async (error) => {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const originalRequest = error.config;
 
-    // 토큰 재발급
-    if (error.response.status === 401) {
+    // reissue 요청 자체는 재시도하지 않음
+    if (originalRequest.url.includes('auth/reissue')) {
+      return Promise.reject(error);
+    }
+
+    // 무한 루프 방지를 위한 플래그
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
       try {
-        const res = await axios.post(`http://api.bookstore-zip.site/auth/reissue`, {
-          refreshToken: refreshToken,
-        });
-        if (res.status == 200) {
-          const { accessToken, refreshToken } = res.data.data;
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-        }
+        const refreshToken = localStorage.getItem('refreshToken');
+        const res = await instance.post('auth/reissue', { refreshToken });
 
-        // 새 토큰으로 헤더 업데이트 후 재요청
-        error.config.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
-        return axios(error.config);
+        const { accessToken, refreshToken: newRefreshToken } = res.data.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', newRefreshToken);
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return instance(originalRequest);
       } catch (refreshErr) {
-        console.log('Token 갱신 실패: ', refreshErr);
-
+        console.log('Token 갱신 실패:', refreshErr);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-
         window.location.href = '/login';
+        return Promise.reject(refreshErr);
       }
     }
+
     return Promise.reject(error);
   },
 );
