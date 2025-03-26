@@ -24,19 +24,19 @@ const RoundButton = ({ type, onClick, isLiked }: RoundButtonProps) => {
   const icon =
     type == 'heart' ? (
       isLiked ? (
-        <FaHeart className="h-5 w-5 text-red_1" />
+        <FaHeart className="h-5 w-5 text-orange" />
       ) : (
-        <FaRegHeart className="h-5 w-5 text-[#979797]" />
+        <FaHeart className="h-5 w-5 text-[#979797]" />
       )
     ) : (
       <TbCurrentLocation
-        className={`h-6 w-6 ${isClicked ? 'text-blue-500' : 'text-[#979797]'} transition duration-400`}
+        className={`h-6 w-6 ${isClicked ? 'text-orange' : 'text-[#979797]'} duration-400 transition`}
       />
     );
 
   return (
     <button
-      className="w-10 h-10 bg-white flex items-center justify-center rounded-full"
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-bg"
       onClick={(e) => {
         setIsClicked(true);
         if (onClick) onClick(e);

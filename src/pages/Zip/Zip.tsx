@@ -11,6 +11,7 @@ import { useMap } from '../../hooks/useMap';
 import { useCurrentLocation } from '../../hooks/useCurrentLocation';
 import { getCategoryBookstore, getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
+import HomeHeader from '../../components/Header/HomeHeader';
 
 export const BOOKSTORE_OPTIONS = [
   { key: 'INDEP', label: '📚 독립서점' },
@@ -21,7 +22,6 @@ export const BOOKSTORE_OPTIONS = [
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [location, setLocation] = useState<ILocation>(defaultLocation);
-  const [currentBookstore, setCurrentBookstore] = useState<string | null>(null);
   const [searchWord, setSearchWord] = useState<string>('');
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen } = useBottomSheetStore();
@@ -42,44 +42,24 @@ const Zip = () => {
       });
     }
     // prevView가 없다면 닫기 (돌아왔을 때만 닫힘)
-    else if (!prevView && !currentBookstore && searchWord === '') {
+    else if (!prevView && searchWord === '') {
       closeBottomSheet();
     }
-  }, [isLiked, currentBookstore, searchWord, prevView]);
+  }, [isLiked, searchWord, prevView]);
 
-  useEffect(() => {
-    if (currentBookstore) {
-      getCategoryBookstore(currentBookstore, location!.latitude, location!.longitude).then((data) => {
-        setLocations(data.data.map((store: getZipPreview) => ({ address: store.address })));
-        setBottomSheet(
-          ({ currentState }) => <SearchZip searchResults={data.data} currentState={currentState} />,
-          '독립 서점',
-        );
-      });
-    }
-  }, [currentBookstore]);
-
+  // 좋아요 처리
   const handleHeart = () => {
     setIsLiked((prev) => !prev);
-    setCurrentBookstore(null);
   };
 
-  const handleCategorySelect = (category: string) => {
-    if (currentBookstore !== category) {
-      setIsLiked(false);
-      setCurrentBookstore(category);
-    } else {
-      setCurrentBookstore(null);
-    }
-  };
-
+  // 현위치 처리
   const handleLocationClick = () => {
     handleCurrentLocation();
     setIsLiked(false);
-    setCurrentBookstore(null);
     closeBottomSheet();
   };
 
+  // 검색 처리
   const handleSearch = async () => {
     setIsLiked(false);
     // 검색 API 호출
@@ -109,26 +89,10 @@ const Zip = () => {
         overflow: isOpen ? 'visible' : 'hidden',
       }}
     >
+      <HomeHeader />
       <div className={`pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full flex-col`}>
-        {/* 검색바 */}
-        <div className="pointer-events-auto mt-[18px] w-full px-[10px]">
-          <SearchBar setSearchWord={setSearchWord} searchWord={searchWord} onSearch={handleSearch} />
-        </div>
-        {/* 카테고리 버튼 */}
-        <div className="pointer-events-auto relative mt-2 overflow-y-visible px-[10px]">
-          <div className="flex w-max gap-2">
-            {BOOKSTORE_OPTIONS.map((type) => (
-              <CategoryButton
-                key={type.key}
-                text={type.label}
-                onClick={() => handleCategorySelect(`${type.key}`)}
-                isSelected={currentBookstore === `${type.key}`}
-              />
-            ))}
-          </div>
-        </div>
         {/* 찜버튼 & 현재위치 */}
-        <div className="pointer-events-auto mt-3 flex flex-col items-end gap-3 px-[10px]">
+        <div className="border-3 pointer-events-auto mt-3 flex flex-col items-end gap-3 border-red-400 px-[10px] pt-[52px]">
           <RoundButton type="heart" onClick={handleHeart} isLiked={isLiked} />
           <RoundButton type="current" onClick={handleLocationClick} />
         </div>
