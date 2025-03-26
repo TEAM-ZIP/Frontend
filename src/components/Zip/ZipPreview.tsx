@@ -9,9 +9,10 @@ import { likeZip } from '../../api/zip.api';
 
 interface ZipPreviewProps {
   bookstore: getZipPreview;
+  index: number;
 }
 
-const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
+const ZipPreview = ({ bookstore, index }: ZipPreviewProps) => {
   const { setBottomSheet } = useBottomSheetStore();
   const [isLiked, setIsLiked] = useState<boolean>(bookstore.liked);
 
@@ -37,26 +38,33 @@ const ZipPreview = ({ bookstore }: ZipPreviewProps) => {
     return option ? option.label : '';
   };
 
+  // 배경색 결정
+  const bgColor = index % 2 == 0 ? '#F6ECC9' : '#C1D201';
+
   return (
-    <div className="flex w-full flex-col border-b-[0.5px] border-main_2 px-5 py-3" onClick={openDetail}>
-      {/* 서점 이름 & 찜 버튼 */}
-      <div className="flex justify-between">
-        <p className="text-[14px] font-bold tracking-[-0.56px] text-main_1">{bookstore.name}</p>
-        <div className="flex h-5 w-5 items-center justify-center rounded-full border-[0.5px] border-[#BCB3B3]">
-          <FaHeart className={`h-3 w-3 ${isLiked ? 'fill-red_1' : 'fill-gray_1'}`} onClick={handleLike} />
+    <div
+      className={`mt-4 flex w-full items-center justify-between rounded-[40px] px-8 py-7`}
+      style={{ backgroundColor: bgColor }}
+      onClick={openDetail}
+    >
+      <div className="flex flex-col gap-1">
+        <p className="text-[12px] tracking-[-0.48px] text-[#706A6A]">
+          {bookstore.address.length > 27 ? bookstore.address.substring(0, 27) + '⋯' : bookstore.address}
+        </p>
+
+        <div className="flex items-center gap-2">
+          <h3 className="text-[17px] tracking-[-0.56px] text-[#1E1E1E]">{bookstore.name}</h3>
+          <div className="flex items-center gap-[2px]">
+            <FaStar className="h-[10px] w-[10px] fill-[#706A6A70]" />
+            <p className="text-[11px] tracking-[-0.44px] text-[#979797]">{bookstore.rating}</p>
+          </div>
+          <div className="h-[10px] w-[1px] bg-[#D9D9D9]"></div>
+          <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{bookstore.keyword}</p>
         </div>
       </div>
-      {/* 별점 & 카테고리 */}
-      <div className="mt-[10px] flex items-center gap-[6px]">
-        <div className="flex items-center gap-1">
-          <FaStar className="h-[10px] w-[10px] fill-[#0000008A]" />
-          <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{bookstore.rating}</p>
-        </div>
-        <div className="h-[10px] w-[1px] bg-[#D9D9D9]"></div>
-        <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{getLabelByKey(bookstore.bookstoreCategory)}</p>
+      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-black">
+        <FaHeart className={`h-3 w-3 ${isLiked ? 'fill-orange' : 'fill-white'} bg-black`} onClick={handleLike} />
       </div>
-      {/* 주소 */}
-      <p className="text-[12px] tracking-[-0.48px] text-[#979797]">{bookstore.address}</p>
     </div>
   );
 };

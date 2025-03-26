@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import HomeIcon from '../../../public/icons/menu-bar/HomeRounded.svg?react';
-import BooksnapIconActive from '../../../public/icons/menu-bar/CommentRounded.svg?react';
-import BooksnapIcon from '../../../public/icons/menu-bar/Booksnap.svg?react';
-import Search from '../../../public/icons/menu-bar/search.svg?react';
-import SearchActive from '../../../public/icons/menu-bar/searchActive.svg?react';
 import SearchIcon from '@mui/icons-material/Search';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import RateReviewIcon from '@mui/icons-material/RateReview';
@@ -17,8 +13,14 @@ const MenuBar = () => {
   const [currentMenu, setCurrentMenu] = useState<string>('home');
 
   useEffect(() => {
-    const pathnameWithoutSlash = location.pathname.split('/');
-    setCurrentMenu(pathnameWithoutSlash[1]);
+    const pathname = location.pathname;
+
+    if (pathname.startsWith('/zip') || pathname.startsWith('/search')) {
+      setCurrentMenu('search');
+    } else {
+      const pathnameWithoutSlash = pathname.split('/')[1];
+      setCurrentMenu(pathnameWithoutSlash);
+    }
   }, [location]);
 
   const menus = [

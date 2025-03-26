@@ -1,6 +1,6 @@
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Bookie from '../../../public/icons/home/bookie.png';
-import Marker from '../../../public/icons/zip/marker.svg?react';
+import Marker from '../../../public/icons/zip/markerHome.svg?react';
 
 const PopularBox = () => {
   return (

@@ -6,4 +6,5 @@ export interface getZipPreview {
   rating: number;
   name: string;
   liked: boolean;
+  keyword: string;
 }
