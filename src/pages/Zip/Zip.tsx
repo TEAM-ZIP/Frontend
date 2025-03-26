@@ -35,6 +35,7 @@ const Zip = () => {
 
   useEffect(() => {
     if (isLiked) {
+      setSearchWord('');
       getHeartBookstore(location!.latitude, location!.longitude).then((data) => {
         setLocations(data.data.bookstores.map((store: getZipPreview) => ({ address: store.address })));
         setBottomSheet(
@@ -48,7 +49,7 @@ const Zip = () => {
     else if (!prevView && searchWord === '') {
       closeBottomSheet();
     }
-  }, [isLiked, searchWord, prevView]);
+  }, [isLiked, prevView]);
 
   useEffect(() => {
     if (initialSearchWord) {
