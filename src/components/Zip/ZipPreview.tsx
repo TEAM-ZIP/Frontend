@@ -48,7 +48,10 @@ const ZipPreview = ({ bookstore, index }: ZipPreviewProps) => {
       onClick={openDetail}
     >
       <div className="flex flex-col gap-1">
-        <p className="text-[12px] tracking-[-0.48px] text-[#706A6A]">{bookstore.address}</p>
+        <p className="text-[12px] tracking-[-0.48px] text-[#706A6A]">
+          {bookstore.address.length > 27 ? bookstore.address.substring(0, 27) + '⋯' : bookstore.address}
+        </p>
+
         <div className="flex items-center gap-2">
           <h3 className="text-[17px] tracking-[-0.56px] text-[#1E1E1E]">{bookstore.name}</h3>
           <div className="flex items-center gap-[2px]">

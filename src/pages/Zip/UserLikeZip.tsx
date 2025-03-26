@@ -31,7 +31,7 @@ export default function userLikeZip({ currentState, bookstoreList }: useLikeZipP
 
   return (
     <div
-      className={`flex h-full w-full flex-col items-center justify-center px-[30px] ${currentState == 'max' ? '' : 'pt-[15px]'}`}
+      className={`flex h-full w-full flex-col items-center justify-center px-[24px] ${currentState == 'max' ? '' : 'pt-[15px]'}`}
     >
       {/* 제목 및 개수 */}
       <div className="flex items-center justify-center gap-2">

@@ -25,7 +25,7 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
   };
 
   return (
-    <div className={`flex w-full flex-col px-[32px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px]'}`}>
+    <div className={`flex w-full flex-col px-[24px] ${currentState == 'max' ? 'pt-[10px]' : 'pt-[28px]'}`}>
       {/* 필터 */}
       <div
         className="ml-[12px] flex h-[26px] w-[80px] items-center gap-1 rounded-[50px] bg-orange pl-[17px]"
