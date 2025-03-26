@@ -6,6 +6,7 @@ import { getZipPreview } from '../../model/zip.model';
 import { BOOKSTORE_OPTIONS } from '../../pages/Zip/Zip';
 import { useState } from 'react';
 import { likeZip } from '../../api/zip.api';
+import toast from 'react-hot-toast';
 
 interface ZipPreviewProps {
   bookstore: getZipPreview;
@@ -23,6 +24,11 @@ const ZipPreview = ({ bookstore, index }: ZipPreviewProps) => {
   const handleLike = (e: React.MouseEvent<HTMLOrSVGElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!localStorage.getItem('accessToken')) {
+      toast.error('로그인이 필요한 서비스입니다.');
+      return;
+    }
 
     const newLike = !isLiked;
     setIsLiked(newLike);
