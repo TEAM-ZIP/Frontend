@@ -33,7 +33,9 @@ const Search = () => {
           <FilterButton text="분위기" />
           <FilterButton text="서적" />
         </div>
-        <button className="rounded-[20px] bg-green py-2 text-[14px] font-bold tracking-[0.56px]">검색</button>
+        <button className="rounded-[20px] bg-green py-2 text-[14px] font-bold tracking-[0.56px]" onClick={handleSearch}>
+          검색
+        </button>
       </div>
       {/* 독서 테마 추천 */}
       <div className="flex flex-col gap-5">
