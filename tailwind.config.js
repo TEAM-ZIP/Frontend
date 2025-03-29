@@ -39,6 +39,7 @@ export default {
         blue: '#9DB2CE',
         mint: '#C0E0D8',
         pink: '#F9D6E7',
+        yellow: '#F6ECC9',
       },
       backgroundImage: {
         'key-gradient': 'linear-gradient(180deg, #E1ECF6 0%, #DAE4FD 31%, #DBE5FD 61.5%, #EAF1F8 100%)',

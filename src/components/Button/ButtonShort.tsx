@@ -29,7 +29,7 @@ const ButtonShort = ({ type, onClick }: ButtonShortProps) => {
       case BUTTON_TYPE.REVIEW:
         setButtonType({
           buttonText: '리뷰 쓰기',
-          icon: <HiPencil className="fill-white" />,
+          icon: <HiPencil className="fill-bg" />,
         });
         break;
       case BUTTON_TYPE.ADD:
@@ -40,9 +40,12 @@ const ButtonShort = ({ type, onClick }: ButtonShortProps) => {
     }
   }, []);
   return (
-    <div className="flex h-[26px] items-center gap-[6px] rounded-[10px] bg-main_1 px-[10px] py-[6px]" onClick={onClick}>
+    <div
+      className="flex h-[26px] items-center gap-[6px] rounded-[10px] bg-orange px-[10px] py-[6px] text-bg"
+      onClick={onClick}
+    >
       {buttonType.icon}
-      <p className="text-[13px] font-normal tracking-normal text-main_2">{buttonType.buttonText}</p>
+      <p className="text-[13px] font-normal tracking-normal text-bg">{buttonType.buttonText}</p>
     </div>
   );
 };

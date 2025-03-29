@@ -4,30 +4,37 @@ interface FilterProps {
   first: string;
   second: string;
   onChange: (selected: string) => void;
+  color?: string; // Tailwind 색상 클래스: ex) 'bg-yellow'
 }
 
-const FilterBar = ({ first, second, onChange }: FilterProps) => {
-  const [isSelected, setIsSelected] = useState(first); // 기본값을 first로
+const FilterBar = ({ first, second, onChange, color = 'bg-yellow' }: FilterProps) => {
+  const [isSelected, setIsSelected] = useState(first);
 
   useEffect(() => {
     onChange(isSelected);
   }, [isSelected]);
 
   return (
-    <div className="flex w-full justify-around rounded-[20px] border-[1px] border-solid border-white bg-bg text-[11px] font-semibold text-white">
+    <div className="flex w-full overflow-hidden rounded-[20px] text-[11px] font-semibold">
+      {/* 왼쪽 탭 */}
       <div
-        className={`w-full cursor-pointer rounded-l-[20px] py-[5px] text-center ${
-          isSelected === first ? 'bg-pink text-black' : 'text-white'
-        }`}
+        className={`w-full cursor-pointer rounded-l-[20px] py-[5px] text-center leading-4 ${
+          isSelected === first
+            ? `${color} border text-black border-${color.replace('bg-', '')} border-r-0`
+            : 'border border-r-0 border-white bg-bg text-white'
+        } `}
         onClick={() => setIsSelected(first)}
       >
         {first}
       </div>
-      <div className="w-[1px] bg-white" />
+
+      {/* 오른쪽 탭 */}
       <div
-        className={`w-full cursor-pointer rounded-r-[20px] py-[5px] text-center ${
-          isSelected === second ? 'bg-pink text-black' : 'text-white'
-        }`}
+        className={`w-full cursor-pointer rounded-r-[20px] py-[5px] text-center leading-4 ${
+          isSelected === second
+            ? `${color} border text-black border-${color.replace('bg-', '')} border-l-0`
+            : 'border border-l-0 border-white bg-bg text-white'
+        } `}
         onClick={() => setIsSelected(second)}
       >
         {second}

@@ -8,6 +8,7 @@ const Button = ({ text, onClick, color = 'mint' }: ButtonProps) => {
   const colorMap: Record<string, string> = {
     pink: '#DEBBCC',
     mint: '#91AAA4',
+    green: '#C1D201',
   };
 
   const iconColor = colorMap[color] ?? '#CCCCCC';

@@ -21,10 +21,12 @@ const MaxHeader = ({ closeBottomSheet, viewName, resultCount }: HeaderProps) => 
         ) : (
           <div className="text-white">{viewName}</div>
         )}
-        <div className="flex items-center gap-[2px]">
-          <FmdGoodIcon sx={{ fontSize: 14, fill: '#CFCCD4' }} />
-          <p className="text-[12px] leading-6 text-[#CFCCD4]">{resultCount}개</p>
-        </div>
+        {viewName !== '서점 상세 정보' && (
+          <div className="flex items-center gap-[2px]">
+            <FmdGoodIcon sx={{ fontSize: 14, fill: '#CFCCD4' }} />
+            <p className="text-[12px] leading-6 text-[#CFCCD4]">{resultCount}개</p>
+          </div>
+        )}
       </div>
       <div className="w-11" />
     </div>
