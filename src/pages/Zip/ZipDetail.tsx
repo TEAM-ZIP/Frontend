@@ -39,12 +39,12 @@ const ZipDetail = ({ currentState }: ZipDetailProps) => {
   const handleBookInfo = () => {};
 
   return (
-    <div className={`flex w-full flex-col gap-7 px-[27px] pt-[32px] text-base tracking-normal`}>
+    <div className={`flex w-full flex-col gap-7 px-[27px] pt-4 text-base tracking-normal`}>
       {/* 서점 정보 */}
       <ZipInfo />
       {/* 리뷰 및 보유서적 */}
       <div>
-        <FilterBar first="리뷰" second="보유 서적" onChange={handleFilterChange} />
+        <FilterBar first="리뷰" second="보유 서적" onChange={handleFilterChange} color="bg-orange" />
         {type == '리뷰' ? (
           <div>
             <div className="mt-5 flex justify-between text-[13px]">
@@ -81,7 +81,7 @@ const ZipDetail = ({ currentState }: ZipDetailProps) => {
                   </div>
                 </div>
               ) : (
-                <NoResult text="직접 리뷰를 남겨보세요!" />
+                <NoResult text="직접 리뷰를 남겨보세요!" color="yellow" />
               )}
             </div>
           </div>
