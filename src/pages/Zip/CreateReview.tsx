@@ -90,7 +90,7 @@ const CreateReview = () => {
         </div>
 
         <div className="w-full">
-          <Button text="리뷰 등록" onClick={handleReviewPost} />
+          <Button text="리뷰 등록" onClick={handleReviewPost} color="green" />
         </div>
       </div>
     </div>
