@@ -4,15 +4,16 @@ interface StarProps {
   rating: number;
   setRating: (value: number) => void;
   size: number;
+  color?: string;
 }
 
-const Star = ({ rating, setRating, size }: StarProps) => {
+const Star = ({ rating, setRating, size, color }: StarProps) => {
   return (
     <div className="flex gap-1">
       {Array.from({ length: 5 }).map((_, index) => (
         <div className="flex cursor-pointer" key={index}>
           <FaStar
-            className={rating > index ? 'text-pink' : 'text-gray_1'}
+            className={rating > index ? (color ? color : 'text-pink') : 'text-gray_1'}
             size={size}
             onClick={() => setRating(index + 1)}
           />
@@ -21,4 +22,5 @@ const Star = ({ rating, setRating, size }: StarProps) => {
     </div>
   );
 };
+
 export default Star;
