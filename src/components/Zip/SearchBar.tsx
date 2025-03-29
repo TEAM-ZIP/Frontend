@@ -21,7 +21,7 @@ const SearchBar = ({ setSearchWord, searchWord, onSearch, text }: SearchBarProps
       <IoSearch className="absolute left-3 top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#C6B8B8]" />
       <input
         placeholder={text}
-        className="w-full rounded-[12px] bg-bg_2 py-[5px] pl-[38px] text-[14px] text-[#C6B8B8] focus:outline-none focus:ring-1 focus:ring-white"
+        className="w-full rounded-[20px] bg-bg_2 py-[5px] pl-[38px] text-[14px] text-[#C6B8B8] focus:outline-none focus:ring-1 focus:ring-white"
         onChange={(e) => setSearchWord(e.target.value)}
         value={searchWord}
         onKeyDown={handleEnter}
