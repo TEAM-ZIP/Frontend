@@ -8,3 +8,15 @@ export interface getZipPreview {
   liked: boolean;
   keyword: string;
 }
+
+export interface zipPreview {
+  address: string;
+  bookstoreId: number;
+  description: string;
+  hours: string;
+  keyword: string;
+  liked: boolean;
+  name: string;
+  phone: string;
+  rating: number;
+}

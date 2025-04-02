@@ -47,3 +47,15 @@ export const likeZip = async (bookstoreId: number) => {
     console.log(error);
   }
 };
+
+// 서점 상세 정보
+export const getZipDetail = async (bookstoreId: number) => {
+  try {
+    const response = await instance.get(`api/bookstores/${bookstoreId}`);
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
