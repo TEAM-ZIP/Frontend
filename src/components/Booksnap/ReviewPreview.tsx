@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { deleteLike, pickBook, postLike } from '../../api/booksnap.api';
 import { MdBookmarkAdd } from 'react-icons/md';
 import toast from 'react-hot-toast';
+import BookstoreTag from './BookstoreTag';
 
 interface ReviewPreviewProps {
   review: BooksnapPreview;
@@ -49,7 +50,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
     if (!localStorage.getItem('accessToken')) {
       toast.error('로그인이 필요한 서비스입니다.');
     } else {
-      pickBook(review.bookInfo.isbn).then((data) => {
+      pickBook(review.bookInfo.bookId).then((data) => {
         if (data?.success) {
           toast.success(`${review.bookInfo.title}을(를) 책장에 담았어요!`);
         } else {
@@ -91,6 +92,13 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
           </div>
         </div>
         <p className="text-[14px] font-light tracking-normal text-white">{review.review}</p>
+        <div className="mt-2 flex">
+          {/* 서점 태그 */}
+          {review.bookInfo?.bookStores &&
+            review.bookInfo.bookStores.map((bookstore) => (
+              <BookstoreTag key={bookstore.bookStoreId} name={bookstore.bookStoreName} />
+            ))}
+        </div>
       </div>
       {/* 좋아요 및 담기 */}
       <div className="my-2 flex justify-around text-[13px] tracking-normal text-[#DBDBDB]">

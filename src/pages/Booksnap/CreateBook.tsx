@@ -7,16 +7,30 @@ import Button from '../../components/Button/Button';
 import Step from '../../components/Booksnap/Step';
 import AddBookstore from '../../components/Booksnap/AddBookstore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { postIndepBook } from '../../api/booksnap.api';
 
 const CreateBook = () => {
   const nav = useNavigate();
 
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const [imageList, setImageList] = useState<File[]>([]);
   const [previewList, setPreviewList] = useState<string[]>([]); // 미리보기용 URL 저장
 
-  const handleReviewPost = () => {};
+  const handleReviewPost = () => {
+    const payload = {
+      bookstoreIds: [1],
+      title: title,
+      authorsString: author,
+      rating: rating,
+      reviewText: review,
+    };
+    postIndepBook(imageList[0], payload).then(() => {
+      // nav(-1);
+    });
+  };
 
   // 파일 선택 시 실행될 함수
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +52,7 @@ const CreateBook = () => {
         <div className="mb-2 flex flex-col items-center justify-center">
           <label>
             {previewList.length == 0 ? (
-              <div className="bg-mint flex h-[120px] w-20 items-center justify-center">
+              <div className="flex h-[120px] w-20 items-center justify-center bg-mint">
                 <AddCircleOutlineIcon sx={{ fontSize: 40, fill: '#9AB1AC ' }} />
               </div>
             ) : (
@@ -48,10 +62,14 @@ const CreateBook = () => {
           </label>
           <input
             placeholder="책 제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="m-0 mb-1 mt-4 text-wrap border-none bg-transparent p-0 text-center text-[15px] font-bold tracking-[-0.56px] text-white shadow-none outline-none focus:outline-none"
           />
           <input
             placeholder="작가 이름을 입력하세요."
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
             className="text-wrap border-none bg-transparent p-0 text-center text-[13px] font-light tracking-[-0.48px] text-gray_2 shadow-none outline-none focus:outline-none"
           />
         </div>

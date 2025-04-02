@@ -23,7 +23,7 @@ const IndiCreateBookReview2 = () => {
       rating: rating,
       reviewText: review,
     };
-    postBookReview(payload).then((data) => {
+    postBookReview('indep', payload).then((data) => {
       console.log('리뷰 등록 성공');
       nav('/booksnap');
     });
