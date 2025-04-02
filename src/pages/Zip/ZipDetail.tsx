@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../../components/Zip/SearchBar';
 import BookInfo from '../../components/Booksnap/BookInfo';
 import { getZipDetail } from '../../api/zip.api';
-import { zipPreview } from '../../model/zip.model';
+import { bookstoreReview, zipPreview } from '../../model/zip.model';
 import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
 import NoResult from '../../components/Booksnap/NoResult';
 
@@ -23,7 +23,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const [type, setType] = useState('리뷰');
   const [searchWord, setSearchWord] = useState('');
   const [bookstoreInfo, setBookstoreInfo] = useState<zipPreview>();
-  const [reviewList, setReviewList] = useState([]);
+  const [reviewList, setReviewList] = useState<bookstoreReview[]>([]);
 
   const handleWriteReview = () => {
     setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} id={id} />, '서점 상세 정보');
@@ -39,7 +39,6 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
 
   const handleFilterChange = (selected: string) => {
     setType(selected);
-    // 리뷰 가져오기
   };
 
   const handleSearch = () => {
@@ -67,7 +66,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             {/* 리뷰 보여주기 */}
             <div className="mt-[2px]">
               {reviewList.length > 0 ? (
-                reviewList.map((review) => <ZipReview />)
+                reviewList.map((review) => <ZipReview review={review} />)
               ) : (
                 <NoBookStoreResult firstText="아직 등록된 리뷰가 없어요!" type="book" />
               )}
@@ -82,6 +81,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
               text="책 제목으로 리뷰를 찾아보세요!"
             />
             <div className="my-6">
+              {/* 수정필요 */}
               {bookstoreInfo ? (
                 <div className="flex flex-col gap-6">
                   <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} />

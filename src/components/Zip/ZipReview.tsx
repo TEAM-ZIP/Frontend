@@ -1,15 +1,20 @@
 import { FaStar } from 'react-icons/fa';
 import image from '../../../public/icons/zip/image.png';
+import { bookstoreReview } from '../../model/zip.model';
 
-const ZipReview = () => {
+interface ZipReviewProps {
+  review: bookstoreReview;
+}
+
+const ZipReview = ({ review }: ZipReviewProps) => {
   return (
     <div className="flex flex-col gap-[10px] border-b-[0.5px] border-[#D9D9D9] px-2 pb-[19px] pt-[10px] text-base tracking-normal">
       {/* 글씨영역 */}
       <div className="flex justify-between">
         {/* 이름 날짜 */}
         <div className="flex items-end gap-[10px] text-[14px]">
-          <p className="text-body3 font-bold text-white">책먹는 여우</p>
-          <p className="text-[13px] font-light text-gray_1">25.01.31</p>
+          <p className="text-body3 font-bold text-white">{review.nickname}</p>
+          <p className="text-[13px] font-light text-gray_1">{review.createdAt.slice(0, 10)}</p>
         </div>
         {/* 별점 */}
         <div className="flex items-center gap-1">
@@ -19,11 +24,8 @@ const ZipReview = () => {
       </div>
       {/* 사진 및 리뷰 */}
       <div className="flex justify-between gap-4">
-        <img src={image} className="h-[80px] w-[80px] flex-shrink-0" />
-        <p className="text-[13px] leading-5 tracking-normal text-gray_1">
-          요즘 자주 찾게 되는 진시황! 몰래 책 먹다가 사장님한테 들켰는데 사장님이 한 번은 봐주신대요... 사장님 진짜
-          좋으신 분이세요 ㅠㅠ
-        </p>
+        <img src={review.imageUrl} className="h-[80px] w-[80px] flex-shrink-0" />
+        <p className="text-[13px] leading-5 tracking-normal text-gray_1">{review.text}</p>
       </div>
 
       {/* 사진영역 */}

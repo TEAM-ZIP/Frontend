@@ -26,7 +26,6 @@ const ZipInfo = ({ bookstoreInfo }: ZipInfoProps) => {
     });
   };
 
-  console.log(bookstoreInfo);
   return (
     <div className="mt-4 flex w-full flex-col items-center gap-4 rounded-[40px] bg-yellow px-7 py-5">
       {/* 서점 이름 */}

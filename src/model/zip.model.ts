@@ -20,3 +20,12 @@ export interface zipPreview {
   phone: string;
   rating: number;
 }
+
+export interface bookstoreReview {
+  bookstoreReviewId: number;
+  nickname: string;
+  rating: number;
+  text: string;
+  imageUrl: string;
+  createdAt: string;
+}
