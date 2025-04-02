@@ -28,7 +28,7 @@ const CreateBook = () => {
       reviewText: review,
     };
     postIndepBook(imageList[0], payload).then(() => {
-      // nav(-1);
+      nav('/booksnap');
     });
   };
 

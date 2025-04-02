@@ -4,7 +4,7 @@ import SearchBar from '../Zip/SearchBar';
 import { useNavigate } from 'react-router-dom';
 
 interface HomeHeaderProps {
-  onSearch: () => void;
+  onSearch: (search: string) => void;
   setSearchWord: (value: string) => void;
   searchWord: string;
 }
@@ -18,7 +18,7 @@ const HomeHeader = ({ onSearch, setSearchWord, searchWord }: HomeHeaderProps) =>
       <SearchBar
         searchWord={searchWord}
         setSearchWord={setSearchWord}
-        onSearch={onSearch}
+        onSearch={() => onSearch(searchWord)}
         text="독립서점을 찾아보세요!"
       ></SearchBar>
     </div>

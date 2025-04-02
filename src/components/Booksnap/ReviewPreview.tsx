@@ -1,7 +1,6 @@
 import { FaStar } from 'react-icons/fa';
 import { BooksnapPreview } from '../../model/booksnap.model';
 import { timeAgo } from '../../utils/timeDifference';
-import { IoMdThumbsUp } from 'react-icons/io';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoMdHeart } from 'react-icons/io';
 import { useEffect, useState } from 'react';
@@ -78,7 +77,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
         <div className="relative z-10 mt-10 flex h-full items-center justify-center">
           <img
             src={review.bookInfo.bookImageUrl}
-            className="scale-110 transform object-cover object-center shadow-md"
+            className="h-[191px] w-[132px] transform object-cover object-center shadow-md"
           />
         </div>
       </div>
@@ -92,13 +91,13 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
           </div>
         </div>
         <p className="text-[14px] font-light tracking-normal text-white">{review.review}</p>
-        <div className="mt-2 flex">
-          {/* 서점 태그 */}
-          {review.bookInfo?.bookStores &&
-            review.bookInfo.bookStores.map((bookstore) => (
+        {review.bookInfo?.bookStores && (
+          <div className="mt-2 flex">
+            {review.bookInfo.bookStores.map((bookstore) => (
               <BookstoreTag key={bookstore.bookStoreId} name={bookstore.bookStoreName} />
             ))}
-        </div>
+          </div>
+        )}
       </div>
       {/* 좋아요 및 담기 */}
       <div className="my-2 flex justify-around text-[13px] tracking-normal text-[#DBDBDB]">
