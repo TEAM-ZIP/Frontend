@@ -10,7 +10,7 @@ import { useCurrentLocation } from '../../hooks/useCurrentLocation';
 import { getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 import HomeHeader from '../../components/Header/HomeHeader';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import useBottomSheet from '../../hooks/useBottomSheet';
 
@@ -28,6 +28,7 @@ const Zip = () => {
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
   const [locations, setLocations] = useState<{ address: string }[]>([]);
   const { setCurrentState } = useBottomSheet();
+  const nav = useNavigate();
 
   const [searchWord, setSearchWord] = useState<string>('');
 
@@ -60,7 +61,7 @@ const Zip = () => {
       setSearchWord(searchWordFromQuery);
       handleSearch(searchWordFromQuery);
     }
-  }, [searchWordFromQuery]);
+  }, [searchParams.toString()]);
 
   // 좋아요 처리
   const handleHeart = () => {
@@ -81,6 +82,9 @@ const Zip = () => {
   // 검색 처리
   const handleSearch = async (search: string) => {
     setIsLiked(false);
+
+    nav(`/zip?search=${search}`, { replace: true });
+
     // 검색 API 호출
     try {
       const data = await searchBookstore(search, location!.latitude, location!.longitude);
