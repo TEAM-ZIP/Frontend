@@ -102,3 +102,16 @@ export const pickBook = async (isbn: string) => {
     console.log(error);
   }
 };
+
+// 서점 검색
+export const searchBookstore = async (query: string | null) => {
+  try {
+    const url = query ? `api/booksnap/bookstore?query=${encodeURIComponent(query)}` : 'api/booksnap/bookstore';
+    const response = await instance.get(url);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error: any) {
+    console.log(error);
+  }
+};

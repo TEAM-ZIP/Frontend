@@ -9,6 +9,13 @@ import AddBookstore from '../../components/Booksnap/AddBookstore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { postIndepBook } from '../../api/booksnap.api';
 
+export type Option = {
+  bookstoreId: number;
+  bookStoreName: string;
+  label: string;
+  value: string;
+};
+
 const CreateBook = () => {
   const nav = useNavigate();
 
@@ -19,9 +26,13 @@ const CreateBook = () => {
   const [imageList, setImageList] = useState<File[]>([]);
   const [previewList, setPreviewList] = useState<string[]>([]); // 미리보기용 URL 저장
 
+  const [selectedBookstores, setSelectedBookstores] = useState<readonly Option[]>([]);
+
   const handleReviewPost = () => {
+    const bookstoreIds = selectedBookstores.map((b) => b.bookstoreId);
+
     const payload = {
-      bookstoreIds: [1],
+      bookstoreIds: bookstoreIds,
       title: title,
       authorsString: author,
       rating: rating,
@@ -76,7 +87,7 @@ const CreateBook = () => {
         {/* 별졈 */}
         <Star rating={rating} setRating={setRating} size={28} />
         {/* 발견한 서점 */}
-        <AddBookstore />
+        <AddBookstore selectedBookstores={selectedBookstores} setSelectedBookstores={setSelectedBookstores} />
         {/* 리뷰 쓰기 */}
         <div className="mt-6 w-full">
           <WritingReview onChange={(e) => setReview(e.target.value)} value={review} />
