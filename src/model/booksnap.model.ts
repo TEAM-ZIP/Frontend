@@ -28,7 +28,9 @@ export interface Bookstore {
 
 // 북스냅 리뷰
 export interface BookReview {
-  isbn: string;
+  isbn?: string;
+  bookId?: number;
+  bookstoreIDs?: number[];
   rating: number;
   reviewText: string;
 }
