@@ -1,3 +1,4 @@
+import { postReview } from '../model/zip.model';
 import instance from './instance';
 
 // 서점 검색
@@ -53,6 +54,28 @@ export const getZipDetail = async (bookstoreId: number) => {
   try {
     const response = await instance.get(`api/bookstores/${bookstoreId}`);
     if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 서점 리뷰 등록
+export const postBookstoreReview = async (review_img: File, review: postReview) => {
+  try {
+    const formData = new FormData();
+
+    formData.append('review_img', review_img);
+    formData.append('review', JSON.stringify(review));
+
+    const response = await instance.post(`/api/bookstore/reviews`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
       return response.data;
     }
   } catch (error) {

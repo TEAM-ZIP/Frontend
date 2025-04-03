@@ -13,7 +13,11 @@ export interface zipPreview {
   address: string;
   bookstoreId: number;
   description: string;
-  hours: string;
+  hours: {
+    weekday: string;
+    saturday: string;
+    sunday: string;
+  };
   keyword: string;
   liked: boolean;
   name: string;
@@ -21,6 +25,7 @@ export interface zipPreview {
   rating: number;
 }
 
+// 리뷰 받아올 때
 export interface bookstoreReview {
   bookstoreReviewId: number;
   nickname: string;
@@ -28,4 +33,11 @@ export interface bookstoreReview {
   text: string;
   imageUrl: string;
   createdAt: string;
+}
+
+// 리뷰 넣을 때
+export interface postReview {
+  bookstoreId: number;
+  rating: number;
+  text: string;
 }

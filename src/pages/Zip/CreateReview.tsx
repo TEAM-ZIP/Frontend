@@ -3,8 +3,9 @@ import Button from '../../components/Button/Button';
 import Star from '../../components/Zip/Star';
 import { ChangeEvent, useState } from 'react';
 import { FaAngleLeft } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { postBookstoreReview } from '../../api/zip.api';
 
 const CreateReview = () => {
   const [rating, setRating] = useState(0);
@@ -12,6 +13,9 @@ const CreateReview = () => {
   const [previewList, setPreviewList] = useState<string[]>([]);
   const [review, setReview] = useState<string>('');
   const nav = useNavigate();
+
+  const location = useLocation();
+  const { id, name } = location.state || {};
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -25,9 +29,14 @@ const CreateReview = () => {
   };
 
   const handleReviewPost = () => {
-    console.log('별점', rating);
-    console.log('사진', imageList);
-    console.log('리뷰:', review);
+    const payload = {
+      bookstoreId: id,
+      rating: rating,
+      text: review,
+    };
+    postBookstoreReview(imageList[0], payload).then(() => {
+      nav(-1);
+    });
   };
 
   return (
@@ -48,37 +57,23 @@ const CreateReview = () => {
 
       {/* 본문 */}
       <div className="flex w-full max-w-[500px] flex-col items-center gap-10 px-[32px] pt-[30px]">
-        <p className="border-b-[1px] border-white pb-6 text-body1 font-bold text-green">하늘밭봄</p>
+        <p className="border-b-[1px] border-white pb-6 text-body1 font-bold text-green">{name}</p>
 
         <div className="mt-[18px] flex w-full flex-col items-center gap-[30px]">
           {/* 사진 추가 및 미리보기 */}
-          {/* 사진 추가 및 미리보기 */}
-          {previewList.length === 0 ? (
-            // 사진이 하나도 없을 때 → 가운데 정렬
-            <div className="flex justify-center">
-              <label className="border-yellow flex h-[125px] w-[125px] items-center justify-center rounded-[20px] border-[1px]">
-                <AddPhotoAlternateIcon sx={{ fontSize: 25, fill: '#FEF3B1' }} />
-                <input type="file" accept="image/*" className="hidden" multiple onChange={handleFileChange} />
-              </label>
-            </div>
-          ) : (
-            // 사진이 추가되었을 때 → 가로 스크롤 가능한 리스트
-            <div className="flex w-full gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide">
-              <label className="border-yellow flex h-[125px] w-[125px] min-w-[125px] shrink-0 items-center justify-center rounded-[20px] border-[1px]">
-                <AddPhotoAlternateIcon sx={{ fontSize: 25, fill: '#FEF3B1' }} />
-                <input type="file" accept="image/*" className="hidden" multiple onChange={handleFileChange} />
-              </label>
-              {previewList.map((src, index) => (
-                <img
-                  key={index}
-                  src={src}
-                  alt={`Preview ${index + 1}`}
-                  className="h-[125px] w-[125px] min-w-[125px] shrink-0 rounded-[20px] object-cover"
-                />
-              ))}
-            </div>
-          )}
-          <p className="mt-[10px] text-[14px] text-white">대표 사진을 등록해주세요.</p>
+          <div className="flex flex-col gap-3">
+            <label>
+              {previewList.length === 0 ? (
+                <div className="flex h-[125px] w-[125px] items-center justify-center rounded-[20px] border-[1px] border-yellow">
+                  <AddPhotoAlternateIcon sx={{ fontSize: 25, fill: '#FEF3B1' }} />
+                </div>
+              ) : (
+                <img src={previewList[0]} alt="썸네일" className="h-[125px] w-[125px] rounded-[20px] object-cover" />
+              )}
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+            </label>
+            <p className="mt-[10px] text-[14px] text-white">대표 사진을 등록해주세요.</p>
+          </div>
 
           {/* 별점 */}
           <Star setRating={setRating} rating={rating} size={25} color="text-orange" />
