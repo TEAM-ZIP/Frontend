@@ -92,7 +92,7 @@ const ReviewPreview = ({ review }: ReviewPreviewProps) => {
         </div>
         <p className="text-[14px] font-light tracking-normal text-white">{review.review}</p>
         {review.bookInfo?.bookStores && (
-          <div className="mt-2 flex">
+          <div className="mt-2 flex gap-[6px]">
             {review.bookInfo.bookStores.map((bookstore) => (
               <BookstoreTag key={bookstore.bookStoreId} name={bookstore.bookStoreName} />
             ))}
