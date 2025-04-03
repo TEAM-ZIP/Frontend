@@ -25,20 +25,8 @@ const ZipReview = ({ review }: ZipReviewProps) => {
       {/* 사진 및 리뷰 */}
       <div className="flex justify-between gap-4">
         <img src={review.imageUrl} className="h-[80px] w-[80px] flex-shrink-0" />
-        <p className="text-[13px] leading-5 tracking-normal text-gray_1">{review.text}</p>
+        <p className="flex-1 text-[13px] leading-5 tracking-normal text-gray_1">{review.text}</p>
       </div>
-
-      {/* 사진영역 */}
-      {/* <div className="relative"> */}
-      {/* 가로 스크롤 가능한 영역 */}
-      {/* <div className="mx-[-32px] overflow-x-auto px-[32px] scrollbar-hide">
-          <div className="flex gap-[10px] after:w-[22px] after:flex-shrink-0 after:content-['']">
-            <img src={image} className="h-[80px] w-[80px] flex-shrink-0" />
-            <img src={image} className="h-[80px] w-[80px] flex-shrink-0" />
-            <img src={image} className="h-[80px] w-[80px] flex-shrink-0" />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
