@@ -39,12 +39,31 @@ const ZipInfo = ({ bookstoreInfo }: ZipInfoProps) => {
             <p className="text-gray_1">{bookstoreInfo.phone}</p>
           </div>
           {/* 영업시간 */}
-          <div className="flex items-center gap-[4px]">
-            <FaClock className="h-[10px] w-[10px] fill-[#0000008A]" />
-            <p className="break-keep text-gray_1">
-              {bookstoreInfo.hours ? bookstoreInfo.hours : '영업시간 정보가 없습니다.'}
-            </p>
-          </div>
+          {bookstoreInfo.hours ? (
+            <div className="flex flex-col">
+              <div className="flex items-center gap-[4px]">
+                <FaClock className="h-[10px] w-[10px] fill-[#0000008A]" />
+                <p className="break-keep text-gray_1">
+                  {bookstoreInfo?.hours.weekday ? `평일: ${bookstoreInfo.hours.weekday}` : '평일 휴무'}
+                </p>
+              </div>
+              <div className="flex items-center gap-[4px]">
+                <p className="ml-[14px] break-keep text-gray_1">
+                  {bookstoreInfo?.hours.saturday ? `토요일: ${bookstoreInfo.hours.saturday}` : '토요일 휴무'}
+                </p>
+                <div className="h-[10px] w-[1px] bg-[#D9D9D9]"></div>
+                <p className="break-keep text-gray_1">
+                  {bookstoreInfo?.hours.saturday ? `일요일: ${bookstoreInfo.hours.saturday}` : '일요일 휴무'}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-[4px]">
+              <FaClock className="h-[10px] w-[10px] fill-[#0000008A]" />
+              <p className="break-keep text-gray_1">영업시간 정보가 없습니다.</p>
+            </div>
+          )}
+
           <div className="flex items-center gap-[6px]">
             <div className="flex items-center gap-1">
               <FaStar className="h-[10px] w-[10px] fill-[#0000008A]" />
