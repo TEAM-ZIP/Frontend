@@ -12,7 +12,7 @@ const Search = () => {
   const nav = useNavigate();
 
   const handleSearch = () => {
-    nav('/zip', { state: { searchWord } });
+    nav(`/zip?search=${searchWord}`);
   };
 
   return (

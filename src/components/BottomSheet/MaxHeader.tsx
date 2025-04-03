@@ -1,5 +1,9 @@
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import { FaAngleLeft } from 'react-icons/fa6';
 import { IoCloseOutline } from 'react-icons/io5';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useBottomSheetStore } from '../../store/bottomSheetStore';
+import useBottomSheet from '../../hooks/useBottomSheet';
 
 interface HeaderProps {
   closeBottomSheet: () => void;
@@ -8,10 +12,25 @@ interface HeaderProps {
 }
 
 const MaxHeader = ({ closeBottomSheet, viewName, resultCount }: HeaderProps) => {
+  const nav = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchWordFromQuery = searchParams.get('search') || '';
+  const { setCurrentState } = useBottomSheet();
+
+  const handleBack = () => {
+    const random = Date.now();
+    nav(`/zip?search=${searchWordFromQuery}&r=${random}`, { replace: true });
+    setCurrentState('mid');
+  };
+
   return (
     <div className="mb-[-12px] flex items-center bg-bg px-2 py-3">
-      <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={closeBottomSheet}>
-        <IoCloseOutline size={30} className="stroke-white" />
+      <div className="flex cursor-pointer items-center justify-center p-2.5">
+        {viewName === '서점 상세 정보' ? (
+          <FaAngleLeft size={24} className="fill-white" onClick={handleBack} />
+        ) : (
+          <IoCloseOutline size={30} className="stroke-white" onClick={closeBottomSheet} />
+        )}
       </div>
       <div className="flex flex-1 items-end justify-center gap-2 text-[20px] font-bold tracking-[-0.8px]">
         {viewName === 'ZIP 검색 결과' ? (

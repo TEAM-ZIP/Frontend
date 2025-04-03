@@ -10,7 +10,7 @@ import { useCurrentLocation } from '../../hooks/useCurrentLocation';
 import { getHeartBookstore, searchBookstore } from '../../api/zip.api';
 import { getZipPreview } from '../../model/zip.model';
 import HomeHeader from '../../components/Header/HomeHeader';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import useBottomSheet from '../../hooks/useBottomSheet';
 
@@ -28,12 +28,15 @@ const Zip = () => {
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
   const [locations, setLocations] = useState<{ address: string }[]>([]);
   const { setCurrentState } = useBottomSheet();
+  const nav = useNavigate();
 
-  const locationState = useLocation();
   const [searchWord, setSearchWord] = useState<string>('');
 
   useMap(location?.latitude, location?.longitude, locations);
   const handleCurrentLocation = useCurrentLocation(location);
+
+  const [searchParams] = useSearchParams();
+  const searchWordFromQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     if (isLiked) {
@@ -54,14 +57,11 @@ const Zip = () => {
   }, [isLiked, prevView]);
 
   useEffect(() => {
-    if (locationState.state?.searchWord) {
-      setSearchWord(locationState.state.searchWord);
-      handleSearch();
-      window.history.replaceState({}, '', locationState.pathname);
-    } else {
-      setSearchWord('');
+    if (searchWordFromQuery) {
+      setSearchWord(searchWordFromQuery);
+      handleSearch(searchWordFromQuery);
     }
-  }, [locationState.state]);
+  }, [searchParams.toString()]);
 
   // 좋아요 처리
   const handleHeart = () => {
@@ -80,11 +80,14 @@ const Zip = () => {
   };
 
   // 검색 처리
-  const handleSearch = async () => {
+  const handleSearch = async (search: string) => {
     setIsLiked(false);
+
+    nav(`/zip?search=${search}`, { replace: true });
+
     // 검색 API 호출
     try {
-      const data = await searchBookstore(searchWord, location!.latitude, location!.longitude);
+      const data = await searchBookstore(search, location!.latitude, location!.longitude);
 
       // 정상 처리
       setSearchResults(data);
@@ -114,7 +117,7 @@ const Zip = () => {
         overflow: isOpen ? 'visible' : 'hidden',
       }}
     >
-      <HomeHeader onSearch={handleSearch} searchWord={searchWord} setSearchWord={setSearchWord} />
+      <HomeHeader onSearch={(search) => handleSearch(search)} searchWord={searchWord} setSearchWord={setSearchWord} />
       <div className={`pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full flex-col`}>
         {/* 찜버튼 & 현재위치 */}
         <div className="border-3 pointer-events-auto mt-3 flex flex-col items-end gap-3 border-red-400 px-[10px] pt-[52px]">

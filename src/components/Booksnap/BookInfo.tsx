@@ -22,9 +22,11 @@ const BookInfo = ({ bookInfo, onClick }: BookInfoProps) => {
           <p className="text-[13px] font-light tracking-[-0.48px] text-gray_2">
             {author.length > 7 ? author.substring(0, 7) + '⋯' : author}
           </p>
-          <p className="text-[13px] font-light tracking-[-0.48px] text-gray_2">
-            {bookInfo.publisher.length > 7 ? bookInfo.publisher.substring(0, 7) + '⋯' : bookInfo.publisher}
-          </p>
+          {bookInfo.publisher && (
+            <p className="text-[13px] font-light tracking-[-0.48px] text-gray_2">
+              {bookInfo.publisher.length > 7 ? bookInfo.publisher.substring(0, 7) + '⋯' : bookInfo.publisher}
+            </p>
+          )}
         </div>
       </div>
     </div>

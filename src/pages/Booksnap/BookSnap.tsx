@@ -17,7 +17,6 @@ const BookSnap = () => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const isLastRef = useRef<boolean>(false);
-  const nav = useNavigate();
 
   // 리뷰 목록 받아오기
   const getReviews = async () => {

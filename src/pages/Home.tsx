@@ -18,7 +18,7 @@ const Home = () => {
   const [searchWord, setSearchWord] = useState('');
 
   const handleSearch = () => {
-    nav('/zip', { state: { searchWord } });
+    nav(`/zip?search=${searchWord}`);
   };
 
   return (

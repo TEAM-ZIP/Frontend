@@ -12,16 +12,33 @@ export interface BooksnapPreview {
 
 // 북스냅 책 정보
 export interface BookDetailInfo {
-  isbn: string;
+  bookId: string;
   title: string;
   bookImageUrl: string;
   authors: string[];
-  publisher: string;
+  publisher: string | null;
+  bookType: 'normal' | 'indep';
+  bookStores: Bookstore[] | null;
+}
+
+export interface Bookstore {
+  bookStoreId: number;
+  bookStoreName: string;
 }
 
 // 북스냅 리뷰
 export interface BookReview {
-  isbn: string;
+  isbn?: string;
+  bookId?: number;
+  bookstoreIDs?: number[];
+  rating: number;
+  reviewText: string;
+}
+
+export interface IndepBookReview {
+  bookstoreIds: number[];
+  title: string;
+  authorsString: string;
   rating: number;
   reviewText: string;
 }

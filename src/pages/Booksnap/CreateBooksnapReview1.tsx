@@ -3,7 +3,7 @@ import SearchBar from '../../components/Zip/SearchBar';
 import Header from '../../components/Common/Header';
 import BookInfo from '../../components/Booksnap/BookInfo';
 import { BookDetailInfo } from '../../model/booksnap.model';
-import { getSearchBook, getSearchBookByAuthor } from '../../api/booksnap.api';
+import { getSearchBook } from '../../api/booksnap.api';
 import MoreButton from '../../components/Booksnap/MoreButton';
 import { useNavigate } from 'react-router-dom';
 import Step from '../../components/Booksnap/Step';
@@ -21,8 +21,8 @@ const CreateBooksnapReview = () => {
   const handleSearch = async (isNewSearch = false, type = searchType) => {
     if (isNewSearch) setPage(1);
     const currentPage = isNewSearch ? 1 : page;
-    const fetchFunction = type === '책 제목' ? getSearchBook : getSearchBookByAuthor;
-    const data = await fetchFunction(searchWord, currentPage);
+    const searchtype = type === '책 제목' ? 'title' : 'author';
+    const data = await getSearchBook('normal', searchtype, searchWord, currentPage);
 
     setIsEnd(data.data.isEnd);
     setBookInfo(isNewSearch ? data.data.bookData : (prev) => [...prev, ...data.data.bookData]);
@@ -58,7 +58,7 @@ const CreateBooksnapReview = () => {
               <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} color="bg-pink" />
               <div className="grid grid-cols-3 gap-7 overflow-y-auto">
                 {bookInfo.map((book) => (
-                  <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
+                  <BookInfo bookInfo={book} key={book.bookId} onClick={() => goToStep2(book)} />
                 ))}
               </div>
             </div>

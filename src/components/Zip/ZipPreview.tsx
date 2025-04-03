@@ -18,7 +18,10 @@ const ZipPreview = ({ bookstore, index }: ZipPreviewProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(bookstore.liked);
 
   const openDetail = () => {
-    setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} />, '서점 상세 정보');
+    setBottomSheet(
+      ({ currentState }) => <ZipDetail currentState={currentState} id={bookstore.bookstoreId} />,
+      '서점 상세 정보',
+    );
   };
 
   const handleLike = (e: React.MouseEvent<HTMLOrSVGElement>) => {

@@ -9,6 +9,13 @@ import { postBookReview } from '../../api/booksnap.api';
 import Step from '../../components/Booksnap/Step';
 import AddBookstore from '../../components/Booksnap/AddBookstore';
 
+export type Option = {
+  bookstoreId: number;
+  bookStoreName: string;
+  label: string;
+  value: string;
+};
+
 const IndiCreateBookReview2 = () => {
   const location = useLocation();
   const book = location.state.book || false;
@@ -17,13 +24,18 @@ const IndiCreateBookReview2 = () => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
+  const [selectedBookstores, setSelectedBookstores] = useState<readonly Option[]>([]);
+
   const handleReviewPost = () => {
+    const bookstoreIds = selectedBookstores.map((b) => b.bookstoreId);
+
     const payload = {
-      isbn: book.isbn,
+      bookId: book.bookId,
+      bookstoreIds: bookstoreIds,
       rating: rating,
       reviewText: review,
     };
-    postBookReview(payload).then((data) => {
+    postBookReview('indep', payload).then((data) => {
       console.log('리뷰 등록 성공');
       nav('/booksnap');
     });
@@ -52,7 +64,7 @@ const IndiCreateBookReview2 = () => {
         {/* 별졈 */}
         <Star rating={rating} setRating={setRating} size={28} />
         {/* 발견한 서점 */}
-        <AddBookstore />
+        <AddBookstore selectedBookstores={selectedBookstores} setSelectedBookstores={setSelectedBookstores} />
         {/* 리뷰 쓰기 */}
         <div className="mt-6 w-full">
           <WritingReview onChange={(e) => setReview(e.target.value)} value={review} />

@@ -22,8 +22,7 @@ const CreateBooksnapReview2 = () => {
       rating: rating,
       reviewText: review,
     };
-    postBookReview(payload).then((data) => {
-      console.log('리뷰 등록 성공');
+    postBookReview('normal', payload).then((data) => {
       nav('/booksnap');
     });
   };

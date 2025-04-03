@@ -3,6 +3,7 @@ import ZipPreview from '../../components/Zip/ZipPreview';
 import { useState } from 'react';
 import Ping from '../../../public/icons/zip/ping.svg?react';
 import { getZipPreview } from '../../model/zip.model';
+import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
 
 interface SearchZipProps {
   searchResults: getZipPreview[];
@@ -52,12 +53,7 @@ export default function SearchZip({ searchResults, currentState }: SearchZipProp
 
       {/* 검색결과 */}
       {searchResults.length === 0 ? (
-        <div className="flex w-full flex-col items-center justify-center">
-          <div className="mt-[12px] h-[0.5px] w-full bg-[#979797]"></div>
-          <Ping className="mb-[5px] mt-[30px]" />
-          <p className="text-[14px] text-[#979797]">검색된 서점이 없어요!</p>
-          <p className="text-[14px] font-medium leading-7 text-white">독립 서점 제보하러 가기 &gt;</p>
-        </div>
+        <NoBookStoreResult firstText="검색된 서점이 없어요!" secondText="독립 서점 제보하러 가기 &gt;" />
       ) : (
         searchResults.map((zip, index) => <ZipPreview key={index} index={index} bookstore={zip} />)
       )}
