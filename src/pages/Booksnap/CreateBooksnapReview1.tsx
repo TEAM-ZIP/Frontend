@@ -58,7 +58,7 @@ const CreateBooksnapReview = () => {
               <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} color="bg-pink" />
               <div className="grid grid-cols-3 gap-7 overflow-y-auto">
                 {bookInfo.map((book) => (
-                  <BookInfo bookInfo={book} key={book.isbn} onClick={() => goToStep2(book)} />
+                  <BookInfo bookInfo={book} key={book.bookId} onClick={() => goToStep2(book)} />
                 ))}
               </div>
             </div>
