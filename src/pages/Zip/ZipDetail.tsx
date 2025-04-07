@@ -10,7 +10,6 @@ import BookInfo from '../../components/Booksnap/BookInfo';
 import { getZipDetail } from '../../api/zip.api';
 import { bookstoreReview, zipPreview } from '../../model/zip.model';
 import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
-import NoResult from '../../components/Booksnap/NoResult';
 import { BookDetailInfo } from '../../model/booksnap.model';
 
 interface ZipDetailProps {
@@ -26,6 +25,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const [bookstoreInfo, setBookstoreInfo] = useState<zipPreview>();
   const [reviewList, setReviewList] = useState<bookstoreReview[]>([]);
   const [bookList, setBookList] = useState<BookDetailInfo[]>([]);
+  const [filteredBookList, setFilteredBookList] = useState<BookDetailInfo[]>([]);
 
   const handleWriteReview = () => {
     // setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} id={id} />, '서점 상세 정보');
@@ -44,8 +44,6 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
     setType(selected);
   };
 
-  const handleSearch = () => {};
-
   useEffect(() => {
     const detail = type === '리뷰' ? 'reviews' : 'books';
     getZipDetail(id, detail).then((data) => {
@@ -55,9 +53,21 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
       }
       if (data.data.bookList) {
         setBookList(data.data.bookList);
+        setFilteredBookList(data.data.bookList);
       }
     });
   }, [type]);
+
+  const handleSearch = () => {
+    if (!searchWord.trim()) {
+      setFilteredBookList(bookList);
+      return;
+    }
+
+    console.log(searchWord);
+    const filtered = bookList.filter((book) => book.title.toLowerCase().includes(searchWord.trim().toLowerCase()));
+    setFilteredBookList(filtered);
+  };
 
   const handleBookInfo = () => {};
 
@@ -99,9 +109,9 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             />
             <div className="my-6">
               {/* 수정필요 */}
-              {bookList.length > 0 ? (
+              {filteredBookList.length > 0 ? (
                 <div className="grid grid-cols-3 gap-7 overflow-y-auto">
-                  {bookList.map((book) => (
+                  {filteredBookList.map((book) => (
                     <BookInfo bookInfo={book} key={book.bookId} onClick={handleBookInfo} />
                   ))}
                 </div>
