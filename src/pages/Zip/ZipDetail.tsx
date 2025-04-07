@@ -44,9 +44,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
     setType(selected);
   };
 
-  const handleSearch = () => {
-    // 보유 서적 받아오기
-  };
+  const handleSearch = () => {};
 
   useEffect(() => {
     const detail = type === '리뷰' ? 'reviews' : 'books';
@@ -81,10 +79,13 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             </div>
             {/* 리뷰 보여주기 */}
             <div className="mt-[2px]">
-              {reviewList ? (
+              {reviewList.length > 0 ? (
                 reviewList.map((review) => <ZipReview review={review} key={review.createdAt} />)
               ) : (
-                <NoBookStoreResult firstText="아직 등록된 리뷰가 없어요!" type="book" />
+                <>
+                  <div className="mt-[12px] h-[0.5px] w-full bg-[#979797]"></div>
+                  <NoBookStoreResult firstText="아직 등록된 리뷰가 없어요!" type="book" />
+                </>
               )}
             </div>
           </div>
@@ -99,16 +100,13 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             <div className="my-6">
               {/* 수정필요 */}
               {bookList.length > 0 ? (
-                <div className="flex flex-col gap-6">
-                  <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} />
-                  <div className="grid grid-cols-3 gap-7 overflow-y-auto">
-                    {bookList.map((book) => (
-                      <BookInfo bookInfo={book} key={book.bookId} onClick={handleBookInfo} />
-                    ))}
-                  </div>
+                <div className="grid grid-cols-3 gap-7 overflow-y-auto">
+                  {bookList.map((book) => (
+                    <BookInfo bookInfo={book} key={book.bookId} onClick={handleBookInfo} />
+                  ))}
                 </div>
               ) : (
-                <NoResult text="검색 결과가 없어요!" />
+                <NoBookStoreResult firstText="아직 보유한 도서에 대한 정보가 없어요!" type="book" />
               )}
             </div>
           </div>
