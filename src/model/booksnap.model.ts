@@ -16,9 +16,9 @@ export interface BookDetailInfo {
   title: string;
   bookImageUrl: string;
   authors: string[];
-  publisher: string | null;
+  publisher?: string | null;
   bookType: 'normal' | 'indep';
-  bookStores: Bookstore[] | null;
+  bookStores?: Bookstore[] | null;
 }
 
 export interface Bookstore {

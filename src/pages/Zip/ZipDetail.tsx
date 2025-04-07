@@ -11,6 +11,7 @@ import { getZipDetail } from '../../api/zip.api';
 import { bookstoreReview, zipPreview } from '../../model/zip.model';
 import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
 import NoResult from '../../components/Booksnap/NoResult';
+import { BookDetailInfo } from '../../model/booksnap.model';
 
 interface ZipDetailProps {
   currentState: string;
@@ -24,6 +25,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const [searchWord, setSearchWord] = useState('');
   const [bookstoreInfo, setBookstoreInfo] = useState<zipPreview>();
   const [reviewList, setReviewList] = useState<bookstoreReview[]>([]);
+  const [bookList, setBookList] = useState<BookDetailInfo[]>([]);
 
   const handleWriteReview = () => {
     // setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} id={id} />, '서점 상세 정보');
@@ -31,19 +33,33 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   };
 
   useEffect(() => {
-    getZipDetail(id).then((data) => {
+    getZipDetail(id, 'reviews').then((data) => {
       setBookstoreInfo(data.data.bookstoreDetail);
       setReviewList(data.data.reviewList);
     });
   }, []);
 
   const handleFilterChange = (selected: string) => {
+    console.log(selected);
     setType(selected);
   };
 
   const handleSearch = () => {
     // 보유 서적 받아오기
   };
+
+  useEffect(() => {
+    const detail = type === '리뷰' ? 'reviews' : 'books';
+    getZipDetail(id, detail).then((data) => {
+      setBookstoreInfo(data.data.bookstoreDetail);
+      if (data.data.reviewList) {
+        setReviewList(data.data.reviewList);
+      }
+      if (data.data.bookList) {
+        setBookList(data.data.bookList);
+      }
+    });
+  }, [type]);
 
   const handleBookInfo = () => {};
 
@@ -65,8 +81,8 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             </div>
             {/* 리뷰 보여주기 */}
             <div className="mt-[2px]">
-              {reviewList.length > 0 ? (
-                reviewList.map((review) => <ZipReview review={review} />)
+              {reviewList ? (
+                reviewList.map((review) => <ZipReview review={review} key={review.createdAt} />)
               ) : (
                 <NoBookStoreResult firstText="아직 등록된 리뷰가 없어요!" type="book" />
               )}
@@ -82,14 +98,14 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
             />
             <div className="my-6">
               {/* 수정필요 */}
-              {bookstoreInfo ? (
+              {bookList.length > 0 ? (
                 <div className="flex flex-col gap-6">
                   <FilterBar first="책 제목" second="작가" onChange={handleFilterChange} />
-                  {/* <div className="grid grid-cols-3 gap-7 overflow-y-auto">
-                    {bookstoreInfo.map((book) => (
+                  <div className="grid grid-cols-3 gap-7 overflow-y-auto">
+                    {bookList.map((book) => (
                       <BookInfo bookInfo={book} key={book.bookId} onClick={handleBookInfo} />
                     ))}
-                  </div> */}
+                  </div>
                 </div>
               ) : (
                 <NoResult text="검색 결과가 없어요!" />
