@@ -8,6 +8,7 @@ import Step from '../../components/Booksnap/Step';
 import AddBookstore from '../../components/Booksnap/AddBookstore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { postIndepBook } from '../../api/booksnap.api';
+import cropImage from '../../utils/cropImage';
 
 export type Option = {
   bookstoreId: number;
@@ -28,7 +29,7 @@ const CreateBook = () => {
 
   const [selectedBookstores, setSelectedBookstores] = useState<readonly Option[]>([]);
 
-  const handleReviewPost = () => {
+  const handleReviewPost = async () => {
     const bookstoreIds = selectedBookstores.map((b) => b.bookstoreId);
 
     const payload = {
@@ -38,7 +39,14 @@ const CreateBook = () => {
       rating: rating,
       reviewText: review,
     };
-    postIndepBook(imageList[0], payload).then(() => {
+
+    let imageToUpload = imageList[0];
+
+    if (imageList[0]) {
+      const url = URL.createObjectURL(imageList[0]);
+      imageToUpload = await cropImage(url, 80, 120); // 자른 File 반환
+    }
+    postIndepBook(imageToUpload, payload).then(() => {
       nav('/booksnap');
     });
   };
