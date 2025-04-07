@@ -14,7 +14,7 @@ const BookInfo = ({ bookInfo, onClick }: BookInfoProps) => {
         className="w-20"
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
       />
-      <div className="flex flex-col gap-[10px]">
+      <div className={`flex flex-col ${bookInfo.publisher ? 'gap-[10px]' : 'gap-[3px]'}`}>
         <p className="text-[15px] font-semibold tracking-[-0.56px] text-white">
           {bookInfo.title.length > 14 ? bookInfo.title.substring(0, 14) + '⋯' : bookInfo.title}
         </p>

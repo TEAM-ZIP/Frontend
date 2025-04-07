@@ -41,3 +41,11 @@ export interface postReview {
   rating: number;
   text: string;
 }
+
+// // 보유 도서
+// export interface haveBooks {
+//   authors: string[];
+//   bookId: number;
+//   bookImageUrl: string;
+//   title: string;
+// }
