@@ -81,8 +81,6 @@ export default function useBottomSheet() {
       const { touchMove, isContentAreaTouched } = metrics.current;
       const currentStateValue = currentStateRef.current;
 
-      // console.log(currentStateValue);
-
       // 상태가 mid인 경우 바텀시트는 무조건 이동
       if (currentStateValue === 'mid') {
         return true;
@@ -102,7 +100,6 @@ export default function useBottomSheet() {
 
           // 맨 위 + 아래로 당기는 중일 때만 바텀시트 이동
           if (touchMove.movingDirection === 'down' && isAtTop) {
-            console.log('dd');
             return true;
           }
 
@@ -143,8 +140,6 @@ export default function useBottomSheet() {
         touchMove.movingDirection = 'up';
       }
 
-      console.log(touchMove.movingDirection);
-
       const canMoveBottomSheet = canUserMoveBottomSheet();
 
       const isNotMaxState = currentStateRef.current !== 'max';
@@ -184,7 +179,6 @@ export default function useBottomSheet() {
 
       if (!canMoveBottomSheet) {
         // 내부 스크롤이 필요한 경우, 바텀시트 동작을 막음
-        console.log('내부 스크롤 중 - 바텀시트 동작 차단');
         return;
       }
 
@@ -200,18 +194,15 @@ export default function useBottomSheet() {
             sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최대 -> 중간
             setCurrentState('mid');
             setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
-            console.log('최대, 중간', BOTTOM_SHEET_HEIGHT_MID, 'state', currentState);
           } else if (isMovingUp) {
             sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`); // 중간 -> 최대
             setCurrentHeight(BOTTOM_SHEET_HEIGHT_MAX);
             setCurrentState('max');
-            console.log(currentHeight);
           }
         } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
           if (isMovingDown) {
             sheet.current!.style.setProperty('transform', `translateY(64px)`); // 중간 -> 최소
             setCurrentState('close');
-            console.log('close');
             closeBottomSheet();
           } else if (isMovingUp) {
             sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최소 -> 중간
