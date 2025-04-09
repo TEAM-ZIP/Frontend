@@ -88,21 +88,31 @@ export default function useBottomSheet() {
         return true;
       }
 
-      if (currentStateValue === 'max' && isContentAreaTouched) {
+      if (currentStateValue === 'max') {
+        if (!isContentAreaTouched) {
+          // 콘텐츠 영역 아닌 곳을 터치했을 때는 바텀시트 이동 허용
+          return true;
+        }
+
         const contentElement = content.current!;
-        const scrollableElement = contentElement.querySelector('[data-scrollable]'); // 스크롤 가능한 내부 요소 찾기
+        const scrollableElement = contentElement.querySelector('[data-scrollable]');
 
         if (scrollableElement) {
-          const isAtTop = scrollableElement.scrollTop <= 0; // 내부 요소가 맨 위인지 확인
+          const isAtTop = scrollableElement.scrollTop <= 0;
 
-          // 방향이 down이고 스크롤이 맨 위에 있을 때만 바텀시트 이동 허용
+          // 맨 위 + 아래로 당기는 중일 때만 바텀시트 이동
           if (touchMove.movingDirection === 'down' && isAtTop) {
+            console.log('dd');
             return true;
           }
-          // 다른 경우 내부 스크롤 우선 허용
+
+          // 그 외엔 내부 스크롤 우선
           return false;
         }
+
+        return false; // scrollableElement 못 찾으면 안전하게 false
       }
+
       // 기본적으로 바텀시트 이동 허용
       return true;
     };
@@ -133,11 +143,17 @@ export default function useBottomSheet() {
         touchMove.movingDirection = 'up';
       }
 
+      console.log(touchMove.movingDirection);
+
       const canMoveBottomSheet = canUserMoveBottomSheet();
 
+      const isNotMaxState = currentStateRef.current !== 'max';
+
+      const isPullingDownInMax = currentStateRef.current === 'max' && touchMove.movingDirection === 'down';
+
       // 바텀시트 이동 가능 여부 확인
-      if (canMoveBottomSheet) {
-        e.preventDefault(); // 바텀시트 이동을 위해 기본 동작 차단
+      if (canMoveBottomSheet && (isNotMaxState || isPullingDownInMax)) {
+        e.preventDefault();
 
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
@@ -153,7 +169,6 @@ export default function useBottomSheet() {
         requestAnimationFrame(() => {
           const scrollableElement = content.current?.querySelector('[data-scrollable]');
           if (scrollableElement instanceof HTMLElement) {
-            console.log('잘됨');
             scrollableElement.style.overflowY = 'auto';
           }
         });
