@@ -12,6 +12,7 @@ import { getZipPreview } from '../../model/zip.model';
 import HomeHeader from '../../components/Header/HomeHeader';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useGeoLocation } from '../../hooks/useGeolocation';
 import useBottomSheet from '../../hooks/useBottomSheet';
 
 export const BOOKSTORE_OPTIONS = [
@@ -22,7 +23,7 @@ export const BOOKSTORE_OPTIONS = [
 
 const Zip = () => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [location, setLocation] = useState<ILocation>(defaultLocation);
+  const { location, error } = useGeoLocation();
   const [searchResults, setSearchResults] = useState<getZipPreview[]>([]);
   const { setBottomSheet, closeBottomSheet, isOpen, resultCount } = useBottomSheetStore();
   const [prevView, setPrevView] = useState(() => useBottomSheetStore.getState().prevView || null);
