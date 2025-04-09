@@ -20,9 +20,10 @@ const SearchBookstoreModal = ({ setModalOpen, selected, setSelected }: ModalProp
     debounce((inputValue: string) => {
       searchBookstore(inputValue).then((data) => {
         const mappedOptions: Option[] = data.data.map((item: any) => ({
-          ...item,
           label: item.bookStoreName,
           value: String(item.bookStoreId),
+          bookStoreName: item.bookStoreName,
+          bookstoreId: item.bookStoreId,
         }));
         setBookstoreOptions(mappedOptions);
       });
