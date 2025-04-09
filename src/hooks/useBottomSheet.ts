@@ -81,28 +81,35 @@ export default function useBottomSheet() {
       const { touchMove, isContentAreaTouched } = metrics.current;
       const currentStateValue = currentStateRef.current;
 
-      // console.log(currentStateValue);
-
       // 상태가 mid인 경우 바텀시트는 무조건 이동
       if (currentStateValue === 'mid') {
         return true;
       }
 
-      if (currentStateValue === 'max' && isContentAreaTouched) {
+      if (currentStateValue === 'max') {
+        if (!isContentAreaTouched) {
+          // 콘텐츠 영역 아닌 곳을 터치했을 때는 바텀시트 이동 허용
+          return true;
+        }
+
         const contentElement = content.current!;
-        const scrollableElement = contentElement.querySelector('[data-scrollable]'); // 스크롤 가능한 내부 요소 찾기
+        const scrollableElement = contentElement.querySelector('[data-scrollable]');
 
         if (scrollableElement) {
-          const isAtTop = scrollableElement.scrollTop <= 0; // 내부 요소가 맨 위인지 확인
+          const isAtTop = scrollableElement.scrollTop <= 0;
 
-          // 방향이 down이고 스크롤이 맨 위에 있을 때만 바텀시트 이동 허용
+          // 맨 위 + 아래로 당기는 중일 때만 바텀시트 이동
           if (touchMove.movingDirection === 'down' && isAtTop) {
             return true;
           }
-          // 다른 경우 내부 스크롤 우선 허용
+
+          // 그 외엔 내부 스크롤 우선
           return false;
         }
+
+        return false; // scrollableElement 못 찾으면 안전하게 false
       }
+
       // 기본적으로 바텀시트 이동 허용
       return true;
     };
@@ -135,9 +142,13 @@ export default function useBottomSheet() {
 
       const canMoveBottomSheet = canUserMoveBottomSheet();
 
+      const isNotMaxState = currentStateRef.current !== 'max';
+
+      const isPullingDownInMax = currentStateRef.current === 'max' && touchMove.movingDirection === 'down';
+
       // 바텀시트 이동 가능 여부 확인
-      if (canMoveBottomSheet) {
-        e.preventDefault(); // 바텀시트 이동을 위해 기본 동작 차단
+      if (canMoveBottomSheet && (isNotMaxState || isPullingDownInMax)) {
+        e.preventDefault();
 
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
@@ -153,7 +164,6 @@ export default function useBottomSheet() {
         requestAnimationFrame(() => {
           const scrollableElement = content.current?.querySelector('[data-scrollable]');
           if (scrollableElement instanceof HTMLElement) {
-            console.log('잘됨');
             scrollableElement.style.overflowY = 'auto';
           }
         });
@@ -169,7 +179,6 @@ export default function useBottomSheet() {
 
       if (!canMoveBottomSheet) {
         // 내부 스크롤이 필요한 경우, 바텀시트 동작을 막음
-        console.log('내부 스크롤 중 - 바텀시트 동작 차단');
         return;
       }
 
@@ -185,18 +194,15 @@ export default function useBottomSheet() {
             sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최대 -> 중간
             setCurrentState('mid');
             setCurrentHeight(BOTTOM_SHEET_HEIGHT_MID);
-            console.log('최대, 중간', BOTTOM_SHEET_HEIGHT_MID, 'state', currentState);
           } else if (isMovingUp) {
             sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`); // 중간 -> 최대
             setCurrentHeight(BOTTOM_SHEET_HEIGHT_MAX);
             setCurrentState('max');
-            console.log(currentHeight);
           }
         } else if (currentSheetY <= MAX_Y && currentSheetY > MID_Y) {
           if (isMovingDown) {
             sheet.current!.style.setProperty('transform', `translateY(64px)`); // 중간 -> 최소
             setCurrentState('close');
-            console.log('close');
             closeBottomSheet();
           } else if (isMovingUp) {
             sheet.current!.style.setProperty('transform', `translateY(${MID_Y - MAX_Y}px)`); // 최소 -> 중간
