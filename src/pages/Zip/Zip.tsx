@@ -58,11 +58,11 @@ const Zip = () => {
   }, [isLiked, prevView]);
 
   useEffect(() => {
-    if (searchWordFromQuery) {
+    if (searchWordFromQuery && location) {
       setSearchWord(searchWordFromQuery);
       handleSearch(searchWordFromQuery);
     }
-  }, [searchParams.toString()]);
+  }, [searchParams.toString(), location]);
 
   // 좋아요 처리
   const handleHeart = () => {
