@@ -72,7 +72,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const handleBookInfo = () => {};
 
   return (
-    <div className={`flex w-full flex-col gap-7 px-[27px] pt-4 text-base tracking-normal`}>
+    <div className={`flex w-full flex-col gap-7 px-[27px] pb-10 pt-4 text-base tracking-normal`}>
       {/* 서점 정보 */}
       {bookstoreInfo && <ZipInfo bookstoreInfo={bookstoreInfo} />}
       {/* 리뷰 및 보유서적 */}
