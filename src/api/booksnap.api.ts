@@ -53,11 +53,14 @@ export const postIndepBook = async (thumbnail: File, review: IndepBookReview) =>
 export const getReview = async (sort: string, page: number) => {
   try {
     const response = await instance.get(`api/booksnap/reviews?sort=${sort}&page=${page}`);
-    if (response.status == 200) {
+    if (response.status === 200) {
       return response.data;
+    } else {
+      throw new Error(`예상치 못한 응답 상태 코드: ${response.status}`);
     }
   } catch (error) {
-    console.log(error);
+    console.error('❌ getReview 실패:', error);
+    throw error; // ❗오류를 호출한 쪽에서 catch하게 던져줍니다
   }
 };
 

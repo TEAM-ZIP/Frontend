@@ -6,8 +6,8 @@ import Loading from '../Loading';
 import WriteButton from '../../components/Booksnap/WriteButton';
 import { getReview } from '../../api/booksnap.api';
 import Toast from '../../components/Common/Toast';
-import { useNavigate } from 'react-router-dom';
 import BooksnapHeader from '../../components/Header/BooksnapHeader';
+import { has } from 'lodash';
 
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('createdAt');
@@ -17,16 +17,19 @@ const BookSnap = () => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const isLastRef = useRef<boolean>(false);
+  const [hasError, setHasError] = useState(false);
 
   // 리뷰 목록 받아오기
   const getReviews = async () => {
     try {
       const data = await getReview(filter, page);
+      console.log('📦 getReview 응답:', data);
       setReview((prev) => (page === 1 ? data.data.booksnapPreview : [...prev, ...data.data.booksnapPreview]));
       setIsLast(data.data.last);
       setIsBottom(false);
     } catch (error) {
       console.error('리뷰를 불러오는 중 에러 발생:', error);
+      setHasError(true);
     }
   };
 
@@ -83,7 +86,7 @@ const BookSnap = () => {
     }
   }, []);
 
-  if (!review) {
+  if (hasError) {
     return <Loading text="데이터를 불러오는 데 실패했습니다!" />;
   }
 
