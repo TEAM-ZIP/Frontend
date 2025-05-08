@@ -8,6 +8,7 @@ import Button from '../../components/Button/Button';
 import { postBookReview } from '../../api/booksnap.api';
 import Step from '../../components/Booksnap/Step';
 import AddBookstore from '../../components/Booksnap/AddBookstore';
+import Loading from '../Loading';
 
 export type Option = {
   bookstoreId: number;
@@ -25,8 +26,10 @@ const IndiCreateBookReview2 = () => {
   const [review, setReview] = useState('');
 
   const [selectedBookstores, setSelectedBookstores] = useState<readonly Option[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleReviewPost = () => {
+    setIsLoading(true);
     const bookstoreIds = selectedBookstores.map((b) => b.bookstoreId);
 
     const payload = {
@@ -36,10 +39,14 @@ const IndiCreateBookReview2 = () => {
       reviewText: review,
     };
     postBookReview('indep', payload).then((data) => {
-      console.log('리뷰 등록 성공');
+      setIsLoading(false);
       nav('/booksnap');
     });
   };
+
+  if (isLoading) {
+    return <Loading text="리뷰를 등록중입니다!" />;
+  }
 
   return (
     <div className="flex h-full flex-col bg-bg pb-[50px] pt-[70px]">
