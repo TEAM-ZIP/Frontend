@@ -9,6 +9,7 @@ import AddBookstore from '../../components/Booksnap/AddBookstore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { postIndepBook } from '../../api/booksnap.api';
 import cropImage from '../../utils/cropImage';
+import Loading from '../Loading';
 
 export type Option = {
   bookstoreId: number;
@@ -28,8 +29,10 @@ const CreateBook = () => {
   const [previewList, setPreviewList] = useState<string[]>([]); // 미리보기용 URL 저장
 
   const [selectedBookstores, setSelectedBookstores] = useState<readonly Option[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleReviewPost = async () => {
+    setIsLoading(true);
     const bookstoreIds = selectedBookstores.map((b) => b.bookstoreId);
 
     const payload = {
@@ -47,6 +50,7 @@ const CreateBook = () => {
       imageToUpload = await cropImage(url, 80, 120); // 자른 File 반환
     }
     postIndepBook(imageToUpload, payload).then(() => {
+      setIsLoading(false);
       nav('/booksnap');
     });
   };
@@ -59,6 +63,10 @@ const CreateBook = () => {
       setPreviewList([URL.createObjectURL(file)]);
     }
   };
+
+  if (isLoading) {
+    return <Loading text="리뷰를 등록중입니다!" />;
+  }
 
   return (
     <div className="flex h-full flex-col bg-bg pb-[50px] pt-[70px]">

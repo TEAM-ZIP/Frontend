@@ -7,6 +7,7 @@ import WritingReview from '../../components/Zip/WritingReview';
 import Button from '../../components/Button/Button';
 import { postBookReview } from '../../api/booksnap.api';
 import Step from '../../components/Booksnap/Step';
+import Loading from '../Loading';
 
 const CreateBooksnapReview2 = () => {
   const location = useLocation();
@@ -16,16 +17,24 @@ const CreateBooksnapReview2 = () => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleReviewPost = () => {
+    setIsLoading(true);
     const payload = {
       isbn: book.isbn,
       rating: rating,
       reviewText: review,
     };
     postBookReview('normal', payload).then((data) => {
+      setIsLoading(false);
       nav('/booksnap');
     });
   };
+
+  if (isLoading) {
+    return <Loading text="리뷰를 등록중입니다!" />;
+  }
 
   return (
     <div className="flex h-full flex-col bg-bg pb-[50px] pt-[70px]">
