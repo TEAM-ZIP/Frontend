@@ -9,6 +9,7 @@ import { sendMessageToChatAPI } from '../api/bookie.api';
 import { MdBookmarkAdd } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { pickBook } from '../api/booksnap.api';
+import { bookieLoadingMessages } from '../constants/bookieLoadingMessages';
 
 type MessageType = {
   text: string;
@@ -28,6 +29,7 @@ const Bookie = () => {
   const nav = useNavigate();
   const [isComposing, setIsComposing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState<string>('');
   const userName = '이구역독서짱';
   const [systemRes, setSystemRes] = useState<MessageType[]>([
     {
@@ -50,6 +52,10 @@ const Bookie = () => {
     setSystemRes((prev) => [...prev, userMessage]); // 사용자 메시지 먼저 출력
     setInput('');
 
+    const random = bookieLoadingMessages[Math.floor(Math.random() * bookieLoadingMessages.length)];
+    setLoadingMessage(random);
+    setIsLoading(true);
+
     try {
       const reply = await sendMessageToChatAPI(input);
       const systemMessage: MessageType = { text: reply.message, type: 'system', books: reply.books };
@@ -60,6 +66,9 @@ const Bookie = () => {
         type: 'system',
       };
       setSystemRes((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+      setLoadingMessage('');
     }
   };
 
@@ -119,11 +128,11 @@ const Bookie = () => {
         </div>
         {/* 채팅구역 */}
         <div
-          className="pointer-events-auto z-10 mb-20 mt-10 flex max-h-[80%] w-full flex-col gap-3 self-end px-8"
+          className="pointer-events-auto z-10 mb-20 mt-10 flex max-h-[80%] w-full flex-col gap-3 self-end"
           onWheel={(e) => e.stopPropagation()} // 휠 이벤트 차단
         >
           {systemRes.map((msg, index) => (
-            <div key={index} className="flex flex-col gap-2">
+            <div key={index} className="flex flex-col gap-2 px-6">
               <MessageBox text={msg.text} type={msg.type} />
               {msg.books && msg.books.length > 0 && (
                 <div className="mt-1 flex flex-col gap-3">
@@ -151,7 +160,12 @@ const Bookie = () => {
               )}
             </div>
           ))}
-
+          {isLoading && (
+            <div className="flex flex-col items-center justify-center py-2 text-white">
+              <h3 className="text-[15px]">부키가 책을 고르러 작은 서점 골목으로 들어갔어요...📚</h3>
+              <p className="animate-pulse text-[12px] italic">{loadingMessage}</p>
+            </div>
+          )}
           <div ref={endOfMessages}></div>
         </div>
       </div>
