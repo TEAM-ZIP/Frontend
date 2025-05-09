@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import Person2Icon from '@mui/icons-material/Person2';
+import toast from 'react-hot-toast';
 
 const MenuBar = () => {
   const nav = useNavigate();
@@ -62,6 +63,14 @@ const MenuBar = () => {
             key={menuItem.name}
             className={`flex cursor-pointer flex-col items-center px-2 ${currentMenu === menuItem.name ? 'pb-[0px] pt-[6px]' : 'py-[6px]'}`}
             onClick={() => {
+              const isAuthenticated = !!localStorage.getItem('accessToken');
+
+              const protectedMenus = ['bookie'];
+
+              if (protectedMenus.includes(menuItem.name) && !isAuthenticated) {
+                toast.error('로그인이 필요한 서비스입니다!');
+                return;
+              }
               nav(menuItem.name);
             }}
           >
