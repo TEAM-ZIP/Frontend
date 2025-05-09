@@ -5,7 +5,7 @@ import Input from '../components/Bookie/Input';
 import { FaRegArrowAltCircleUp } from 'react-icons/fa';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { sendMessageToChatAPI } from '../api/bookie.api';
+import { getHistory, sendMessageToChatAPI } from '../api/bookie.api';
 import { MdBookmarkAdd } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { pickBook } from '../api/booksnap.api';
@@ -43,6 +43,12 @@ const Bookie = () => {
       endOfMessages.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [systemRes]);
+
+  useEffect(() => {
+    getHistory().then((data) => {
+      setSystemRes(data.chat);
+    });
+  }, []);
 
   // 메세지 보내기
   const sendMessage = async () => {

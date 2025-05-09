@@ -16,3 +16,17 @@ export const sendMessageToChatAPI = async (message: string) => {
     throw error;
   }
 };
+
+// 이전 히스토리 가져오기
+export const getHistory = async () => {
+  try {
+    const response = await instance.get('/bookie/history');
+
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

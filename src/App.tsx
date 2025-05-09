@@ -2,6 +2,7 @@ import './App.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/router';
 import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }
