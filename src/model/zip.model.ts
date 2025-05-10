@@ -23,6 +23,7 @@ export interface zipPreview {
   name: string;
   phone: string;
   rating: number;
+  likedCount: number;
 }
 
 // 리뷰 받아올 때
