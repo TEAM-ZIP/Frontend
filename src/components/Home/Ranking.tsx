@@ -19,7 +19,7 @@ const Ranking = () => {
     getTrendZip().then((data) => {
       setBookstores(data.data);
     });
-  });
+  }, []);
 
   const left = bookstores.slice(0, 5);
   const right = bookstores.slice(5, 10);
