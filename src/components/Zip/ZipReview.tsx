@@ -19,7 +19,7 @@ const ZipReview = ({ review }: ZipReviewProps) => {
         {/* 별점 */}
         <div className="flex items-center gap-1">
           <FaStar className="h-[12px] w-[12px] fill-[#D9D9D9]" />
-          <p className="text-[13px] font-bold text-white">4</p>
+          <p className="text-[13px] font-bold text-white">{review.rating}</p>
         </div>
       </div>
       {/* 사진 및 리뷰 */}

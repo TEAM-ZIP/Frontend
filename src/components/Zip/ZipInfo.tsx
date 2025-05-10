@@ -80,7 +80,7 @@ const ZipInfo = ({ bookstoreInfo }: ZipInfoProps) => {
           <div className="flex h-6 w-6 items-center justify-center rounded-full bg-bg" onClick={handleLike}>
             <FaHeart className={`h-3 w-3 ${isLiked ? 'fill-orange' : 'fill-white'}`} />
           </div>
-          <p className="text-[12px] text-gray_1">12</p>
+          <p className="text-[12px] text-gray_1">{bookstoreInfo.likedCount}</p>
         </div>
       </div>
       <p className="flex self-start break-keep text-[13px] leading-4 text-gray_1">{bookstoreInfo.description}</p>

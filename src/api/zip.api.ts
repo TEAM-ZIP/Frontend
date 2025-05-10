@@ -50,9 +50,9 @@ export const likeZip = async (bookstoreId: number) => {
 };
 
 // 서점 상세 정보
-export const getZipDetail = async (bookstoreId: number, type: string) => {
+export const getZipDetail = async (bookstoreId: number, type: string, sortFiled: string) => {
   try {
-    const response = await instance.get(`api/bookstores/${bookstoreId}/details?type=${type}`);
+    const response = await instance.get(`api/bookstores/${bookstoreId}/details?type=${type}&sortFiled?=${sortFiled}`);
     if (response.status == 200) {
       return response.data;
     }
@@ -80,5 +80,17 @@ export const postBookstoreReview = async (review_img: File, review: postReview) 
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+// 인기 급상승 독립 서점
+export const getTrendZip = async () => {
+  try {
+    const response = await instance.get('/api/bookstores/trending');
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };

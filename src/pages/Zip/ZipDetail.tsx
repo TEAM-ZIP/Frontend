@@ -11,6 +11,7 @@ import { getZipDetail } from '../../api/zip.api';
 import { bookstoreReview, zipPreview } from '../../model/zip.model';
 import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
 import { BookDetailInfo } from '../../model/booksnap.model';
+import { set } from 'lodash';
 
 interface ZipDetailProps {
   currentState: string;
@@ -26,6 +27,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const [reviewList, setReviewList] = useState<bookstoreReview[]>([]);
   const [bookList, setBookList] = useState<BookDetailInfo[]>([]);
   const [filteredBookList, setFilteredBookList] = useState<BookDetailInfo[]>([]);
+  const [filter, setFilter] = useState<'createdAt' | 'rating'>('createdAt');
 
   const handleWriteReview = () => {
     // setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} id={id} />, '서점 상세 정보');
@@ -33,11 +35,11 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   };
 
   useEffect(() => {
-    getZipDetail(id, 'reviews').then((data) => {
+    getZipDetail(id, 'reviews', filter).then((data) => {
       setBookstoreInfo(data.data.bookstoreDetail);
       setReviewList(data.data.reviewList);
     });
-  }, []);
+  }, [filter]);
 
   const handleFilterChange = (selected: string) => {
     console.log(selected);
@@ -46,7 +48,7 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
 
   useEffect(() => {
     const detail = type === '리뷰' ? 'reviews' : 'books';
-    getZipDetail(id, detail).then((data) => {
+    getZipDetail(id, detail, filter).then((data) => {
       setBookstoreInfo(data.data.bookstoreDetail);
       if (data.data.reviewList) {
         setReviewList(data.data.reviewList);
@@ -82,8 +84,15 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
           <div>
             <div className="mt-5 flex justify-between text-[13px]">
               <div className="flex items-center gap-4">
-                <p className="text-orange">• 최신 순</p>
-                <p className="text-white">• 별점 순</p>
+                <p
+                  className={filter === 'createdAt' ? 'text-orange' : 'text-white'}
+                  onClick={() => setFilter('createdAt')}
+                >
+                  • 최신 순
+                </p>
+                <p className={filter === 'rating' ? 'text-orange' : 'text-white'} onClick={() => setFilter('rating')}>
+                  • 별점 순
+                </p>
               </div>
               <ButtonShort type="review" onClick={handleWriteReview} />
             </div>
