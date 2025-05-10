@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+import { getTrendZip } from '../../api/zip.api';
+
 const Ranking = () => {
-  const name = [
+  const [bookstores, setBookstores] = useState([
     '게으른 정원',
     '고요서사',
     '스토리지북앤필름',
@@ -10,10 +13,16 @@ const Ranking = () => {
     '책방서로',
     '북소리서점',
     '책밥서점',
-  ];
+  ]);
 
-  const left = name.slice(0, 5);
-  const right = name.slice(5, 10);
+  useEffect(() => {
+    getTrendZip().then((data) => {
+      setBookstores(data.data);
+    });
+  });
+
+  const left = bookstores.slice(0, 5);
+  const right = bookstores.slice(5, 10);
 
   return (
     <div>

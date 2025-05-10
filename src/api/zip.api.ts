@@ -82,3 +82,15 @@ export const postBookstoreReview = async (review_img: File, review: postReview) 
     console.log(error);
   }
 };
+
+// 인기 급상승 독립 서점
+export const getTrendZip = async () => {
+  try {
+    const response = await instance.get('/api/bookstores/trending');
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
