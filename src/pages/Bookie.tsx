@@ -30,7 +30,7 @@ const Bookie = () => {
   const [isComposing, setIsComposing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState<string>('');
-  const userName = '이구역독서짱';
+  const userName = localStorage.getItem('nickname');
   const [systemRes, setSystemRes] = useState<MessageType[]>([
     {
       text: `안녕하세요! ${userName}님이 좋아하실만한책을 추천해드리는 Bookie입니다! 더 많은 정보를 알려주시면, 책을 찾아드릴게요.`,

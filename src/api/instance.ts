@@ -24,10 +24,11 @@ instance.interceptors.request.use(
 // 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
-    const { accessToken, refreshToken } = response.data.data || {};
+    const { accessToken, refreshToken, nickname } = response.data.data || {};
     if (accessToken && refreshToken) {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('nickname', nickname);
     }
     return response;
   },
@@ -57,6 +58,7 @@ instance.interceptors.response.use(
         console.log('Token 갱신 실패:', refreshErr);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('nickname');
         window.location.href = '/login';
         return Promise.reject(refreshErr);
       }
