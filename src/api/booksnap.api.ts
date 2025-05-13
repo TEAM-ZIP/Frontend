@@ -115,3 +115,42 @@ export const searchBookstore = async (query: string | null) => {
     console.log(error);
   }
 };
+
+// 책 리뷰검색하기
+export const searchReview = async (bookName: string) => {
+  try {
+    const response = await instance.get(`/api/search?bookName=${bookName}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 책 검색 기록 저장
+export const postSearchHistory = async (searchType: string, searchWord: string) => {
+  try {
+    const response = await instance.post(`/api/search-history`, {
+      searchType: searchType,
+      searchWord: searchWord,
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 최근 검색어 불러오기
+export const getRecentSearch = async (searchtype: string, page: number, size: number) => {
+  try {
+    const response = await instance.get(`/api/search-history?searchtype=${searchtype}&page=${page}&size=${size}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import MenuBar from './Common/MenuBar';
 import { useEffect, useRef, useState } from 'react';
+import { ScrollContext } from './ScrollContext';
 
 const Layout = () => {
-  const headerHeight = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
   const menuBarHeight = useRef<HTMLDivElement>(null);
   const [heights, setHeights] = useState(0);
 
@@ -24,21 +25,23 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col">
-      <main
-        className="overflow-auto scrollbar-none"
-        style={{
-          // marginTop: `${heights.header}px`,
-          marginBottom: `${heights}px`,
-          height: `calc(100dvh - ${heights}px)`,
-        }}
-      >
-        <Outlet />
-      </main>
-      <footer className="fixed bottom-0 z-30 w-full max-w-[500px]" ref={menuBarHeight}>
-        <MenuBar />
-      </footer>
-    </div>
+    <ScrollContext.Provider value={mainRef}>
+      <div className="relative flex flex-col">
+        <main
+          className="overflow-y-auto scrollbar-none"
+          ref={mainRef}
+          style={{
+            marginBottom: `${heights}px`,
+            height: `calc(100dvh - ${heights}px)`,
+          }}
+        >
+          <Outlet />
+        </main>
+        <footer className="fixed bottom-0 z-30 w-full max-w-[500px]" ref={menuBarHeight}>
+          <MenuBar />
+        </footer>
+      </div>
+    </ScrollContext.Provider>
   );
 };
 

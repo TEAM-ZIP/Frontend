@@ -4,9 +4,11 @@ import ReviewPreview from '../../components/Booksnap/ReviewPreview';
 import { BooksnapPreview } from '../../model/booksnap.model';
 import Loading from '../Loading';
 import WriteButton from '../../components/Booksnap/WriteButton';
-import { getReview } from '../../api/booksnap.api';
+import { getReview, searchReview } from '../../api/booksnap.api';
 import Toast from '../../components/Common/Toast';
 import BooksnapHeader from '../../components/Header/BooksnapHeader';
+import { useScrollRef } from '../../components/ScrollContext';
+import { useSearchParams } from 'react-router-dom';
 
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('createdAt');
@@ -14,9 +16,19 @@ const BookSnap = () => {
   const [page, setPage] = useState(1);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isBottom, setIsBottom] = useState<boolean>(false);
-  const mainRef = useRef<HTMLDivElement>(null);
   const isLastRef = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+  const mainRef = useScrollRef();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('query');
+
+  useEffect(() => {
+    if (query) {
+      searchReview(query).then((data) => {
+        setReview(data.booksnapPreview);
+      });
+    }
+  }, [query]);
 
   // 리뷰 목록 받아오기
   const getReviews = async () => {
@@ -35,6 +47,7 @@ const BookSnap = () => {
 
   // filter가 변경될 때 상태 초기화 및 getReviews 호출
   useEffect(() => {
+    if (query) return;
     setReview([]);
     setIsLast(false);
     setIsBottom(false);
@@ -48,6 +61,8 @@ const BookSnap = () => {
 
   // page가 변경될 때만 getReviews 호출
   useEffect(() => {
+    if (query) return;
+
     if (page !== 1 || review.length === 0) {
       // 🔄 리뷰가 없거나 페이지가 1이 아닐 때만 호출
       getReviews();
@@ -59,32 +74,26 @@ const BookSnap = () => {
     isLastRef.current = isLast;
   }, [isLast]);
 
-  // 바닥 감지
-  const detectBottom = () => {
-    if (mainRef.current) {
-      const { scrollTop, clientHeight, scrollHeight } = mainRef.current;
-      return scrollHeight > clientHeight && scrollTop + clientHeight >= scrollHeight - 1;
-    }
-    return false;
-  };
-
-  // 스크롤이 바닥에 있고, 마지막 페이지가 아니면 page + 1
-  const handleScrollEvent = () => {
-    if (detectBottom() && !isBottom && !isLastRef.current) {
-      setIsBottom(true);
-      setPage((prev) => prev + 1);
-    }
-  };
-
-  // 스크롤 이벤트 등록
   useEffect(() => {
-    if (mainRef.current) {
-      mainRef.current.addEventListener('scroll', handleScrollEvent);
-      return () => {
-        mainRef.current?.removeEventListener('scroll', handleScrollEvent);
-      };
+    const handleScroll = () => {
+      if (!mainRef.current) return;
+
+      const { scrollTop, clientHeight, scrollHeight } = mainRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 100 && !isBottom && !isLastRef.current) {
+        setIsBottom(true);
+        setPage((prev) => prev + 1);
+      }
+    };
+
+    const el = mainRef.current;
+    if (el) {
+      el.addEventListener('scroll', handleScroll);
     }
-  }, []);
+
+    return () => {
+      el?.removeEventListener('scroll', handleScroll);
+    };
+  }, [mainRef, isBottom]);
 
   if (isLoading) {
     return <Loading text="리뷰 목록을 불러오는 중입니다!" />;
@@ -95,7 +104,7 @@ const BookSnap = () => {
   }
 
   return (
-    <div ref={mainRef} className="h-screen overflow-y-auto bg-bg scrollbar-none">
+    <div className="overflow-hidden bg-bg scrollbar-none">
       {/* 헤더 */}
       <BooksnapHeader />
       <div className="mt-[50px] flex flex-col">
