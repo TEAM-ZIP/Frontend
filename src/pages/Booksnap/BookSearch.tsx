@@ -1,10 +1,23 @@
+import { useEffect, useState } from 'react';
+import { getRecentSearch } from '../../api/booksnap.api';
 import RecentSearch from '../../components/Booksnap/RecentSearch';
 import Tag from '../../components/Common/Tag';
 import BookSearchHeader from '../../components/Header/BookSearchHeader';
 
+interface RecentType {
+  id: number;
+  searchWord: string;
+}
+
 const BookSearch = () => {
   const bookname = ['구원의 날', '지구에서 한아뿐', '사이키쿠스오'];
-  const recent = ['하이큐 10권', '우리가 빛의 속도로 갈 수 없다면', '천 개의 파랑'];
+  const [recent, setRecent] = useState<RecentType[]>([]);
+
+  useEffect(() => {
+    getRecentSearch('booktitle', 1, 10).then((data) => {
+      setRecent(data.data.searchHistory);
+    });
+  }, []);
 
   return (
     <div className="flex h-full flex-col bg-bg">
@@ -25,7 +38,7 @@ const BookSearch = () => {
           <p className="px-[10px] text-body3 font-bold text-white">최근 검색</p>
           <div className="flex flex-col gap-[5px]">
             {recent.map((book, index) => (
-              <RecentSearch name={book} key={index} />
+              <RecentSearch name={book.searchWord} key={index} />
             ))}
           </div>
         </div>

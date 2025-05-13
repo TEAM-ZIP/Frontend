@@ -142,3 +142,15 @@ export const postSearchHistory = async (searchType: string, searchWord: string) 
     console.log(err);
   }
 };
+
+// 최근 검색어 불러오기
+export const getRecentSearch = async (searchtype: string, page: number, size: number) => {
+  try {
+    const response = await instance.get(`/api/search-history?searchtype=${searchtype}&page=${page}&size=${size}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
