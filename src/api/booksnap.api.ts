@@ -115,3 +115,15 @@ export const searchBookstore = async (query: string | null) => {
     console.log(error);
   }
 };
+
+// 책 리뷰검색하기
+export const searchReview = async (bookName: string) => {
+  try {
+    const response = await instance.get(`/api/search?bookName=${bookName}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

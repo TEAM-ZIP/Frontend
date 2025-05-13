@@ -4,10 +4,11 @@ import ReviewPreview from '../../components/Booksnap/ReviewPreview';
 import { BooksnapPreview } from '../../model/booksnap.model';
 import Loading from '../Loading';
 import WriteButton from '../../components/Booksnap/WriteButton';
-import { getReview } from '../../api/booksnap.api';
+import { getReview, searchReview } from '../../api/booksnap.api';
 import Toast from '../../components/Common/Toast';
 import BooksnapHeader from '../../components/Header/BooksnapHeader';
-import { useScrollRef } from '../../components/scrollContext';
+import { useScrollRef } from '../../components/ScrollContext';
+import { useSearchParams } from 'react-router-dom';
 
 const BookSnap = () => {
   const [filter, setFilter] = useState<FilterType>('createdAt');
@@ -18,6 +19,16 @@ const BookSnap = () => {
   const isLastRef = useRef<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const mainRef = useScrollRef();
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('query');
+
+  useEffect(() => {
+    if (query) {
+      searchReview(query).then((data) => {
+        setReview(data.booksnapPreview);
+      });
+    }
+  }, [query]);
 
   // 리뷰 목록 받아오기
   const getReviews = async () => {
@@ -36,6 +47,7 @@ const BookSnap = () => {
 
   // filter가 변경될 때 상태 초기화 및 getReviews 호출
   useEffect(() => {
+    if (query) return;
     setReview([]);
     setIsLast(false);
     setIsBottom(false);
@@ -49,6 +61,8 @@ const BookSnap = () => {
 
   // page가 변경될 때만 getReviews 호출
   useEffect(() => {
+    if (query) return;
+
     if (page !== 1 || review.length === 0) {
       // 🔄 리뷰가 없거나 페이지가 1이 아닐 때만 호출
       getReviews();
