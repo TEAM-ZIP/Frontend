@@ -3,6 +3,7 @@ import Arrow from '../../../public/icons/menu-bar/ArrowLeft.svg?react';
 
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../Zip/SearchBar';
+import { postSearchHistory } from '../../api/booksnap.api';
 
 const BookSearchHeader = () => {
   const [searchWord, setSearchWord] = useState('');
@@ -10,6 +11,7 @@ const BookSearchHeader = () => {
 
   const handleSearch = () => {
     nav(`/booksnap?query=${searchWord}`);
+    postSearchHistory('booktitle', searchWord);
   };
 
   return (

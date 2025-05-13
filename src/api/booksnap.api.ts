@@ -127,3 +127,18 @@ export const searchReview = async (bookName: string) => {
     console.log(err);
   }
 };
+
+// 책 검색 기록 저장
+export const postSearchHistory = async (searchType: string, searchWord: string) => {
+  try {
+    const response = await instance.post(`/api/search-history`, {
+      searchType: searchType,
+      searchWord: searchWord,
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
