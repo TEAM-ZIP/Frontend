@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import MenuBar from './Common/MenuBar';
 import { useEffect, useRef, useState } from 'react';
-import { ScrollContext } from './scrollContext';
+import { ScrollContext } from './ScrollContext';
 
 const Layout = () => {
   const mainRef = useRef<HTMLDivElement>(null);
