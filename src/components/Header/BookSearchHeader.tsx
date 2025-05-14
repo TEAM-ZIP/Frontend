@@ -4,8 +4,12 @@ import Arrow from '../../../public/icons/menu-bar/ArrowLeft.svg?react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../Zip/SearchBar';
 
-const BookSearchHeader = () => {
-  const [searchWord, setSearchWord] = useState('');
+interface BookSearchHeaderProps {
+  query?: string;
+}
+
+const BookSearchHeader = ({ query }: BookSearchHeaderProps) => {
+  const [searchWord, setSearchWord] = useState(query || '');
   const nav = useNavigate();
 
   const handleSearch = () => {
@@ -14,7 +18,7 @@ const BookSearchHeader = () => {
 
   return (
     <div className="fixed left-0 right-0 top-0 z-20 m-auto flex max-w-[500px] items-center gap-[15px] border-b-[1px] border-[#544F4F] bg-bg px-[20px] py-[10px]">
-      <Arrow onClick={() => nav(-1)} />
+      <Arrow onClick={() => nav('/booksnap')} />
       <SearchBar
         searchWord={searchWord}
         setSearchWord={setSearchWord}
