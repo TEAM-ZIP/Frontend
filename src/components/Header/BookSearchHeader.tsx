@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Arrow from '../../../public/icons/menu-bar/ArrowLeft.svg?react';
-
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../Zip/SearchBar';
 
@@ -11,6 +10,12 @@ interface BookSearchHeaderProps {
 const BookSearchHeader = ({ query }: BookSearchHeaderProps) => {
   const [searchWord, setSearchWord] = useState(query || '');
   const nav = useNavigate();
+
+  useEffect(() => {
+    if (query !== undefined) {
+      setSearchWord(query);
+    }
+  }, [query]);
 
   const handleSearch = () => {
     nav(`/booksnap?query=${searchWord}`);
@@ -24,7 +29,7 @@ const BookSearchHeader = ({ query }: BookSearchHeaderProps) => {
         setSearchWord={setSearchWord}
         onSearch={handleSearch}
         text="책 제목으로 리뷰를 찾아보세요!"
-      ></SearchBar>
+      />
     </div>
   );
 };
