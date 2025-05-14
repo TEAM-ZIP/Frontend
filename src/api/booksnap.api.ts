@@ -128,21 +128,6 @@ export const searchReview = async (bookName: string) => {
   }
 };
 
-// 책 검색 기록 저장
-export const postSearchHistory = async (searchType: string, searchWord: string) => {
-  try {
-    const response = await instance.post(`/api/search-history`, {
-      searchType: searchType,
-      searchWord: searchWord,
-    });
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 // 최근 검색어 불러오기
 export const getRecentSearch = async (searchtype: string, page: number, size: number) => {
   try {
