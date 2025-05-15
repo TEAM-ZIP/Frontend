@@ -4,7 +4,7 @@ import instance from './instance';
 // 서점 검색
 export const searchBookstore = async (name: string, lat: number, lng: number) => {
   try {
-    const response = await instance.get(`/api/bookstores/search?keyword=${name}&lat=${lat}&lng=${lng}`);
+    const response = await instance.get(`/api/bookstores/search?searchK=${name}&lat=${lat}&lng=${lng}`);
     if (response.status == 200) {
       return response.data;
     }
