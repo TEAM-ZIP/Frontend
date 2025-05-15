@@ -13,11 +13,14 @@ const BookSearch = () => {
   const bookname = ['구원의 날', '지구에서 한아뿐', '사이키쿠스오'];
   const [recent, setRecent] = useState<RecentType[]>([]);
   const [word, setWord] = useState('');
+  const isLogin = !!localStorage.getItem('accessToken');
 
   useEffect(() => {
-    getRecentSearch('booktitle', 1, 10).then((data) => {
-      setRecent(data.data.searchHistory);
-    });
+    if (isLogin) {
+      getRecentSearch('booktitle', 1, 10).then((data) => {
+        setRecent(data.data.searchHistory);
+      });
+    }
   }, []);
 
   const handleClick = (bookName: string) => {
