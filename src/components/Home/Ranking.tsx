@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getTrendZip } from '../../api/zip.api';
+import { useNavigate } from 'react-router-dom';
 
 const Ranking = () => {
+  const nav = useNavigate();
   const [bookstores, setBookstores] = useState([
     '게으른 정원',
     '고요서사',
@@ -30,7 +32,7 @@ const Ranking = () => {
         {/* 왼쪽 열 */}
         <div className="flex flex-col gap-4">
           {left.map((bookstore, i) => (
-            <p key={i}>
+            <p key={i} onClick={() => nav(`/zip?search=${bookstore}`)}>
               {i + 1}. {bookstore}
             </p>
           ))}
@@ -39,7 +41,7 @@ const Ranking = () => {
         {/* 오른쪽 열 */}
         <div className="flex flex-col gap-4">
           {right.map((bookstore, i) => (
-            <p key={i}>
+            <p key={i} onClick={() => nav(`/zip?search=${bookstore}`)}>
               {i + 6}. {bookstore}
             </p> // 6부터 시작
           ))}
