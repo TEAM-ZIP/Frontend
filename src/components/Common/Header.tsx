@@ -31,7 +31,6 @@ const Header = ({ title }: HeaderProps) => {
     '/booksnap/create/2',
     '/booksnap/create/indi/2',
     '/booksnap/create/book',
-    '/mypage',
   ];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 

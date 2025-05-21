@@ -13,7 +13,6 @@ import FindPw2 from '../pages/FindPW/FindPw2';
 import ResetPw from '../pages/FindPW/ResetPw';
 import KakaoLogin from '../components/Login/KakaoLogin';
 import CreateReview from '../pages/Zip/CreateReview';
-import ProtectedRoute from '../components/ProtectedRoute';
 import CreateBooksnapReview1 from '../pages/Booksnap/CreateBooksnapReview1';
 import CreateBooksnapReview2 from '../pages/Booksnap/CreateBooksnapReview2';
 import BookSearch from '../pages/Booksnap/BookSearch';
@@ -44,51 +43,27 @@ export const router = createBrowserRouter([
   { path: '/bookie', element: <Bookie /> },
   {
     path: 'zip/create-review',
-    element: (
-      <ProtectedRoute>
-        <CreateReview />
-      </ProtectedRoute>
-    ),
+    element: <CreateReview />,
   },
   {
     path: 'booksnap/create/1',
-    element: (
-      <ProtectedRoute>
-        <CreateBooksnapReview1 />
-      </ProtectedRoute>
-    ),
+    element: <CreateBooksnapReview1 />,
   },
   {
     path: 'booksnap/create/2',
-    element: (
-      <ProtectedRoute>
-        <CreateBooksnapReview2 />
-      </ProtectedRoute>
-    ),
+    element: <CreateBooksnapReview2 />,
   },
   {
     path: 'booksnap/create/indi/1',
-    element: (
-      <ProtectedRoute>
-        <IndiCreateBookReview1 />
-      </ProtectedRoute>
-    ),
+    element: <IndiCreateBookReview1 />,
   },
   {
     path: 'booksnap/create/indi/2',
-    element: (
-      <ProtectedRoute>
-        <IndiCreateBookReview2 />
-      </ProtectedRoute>
-    ),
+    element: <IndiCreateBookReview2 />,
   },
   {
     path: 'booksnap/create/book',
-    element: (
-      <ProtectedRoute>
-        <CreateBook />
-      </ProtectedRoute>
-    ),
+    element: <CreateBook />,
   },
   { path: '/reset-pw', element: <ResetPw /> },
 ]);
