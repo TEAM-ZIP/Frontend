@@ -14,7 +14,7 @@ const MadeBy = () => {
       </div>
       <div className="flex flex-col items-end p-[10px] text-body3 text-white">
         <p>@yongaricode</p>
-        <p className="text-pink">용가리 먹방 시작~</p>
+        <p className="text-pink">용가리가 코드를 짠다~</p>
       </div>
       <div className="flex flex-col items-end p-[10px] text-body3 text-white">
         <p>@hyuna</p>

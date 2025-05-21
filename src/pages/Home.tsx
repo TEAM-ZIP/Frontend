@@ -12,10 +12,13 @@ import Name from '../components/Home/Name';
 import { searchBookstore } from '../api/zip.api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Modal from '../components/Modal/Modal';
+import AddBookstoreModal from '../components/Modal/AddBookstoreModal';
 
 const Home = () => {
   const nav = useNavigate();
   const [searchWord, setSearchWord] = useState('');
+  const [modal, setModal] = useState(false);
 
   const handleSearch = () => {
     nav(`/zip?search=${searchWord}`);
@@ -39,10 +42,15 @@ const Home = () => {
         <ReportBookstore />
         <Region />
         <BookReview />
-        <ReportStore />
+        <ReportStore onClick={() => setModal(true)} />
         <Contact />
         <MadeBy />
       </div>
+      {modal && (
+        <Modal>
+          <AddBookstoreModal setModalOpen={setModal} name="" />
+        </Modal>
+      )}
     </div>
   );
 };

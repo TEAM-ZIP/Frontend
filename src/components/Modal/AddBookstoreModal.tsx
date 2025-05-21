@@ -14,12 +14,13 @@ const AddBookstoreModal = ({ setModalOpen, name }: ModalProps) => {
   const [closeTime, setCloseTime] = useState('');
   const [feature, setFeature] = useState('');
   const [detail, setDetail] = useState('');
+  const nickname = localStorage.getItem('nickname');
 
   return (
     <div className="flex w-[320px] flex-col items-center justify-center gap-6 rounded-2xl bg-white p-4">
       <div className="flex w-full flex-col">
         <p className="text-[18px] font-semibold">독립서점 제보하기</p>
-        <p className="text-[14px] text-gray_2">용가리님만 알고있는 독립서점을 제보해주세요!</p>
+        <p className="text-[14px] text-gray_2">{nickname}님만 알고있는 독립서점을 제보해주세요!</p>
       </div>
       <LabeledInput
         label="서점 이름"
