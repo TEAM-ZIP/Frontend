@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../pages/Home';
 import Zip from '../pages/Zip/Zip';
-import MyPage from '../pages/MyPage';
+import MyPage from '../pages/MyPage/MyPage';
 import Bookie from '../pages/Bookie';
 import BookSnap from '../pages/Booksnap/BookSnap';
 import Layout from '../components/layout';
