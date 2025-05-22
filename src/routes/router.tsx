@@ -20,6 +20,7 @@ import IndiCreateBookReview1 from '../pages/Booksnap/IndiCreateBookReveiw1';
 import IndiCreateBookReview2 from '../pages/Booksnap/IndiCreateBookReview2';
 import CreateBook from '../pages/Booksnap/CreateBook';
 import Search from '../pages/Zip/Search';
+import MyBook from '../pages/MyPage/MyBook';
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
   { path: '/find-pw', element: <FindPw /> },
   { path: '/find-pw2', element: <FindPw2 /> },
   { path: '/bookie', element: <Bookie /> },
+  { path: '/mypage/book', element: <MyBook /> },
   {
     path: 'zip/create-review',
     element: <CreateReview />,

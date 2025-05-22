@@ -2,13 +2,14 @@ import { BookDetailInfo } from '../../model/booksnap.model';
 import image from '../../../public/icons/book-snap/image.png';
 interface BookInfoProps {
   bookInfo: BookDetailInfo;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
+
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const BookInfo = ({ bookInfo, onClick }: BookInfoProps) => {
   const author = bookInfo.authors.join(', ');
   return (
-    <div className="flex flex-col gap-4" onClick={onClick}>
+    <div className="flex flex-col items-center gap-4" onClick={onClick}>
       <img
         src={bookInfo.bookImageUrl == '' ? image : bookInfo.bookImageUrl}
         className="w-20"

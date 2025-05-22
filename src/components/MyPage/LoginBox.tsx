@@ -36,7 +36,7 @@ const LoginBox = () => {
       <div className="mt-4 grid grid-cols-[1fr_1px_1fr] items-center rounded-[10px] border-t-[1px] border-mint py-[9px]">
         <div
           className="flex items-center justify-center gap-1 text-body4 font-semibold text-white"
-          onClick={() => nav('myBook')}
+          onClick={() => nav('book')}
         >
           <BookmarkRoundedIcon sx={{ fill: '#c0e0d8', fontSize: 22 }} />
           <p>나의 책장</p>
