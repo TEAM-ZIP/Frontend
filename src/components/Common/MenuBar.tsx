@@ -12,6 +12,7 @@ const MenuBar = () => {
   const nav = useNavigate();
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('home');
+  const isLogin = localStorage.getItem('accessToken');
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -48,8 +49,8 @@ const MenuBar = () => {
       active: <SmartToyIcon sx={{ fontSize: 30, fill: '#E27451' }} />,
     },
     {
-      menu: 'My page',
-      name: 'mypage',
+      menu: isLogin ? 'My Page' : 'Login',
+      name: isLogin ? 'mypage' : 'login',
       inactive: <Person2Icon sx={{ fontSize: 30, fill: '#9DB2CE' }} />,
       active: <Person2Icon sx={{ fontSize: 30, fill: '#E27451' }} />,
     },

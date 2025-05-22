@@ -1,9 +1,15 @@
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Bookie from '../../../public/icons/home/bookie.png';
+import { protectedNavigate } from '../../utils/ProtectedNavigate';
+import { useNavigate } from 'react-router-dom';
 
 const BookieBox = () => {
+  const nav = useNavigate();
   return (
-    <div className="flex w-full flex-col gap-[5px] rounded-[20px] bg-green px-[10px] pt-[15px]">
+    <div
+      className="flex w-full flex-col gap-[5px] rounded-[20px] bg-green px-[10px] pt-[15px]"
+      onClick={() => protectedNavigate(nav, '/bookie')}
+    >
       <MenuBookIcon sx={{ fontSize: 24, fill: '#E8EBC8' }} />
       <h3 className="text-[14px] font-medium leading-[22px] text-white">도서 추천 메이트</h3>
       <div>

@@ -12,6 +12,7 @@ import { bookstoreReview, zipPreview } from '../../model/zip.model';
 import NoBookStoreResult from '../../components/Zip/NoBookStoreResult';
 import { BookDetailInfo } from '../../model/booksnap.model';
 import { set } from 'lodash';
+import { protectedNavigate } from '../../utils/ProtectedNavigate';
 
 interface ZipDetailProps {
   currentState: string;
@@ -30,8 +31,9 @@ const ZipDetail = ({ currentState, id }: ZipDetailProps) => {
   const [filter, setFilter] = useState<'createdAt' | 'rating'>('createdAt');
 
   const handleWriteReview = () => {
-    // setBottomSheet(({ currentState }) => <ZipDetail currentState={currentState} id={id} />, '서점 상세 정보');
-    nav('create-review', { state: { id: id, name: bookstoreInfo?.name } });
+    protectedNavigate(nav, 'create-review', {
+      state: { id: id, name: bookstoreInfo?.name },
+    });
   };
 
   useEffect(() => {

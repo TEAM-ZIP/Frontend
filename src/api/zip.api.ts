@@ -94,3 +94,15 @@ export const getTrendZip = async () => {
     console.log(err);
   }
 };
+
+// 해시태그 검색
+export const getHashTag = async () => {
+  try {
+    const response = await instance.get('/api/bookstores/hashtag');
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

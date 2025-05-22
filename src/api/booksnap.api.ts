@@ -103,6 +103,18 @@ export const pickBook = async (bookId: string) => {
   }
 };
 
+// 책 담기
+export const deleteBook = async (bookId: string) => {
+  try {
+    const response = await instance.delete(`api/pick-book`, { data: { bookId: bookId } });
+    if (response.status == 200) {
+      return { success: true, message: '책 담기가 취소되었습니다!' };
+    }
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 // 서점 검색
 export const searchBookstore = async (query: string | null) => {
   try {

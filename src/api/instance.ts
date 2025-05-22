@@ -28,6 +28,8 @@ instance.interceptors.response.use(
     if (accessToken && refreshToken) {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+    }
+    if (nickname) {
       localStorage.setItem('nickname', nickname);
     }
     return response;

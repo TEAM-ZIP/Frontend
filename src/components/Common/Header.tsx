@@ -31,18 +31,22 @@ const Header = ({ title }: HeaderProps) => {
     '/booksnap/create/2',
     '/booksnap/create/indi/2',
     '/booksnap/create/book',
+    '/mypage/book',
   ];
   const showBackButton = showBackButtonPaths.includes(location.pathname);
 
   const showCloseButtonPaths = ['/bookie', '/booksnap/create/indi/1', '/booksnap/create/1'];
   const showCloseButton = showCloseButtonPaths.includes(location.pathname);
 
+  // 마이페이지만 헤더 글씨, 아이콘 흰색
+  const myPage = location.pathname.startsWith('/mypage');
+
   return (
     <div className="fixed left-0 right-0 top-0 m-auto w-full max-w-[500px]">
       <div className={`flex items-center bg-bg px-2 py-3`}>
         {showBackButton && (
           <div className="flex cursor-pointer items-center justify-center p-2.5" onClick={handleGoBack}>
-            <FaAngleLeft size={24} className="fill-mint" />
+            <FaAngleLeft size={24} className={`${myPage ? 'fill-white' : 'fill-mint'}`} />
           </div>
         )}
         {showCloseButton && (
@@ -50,7 +54,11 @@ const Header = ({ title }: HeaderProps) => {
             <IoCloseOutline size={30} className="stroke-mint" />
           </div>
         )}
-        <div className="text-mint flex-1 text-center text-[20px] font-medium tracking-[-0.8px]">{title}</div>
+        <div
+          className={`flex-1 text-center text-[20px] font-medium tracking-[-0.8px] ${myPage ? 'text-white' : 'text-mint'}`}
+        >
+          {title}
+        </div>
         {showBackButton || showCloseButton ? <div className="w-11" /> : ''}
       </div>
     </div>

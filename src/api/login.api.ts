@@ -66,3 +66,15 @@ export const getTempPw = async (email: string) => {
     console.log(err);
   }
 };
+
+// 로그아웃
+export const logOut = async (refreshToken: string) => {
+  try {
+    const response = await instance.post('auth/logout', { refreshToken: refreshToken });
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

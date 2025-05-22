@@ -1,5 +1,6 @@
 import { HiPencil } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
+import { protectedNavigate } from '../../utils/ProtectedNavigate';
 
 const WriteButton = () => {
   const nav = useNavigate();
@@ -9,7 +10,7 @@ const WriteButton = () => {
       <div
         className="absolute right-[14px] flex items-center gap-1 rounded-full bg-[#C0E0D8] p-4"
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
-        onClick={() => nav('create/1')}
+        onClick={() => protectedNavigate(nav, 'create/1')}
       >
         <HiPencil className="h-7 w-7 fill-[#191919]" />
       </div>
