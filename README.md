@@ -62,32 +62,60 @@ https://github.com/TEAM-ZIP/Backend
 https://github.com/TEAM-ZIP/AI
 ```
 
-### How to Build
+### How to Install
 
+<br>
 1. Repository 클론
 
 ```
-https://github.com/TEAM-ZIP/Frontend
+git clone https://github.com/TEAM-ZIP/Frontend
+cd Frontend
 ```
 
  <br>
- 2. npm i 
+ 2. 의존성 설치
  
  ```
 npm install
  ```
-- git clone을 하면 npm 패키지가 없기 때문에 설치가 필요합니다. 
+- git clone을 하면 의존성 패키지들이 없기 때문에 설치가 필요합니다. 
 - npm이 있는 폴더에서 npm i 를 진행해야합니다.
-- 설치가 완료되면 package-lock.json 과  package.json 파일이 생성됩니다.
+- 설치 완료 시 node_modules 폴더가 생성됩니다.
 
  <br>
-3. 빌드
+3. 개발 서버 실행
 
 ```
 npm run dev
 ```
 
-터미널에서 npm run dev를 실행하면 웹 페이지를 확인할 수 있습니다. <br>
+- 터미널에서 npm run dev를 실행하면 개발 서버가 실행되고 브라우저에서 확인할 수 있습니다. <br>
+
+### How to Build (Production)
+
+<br>
+
+```
+npm run build
+```
+
+- 배포용 빌드 파일이 dist 폴더에 생성됩니다.
+
+### How to Test
+
+<br>
+1. 로컬 환경에서 테스트:
+
+```
+npm run build
+```
+
+- 개발 서버 실행 후 http://localhost:5173에서 기능 테스트 가능
+
+<br>
+2. 배포된 사이트에서 테스트:
+
+- [서점 ZIP가기](https://reactjs.org/)에서 모든 기능 확인 가능
 
 ---
 
@@ -99,7 +127,7 @@ npm run dev
 
 ## 📍 아키텍처
 
-![alt text](<public/readme/시스템 아키텍처.png>)
+![alt text](public/readme/architecture.png)
 
 ## 🗂️ 폴더 구조
 
